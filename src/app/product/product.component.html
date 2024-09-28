@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="header">
+        <h2>{{productDetails.brand_name}}</h2>
+        <div class="search">
+            <input type="text" placeholder="Search...">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+<!-- Product Page HTML Structure -->
+    <div class="product-page">
+        <div class="product-images">
+            <!-- <img class="main-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage"> -->
+            <!-- to handle the error of a missing image -->
+            <img class="main-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)">
+            <button class="carousel-prev">‹</button>
+            <button class="carousel-next">›</button>
+        </div>
+        <div class="product-details">
+            <h1>{{productDetails.product_name}}</h1>
+            <div class="price">
+                ₹{{productDetails.selling_price}}
+                <del>₹{{productDetails.mrp}}</del> 
+                <span class="discount">({{productDetails.discount_percent}}% OFF)</span>
+            </div>
+            <p class="product-description">{{ productDetails.product_description }}</p>
+        </div>
+    </div>
+</div>
