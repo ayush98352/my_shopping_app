@@ -1,13 +1,19 @@
 
-body {
+/* body {
     margin: 0;
     font-family: sans-serif;
-}
+} */
 .container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #f2f2f2;
+    /* background-color: #f2f2f2; */
+    /* max-width: 375px; */
+    /* position: absolute; */
+
+    max-width: 600px;
+    margin: 0px auto;
+
 }
 .header {
     background-color: #fff;
@@ -37,14 +43,30 @@ body {
 .header .search i {
     font-size: 20px;
 }
+
+.header1 {
+    display: flex;
+    align-items: center;
+    margin-left: -20px;
+}
+
+.header-icon {
+    width: 32px;
+    height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 .content {
-    padding: 15px;
+    /* padding: 15px; */
     flex-grow: 1;
     overflow-y: auto;
 }
 .section {
     background-color: #fff; 
-    padding: 15px;
+    /* padding: 15px; */
+    padding: 14px 0px 0px;
     margin-bottom: 15px;
     border-radius: 10px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -61,61 +83,6 @@ body {
     font-size: 14px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-/* Grid Items */
-.grid-item {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.grid-item img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.grid-item p {
-    margin: 5px 0;
-}
-
-/* .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-  }
-  
-  .grid-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  } */
-  
-  .mrp {
-    font-size: 12px;
-    color: #aaa;
-    text-decoration: line-through;
-  }
-  
-  .discount-percent {
-    font-size: 12px;
-    color: #cf9a65;
-    font-weight: bold;
-  }
-
 
 .button {
     background-color: #007bff;
@@ -125,3 +92,99 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
+
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+/* Grid Items */
+.product-grid-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    /* padding: 10px; */
+    padding: 12px 14px 12px 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-radius: 10px;
+}
+
+.product-grid-item img {
+    width: 100%;
+    /* height: auto; */
+    /* /* width: 157px; */
+    height: 160px; 
+    /* border-bottom: 1px solid #e0e0e0; */
+    border-radius: 10px;
+    object-fit: contain;
+     /* Ensures the image fills the space while maintaining the aspect ratio */
+    background-color: #ffffff; 
+    /* Optional: add a background color to fill the empty space */
+
+}
+
+.product-name {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-grid-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    justify-content: space-between; /* Pushes the icon to the right */
+}
+
+.short-name {
+    font-size: 9px;
+    line-height: 12px;    
+    display: block;  /* This will place MRP on a new line */
+    margin-top: -3px;
+    color: #4E5A37;
+}
+
+/* Style for the main container */
+.price-info {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Selling price style */
+  .selling-price {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000; /* Black for selling price */
+  }
+  
+  /* Container for MRP and discount */
+  .mrp-discount {
+    /* display: flex; */
+    align-items: center; /* Keep MRP and discount aligned on the same line */
+    margin-top: -3px;
+  }
+  
+  /* MRP style */
+  .mrp {
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: line-through;
+    margin-right: 5px; /* Spacing between MRP and discount */
+    font-weight: 400;
+  }
+  
+  /* Discount style */
+  .discount-percent {
+    font-size: 12px;
+    color: #ed4a4a;
+    font-weight: 400;
+  }

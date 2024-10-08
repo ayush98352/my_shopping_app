@@ -1,18 +1,75 @@
 
 <div class="container">
-    <div class="header">
+    <!-- <div class="header">
         <h2>Shopping</h2>
         <div class="search">
             <input type="text" placeholder="Search...">
             <i class="fas fa-search"></i>
         </div>
+        <div class="action-button wishlist" (click)="goToWishlistPage()">
+          <img src="assets/svg/wishlist-icon.svg" alt="Wishlist" width="20" height="20">
+        </div>
+        <div class="action-button add-to-bag" (click)="goToBagPage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6912 5H19.25C19.6442 5 19.9711 5.30515 19.9982 5.6984L20.9982 20.1984C21.0125 20.4058 20.9401 20.6098 20.7983 20.7618C20.6564 20.9137 20.4579 21 20.25 21H3.75C3.54213 21 3.34357 20.9137 3.20173 20.7618C3.05989 20.6098 2.98748 20.4058 3.00178 20.1984L4.00178 5.6984C4.0289 5.30515 4.35582 5 4.75 5H7.30882C7.66819 2.73241 9.631 1 12 1C14.369 1 16.3318 2.73241 16.6912 5ZM8.83686 5H15.1631C14.8248 3.56615 13.5376 2.5 12 2.5C10.4624 2.5 9.17517 3.56615 8.83686 5ZM15.25 8.25V6.5H8.75V8.25C8.75 8.66421 8.41421 9 8 9C7.58579 9 7.25 8.66421 7.25 8.25" fill="#262A39"></path>
+          </svg>
+      </div>
+        
+    </div> -->
+
+    <div class="header">
+        <h2>Shopping</h2>
+        <div style="gap: 13px">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 21L16.65 16.65" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <!-- <img src="assets/svg/wishlist-header-icon.svg" alt="wishlist"  width="25" height="23" (click) = "goToWishlistPage()"> -->
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click) = "goToWishlistPage()">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+            </svg>
+            <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click) = "goToBagPage()">
+        </div>
     </div>
     <div class="content">
+      <!-- categories -->
         <div class="section">
-            <h3>Categories</h3>
+            <!-- <h3>Categories</h3> -->
             <div class="grid">
+              <div class="category-item">
+                <img
+                  src="assets/svg/big_sale_logo.svg"
+                  alt="Big Sale"
+                />
+                <div class="category-name">Big Sale</div>
+            </div>
               <ng-container *ngFor="let category of categories">
-                <div class="grid-item" (click)="gotoShowCategoryProductsPage(category)">
+                <!-- <div class="grid-item" (click)="gotoShowCategoryProductsPage(category)">
+                  <img
+                    [src]="'assets/img/' + category.category_logo + '.jpg'"
+                    [alt]="category.category_logo"
+                  />
+                </div> -->
+                <!-- <div class="category-item">
+                    <img
+                      [src]="'assets/svg/' + category.category_logo + '.svg'"
+                      [alt]="category.category_logo"                      
+                    />
+                    <div class="category-name">{{category.category_name}}</div>
+                </div> -->
+
+                <!-- Initial block to show the SVG -->
+                <div class="category-item" *ngIf="!category.hasError" (click) = "gotoShowCategoryProductsPage(category)">
+                  <img
+                    [src]="'assets/svg/' + category.category_logo + '.svg'"
+                    [alt]="category.category_logo"
+                    (error)="onImageError(category)"
+                  />
+                  <div class="category-name">{{ category.category_name }}</div>
+                </div>
+
+                <!-- Fallback block to show JPG if SVG fails -->
+                <div class="grid-item" *ngIf="category.hasError" (click)="gotoShowCategoryProductsPage(category)">
                   <img
                     [src]="'assets/img/' + category.category_logo + '.jpg'"
                     [alt]="category.category_logo"
@@ -21,6 +78,22 @@
               </ng-container>
             </div>
         </div>
+        <!-- ads -->
+        <div class="section">
+          <div class="new-arrival">
+              <!-- <div class="new-arrival-text">
+                  <h2>NEW ARRIVAL IS COMING!</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+              <div class="new-arrival-image">
+                  <img src="/api/placeholder/200/200" alt="New Arrival">
+              </div> -->
+              <div class="new-arrival-image">
+                <img src="assets/svg/ad.svg" alt="Wishlist">
+              </div>
+          </div>
+        </div>
+
         <div class="section">
             <h3>Top Brands</h3>
             <div class="grid">
@@ -39,24 +112,57 @@
             
         </div>
         <div class="section">
-            <h3>Recommended Products</h3>
+            <h3>Top Products</h3>
             <div class="product-grid">
               <ng-container *ngFor="let recommendedProduct of recommendedProducts">
                 <div class="product-grid-item" (click) = "gotoShowProductPage(recommendedProduct)">
-                  <img
-                    ngOptimizedImage
-                    [src]="'assets/img/products/' + recommendedProduct.main_image + '.jpg'"
-                    [alt]="recommendedProduct.main_image"
-                  />
-                  <p>{{recommendedProduct.product_name}}</p>
-                  <p>
-                      {{recommendedProduct.selling_price}}
-                    <span class="mrp">{{recommendedProduct.mrp}}</span>
-                    (<span class="discount-percent">{{recommendedProduct.discount_percent}}% OFF</span>)
+                  <div>
+                    <img 
+                      ngOptimizedImage
+                      [src]="'assets/img/products/' + recommendedProduct.main_image + '.jpg'"
+                      [alt]="recommendedProduct.main_image"
+                    />
+                  </div>
+                  <div class = "product-name">
+                    <p>{{recommendedProduct.brand_name}}
+                      <span class="short-name">{{recommendedProduct.product_short_name}}</span>
+                    </p>
+                    <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
+                      <img src="assets/svg/wishlist-icon.svg" alt="wishlist" width="19" height="17">
+                    </span> 
+                    <span *ngIf="recommendedProduct?.iswishlisted == '1'" (click)="removeFromWishlist(recommendedProduct, $event)">
+                      <img src="assets/svg/wishlisted-icon.svg" alt="wishlisted" width="19" height="17" viewBox="0 0 24 24">
+                    </span> 
+                  </div>
+                  <p class="price-info">
+                    <span class="selling-price">₹{{recommendedProduct.selling_price}}</span>
+                    <span class="mrp-discount">
+                      <span class="mrp">₹{{recommendedProduct.mrp}}</span>
+                      (<span class="discount-percent">{{recommendedProduct.discount_percent}}% OFF</span>)
+                    </span>
                   </p>
                 </div>
               </ng-container>
             </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-icons">
+          <div class="icon">
+            <img src="assets/svg/home-icon.svg" alt="Home" width="29" height="29">
+          </div>
+          <div class="icon">
+            <img src="assets/svg/new-icon.svg" alt="New" width="30" height="31">
+          </div>
+          <div class="icon">
+            <img src="assets/svg/group-icon.svg" alt="Categories" width="24" height="25">
+          </div>
+          <div class="icon">
+            <img src="assets/svg/trends-icon.svg" alt="Trends" width="28" height="21">
+          </div>
+          <div class="icon">
+            <img src="assets/svg/profile-icon.svg" alt="Profile" width="28" height="28">
+          </div>
         </div>
     </div>
 </div>

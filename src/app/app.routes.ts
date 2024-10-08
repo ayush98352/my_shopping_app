@@ -1,11 +1,27 @@
 import { Routes } from '@angular/router';
 // import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';  // Import the AuthGuard
 
 export const routes: Routes = [
+    // {
+    //     path: '',
+    //     redirectTo: '/login',
+    //     pathMatch: 'full'  // Default route redirecting to login
+    // },
     {
         path: '',
-        loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
+    },    
+    {
+        path: 'login',
+        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent)
     },
+    
+    // {
+    //     path: '',
+    //     loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+    // },
     {
         path: 'home',
         loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
@@ -21,6 +37,15 @@ export const routes: Routes = [
     },
     {   path: 'product/:product_id',
         loadComponent: () => import('./product/product.component').then(m => m.ProductComponent)
+    },
+    {   path: 'wishlist/:user_id',
+        loadComponent: () => import('./wishlist/wishlist.component').then(m => m.WishlistComponent) 
+    },
+    // {   path: 'cart/:user_id',
+    //     loadComponent: () => import('./bag/bag.component').then(m => m.BagComponent)
+    // },
+    {   path: 'cart/:user_id',
+        loadComponent: () => import('./shopping-bag/shopping-bag.component').then(m => m.ShoppingBagComponent)
     },
 
     // {   path: 'category/:id', 

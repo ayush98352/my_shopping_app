@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { RouterModule , Router, ActivatedRoute} from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { CommonModule } from '@angular/common'; 
 import { DataShareService } from '../services/data.share.service';
 
@@ -18,10 +19,14 @@ export class ProductComponent implements OnInit{
   public imagesArray: any[] = [];
   public currentIndex: number = 0;
   public currentImage:string = '';
+  public inWishlist: boolean = false;
+  public inCart: boolean = false;
+  public loggedInUserId = localStorage.getItem('loggedInUserId');
 
-  public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService) {}
+  public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
   async ngOnInit() {
+    console.log(this.route);
     this.route.params.subscribe(params => {
       this.productId = params['product_id'];
     });
@@ -62,6 +67,10 @@ export class ProductComponent implements OnInit{
     // // Show the main image initially
     showImage();
 
+    this.checkWishlistStatus();
+    // this.checkCartStatus();
+    console.log('iswishliste', this.inWishlist)
+
   }
 
   async getProductDetails(productId: any) {
@@ -88,7 +97,83 @@ export class ProductComponent implements OnInit{
       this.currentImage = this.imagesArray[this.currentIndex];
     }
   }
-  
 
+  async checkWishlistStatus() {
+    let apiParams = {
+      user_id: this.loggedInUserId,
+      product_id: this.productId
+    }
+    await this.apiService.getDataWithParams('/home/checkWishlistStatus', apiParams)
+      .subscribe((response: any) => {
+        console.log('checkWishlistStatus', response)
+        if(response.code == 500 && response.message == 'sucess'){
+          if(response.result[0] && response.result[0].inWishlist === 0){
+            this.inWishlist = false;
+          }
+          else if (response.result[0].inWishlist > 0){
+            this.inWishlist = true;
+          }
+          else{
+            this.inWishlist = false;
+          }
+        }
+        else{
+          this.inWishlist = false;
+        }
+        console.log('isnode check', this.inWishlist);
+    });
+  }
+
+  async addToWishlist() {
+    let apiParams = {
+      user_id: this.loggedInUserId,
+      product_id: this.productId
+    }
+    await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
+      .subscribe((response: any) => {
+        if(response.code == 500 && response.message == 'sucess'){
+          this.inWishlist = true;
+        }else{
+          this.inWishlist = false;
+          alert('Unable to add to wishlist');
+        }
+    });
+  }
+
+  async removeFromWishlist() {
+    let apiParams = {
+      user_id: this.loggedInUserId,
+      product_id: this.productId
+    }
+    await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
+      .subscribe((response: any) => {
+        console.log('removeFromWishlist', response)
+        if(response.code == 500 && response.message == 'sucess'){
+          this.inWishlist = false;
+        }else{
+          this.inWishlist = true;
+          alert('Unable To remove from wishlist');
+        }
+    });
+  }
+
+  // checkCartStatus() {
+  //   this.http.get(`/cart/check?user_id=${this.userId}&product_id=${this.productId}`)
+  //     .subscribe((response: any) => {
+  //       this.inCart = response.inCart;
+  //       this.cartQuantity = response.quantity || 0;
+  //     });
+  // }
+
+  goToWishlistPage(){
+    return this.router.navigate(['/wishlist', this.loggedInUserId] );
+  }
+
+  goBackToPreviousPage() {
+    this.location.back();
+  }
   
+  goToBagPage(){
+    return this.router.navigate(['/cart', this.loggedInUserId ]);
+  }
 }

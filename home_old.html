@@ -1,0 +1,90 @@
+
+<div class="container">
+    <!-- <div class="header">
+        <h2>Shopping</h2>
+        <div class="search">
+            <input type="text" placeholder="Search...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="action-button wishlist" (click)="goToWishlistPage()">
+          <img src="assets/svg/wishlist-icon.svg" alt="Wishlist" width="20" height="20">
+        </div>
+        <div class="action-button add-to-bag" (click)="goToBagPage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6912 5H19.25C19.6442 5 19.9711 5.30515 19.9982 5.6984L20.9982 20.1984C21.0125 20.4058 20.9401 20.6098 20.7983 20.7618C20.6564 20.9137 20.4579 21 20.25 21H3.75C3.54213 21 3.34357 20.9137 3.20173 20.7618C3.05989 20.6098 2.98748 20.4058 3.00178 20.1984L4.00178 5.6984C4.0289 5.30515 4.35582 5 4.75 5H7.30882C7.66819 2.73241 9.631 1 12 1C14.369 1 16.3318 2.73241 16.6912 5ZM8.83686 5H15.1631C14.8248 3.56615 13.5376 2.5 12 2.5C10.4624 2.5 9.17517 3.56615 8.83686 5ZM15.25 8.25V6.5H8.75V8.25C8.75 8.66421 8.41421 9 8 9C7.58579 9 7.25 8.66421 7.25 8.25" fill="#262A39"></path>
+          </svg>
+      </div>
+        
+    </div> -->
+
+    <div class="header">
+        <h2>Shopping</h2>
+        <div>
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 21L16.65 16.65" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click) = "goToWishlistPage()">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+            </svg>
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.125 23.25C13.1951 23.25 14.0625 24.1174 14.0625 25.1875C14.0625 26.2576 13.1951 27.125 12.125 27.125C11.0549 27.125 10.1875 26.2576 10.1875 25.1875C10.1875 24.1174 11.0549 23.25 12.125 23.25Z" stroke="#1B1B1B" stroke-width="1.8125"/>
+                <path d="M21.1667 23.25C22.2368 23.25 23.1042 24.1174 23.1042 25.1875C23.1042 26.2576 22.2368 27.125 21.1667 27.125C20.0967 27.125 19.2292 26.2576 19.2292 25.1875C19.2292 24.1174 20.0967 23.25 21.1667 23.25Z" stroke="#1B1B1B" stroke-width="1.8125"/>
+                <path d="M7.927 15.5C7.927 13.6459 7.92906 12.3528 8.06024 11.3772C8.18766 10.4294 8.42074 9.92745 8.77822 9.56997C9.1357 9.21249 9.63761 8.97941 10.5854 8.85199C11.5611 8.7208 12.8542 8.71875 14.7083 8.71875H18.4763C20.6294 8.71875 22.1401 8.72106 23.263 8.88043C24.3589 9.03598 24.9065 9.31952 25.2681 9.74648C25.6298 10.1734 25.8196 10.7602 25.7928 11.8668C25.7654 13.0005 25.5192 14.4911 25.1653 16.6148C24.9035 18.1858 24.7201 19.2753 24.477 20.092C24.2417 20.8826 23.9816 21.301 23.6375 21.5925C23.2933 21.8841 22.838 22.0717 22.0193 22.1739C21.1738 22.2794 20.0691 22.2812 18.4763 22.2812H14.7083C12.8542 22.2812 11.5611 22.2792 10.5854 22.1481C9.63761 22.0206 9.1357 21.7876 8.77822 21.43C8.42074 21.0725 8.18766 20.5707 8.06024 19.6229C7.92906 18.6471 7.927 17.3541 7.927 15.5Z" stroke="#1B1B1B" stroke-width="1.8125"/>
+                <path d="M7.92716 14.8542V6.45833C7.92716 5.0316 6.77057 3.875 5.34383 3.875H3.72925" stroke="#1B1B1B" stroke-width="1.8125" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <h3>Categories</h3>
+            <div class="grid">
+              <ng-container *ngFor="let category of categories">
+                <div class="grid-item" (click)="gotoShowCategoryProductsPage(category)">
+                  <img
+                    [src]="'assets/img/' + category.category_logo + '.jpg'"
+                    [alt]="category.category_logo"
+                  />
+                </div>
+              </ng-container>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Top Brands</h3>
+            <div class="grid">
+                <ng-container *ngFor="let brand of brands">
+                  <div class="grid-item" (click) = "gotoShowBrandProductsPage(brand)">
+                    <img style="height: 50px"
+                      [src]="'assets/img/' + brand.brand_logo + '.jpg'"
+                      [alt]="brand.brand_logo"
+                    />
+                    <p>{{brand.brand_name}}</p>
+                  </div>
+                </ng-container>
+            </div>
+
+            <!-- <div class="view-more">View More</div> -->
+            
+        </div>
+        <div class="section">
+            <h3>Recommended Products</h3>
+            <div class="product-grid">
+              <ng-container *ngFor="let recommendedProduct of recommendedProducts">
+                <div class="product-grid-item" (click) = "gotoShowProductPage(recommendedProduct)">
+                  <img
+                    ngOptimizedImage
+                    [src]="'assets/img/products/' + recommendedProduct.main_image + '.jpg'"
+                    [alt]="recommendedProduct.main_image"
+                  />
+                  <p>{{recommendedProduct.product_name}}</p>
+                  <p>
+                      {{recommendedProduct.selling_price}}
+                    <span class="mrp">{{recommendedProduct.mrp}}</span>
+                    (<span class="discount-percent">{{recommendedProduct.discount_percent}}% OFF</span>)
+                  </p>
+                </div>
+              </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

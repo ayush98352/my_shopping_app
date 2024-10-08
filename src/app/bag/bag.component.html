@@ -1,0 +1,32 @@
+<!-- shopping-bag.component.html -->
+<div class="shopping-bag-container">
+    <h1>Your Shopping Bag</h1>
+    
+    <div class="bag-summary">
+      <p>{{bagItems.length}} items in your bag</p>
+      <button (click)="clearBag()" class="clear-bag-btn">Clear Bag</button>
+    </div>
+  
+    <div class="bag-items">
+      <div *ngFor="let item of bagItems; let i = index" class="bag-item">
+        <img [src]="item.imageUrl" [alt]="item.name" class="item-image">
+        <div class="item-details">
+          <h3>{{item.name}}</h3>
+          <p>Size: {{item.size}}</p>
+          <p>Color: {{item.color}}</p>
+          <p class="item-price">₹{{item.price}}</p>
+        </div>
+        <div class="item-actions">
+          <button (click)="decreaseQuantity(i)" class="quantity-btn">-</button>
+          <span class="item-quantity">{{item.quantity}}</span>
+          <button (click)="increaseQuantity(i)" class="quantity-btn">+</button>
+          <button (click)="removeItem(i)" class="remove-btn">Remove</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="bag-total">
+      <h2>Total: ₹{{getTotalPrice()}}</h2>
+      <button (click)="checkout()" class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>

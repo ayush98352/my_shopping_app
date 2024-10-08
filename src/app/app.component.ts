@@ -3,17 +3,21 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { Component,Renderer2,HostListener,OnInit } from '@angular/core';
+import { Component,Renderer2,HostListener,OnInit,  Inject, PLATFORM_ID  } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
 import { Router, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart,ResolveEnd, NavigationError,ActivatedRoute } from '@angular/router';
 import { DataShareService } from './services/data.share.service';
 import { DataAccessService } from './services/data-access.service';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 import { ApiService } from './services/api.service';
+import { isPlatformBrowser } from '@angular/common';
+
 
 
 import * as jQuery from 'jquery';
 import * as $ from 'jquery';
+import { LoginComponent } from './login/login.component';
 interface WebAppInterface {
   setUserInfoFromApp(obj: string): any;
   generateFCMToken() : any;
@@ -26,10 +30,10 @@ declare var jdSalesInterface: WebAppInterface;
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule, NgOptimizedImage],
+  imports: [CommonModule, RouterOutlet, HttpClientModule, NgOptimizedImage, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [ApiService]  // Add your ApiService here if needed
+  providers: [ApiService],  // Add your ApiService here if needed
 })
 export class AppComponent implements OnInit {
   title = 'my-app';
@@ -41,10 +45,21 @@ export class AppComponent implements OnInit {
 
   data: any;
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService ) {}
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object ) {}
  
   ngOnInit(): void {
     this.checkScreenSize()
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        this.router.navigate(['/home']);  // Navigate to home if token is present
+      } else {
+        this.router.navigate(['/login']);  // Otherwise, go to login
+      }
+    }
+    else{
+      this.router.navigate(['/login']);  // Otherwise, go to login
+    };
 
     // this.apiService.getData().subscribe(
     //   (response) => {
