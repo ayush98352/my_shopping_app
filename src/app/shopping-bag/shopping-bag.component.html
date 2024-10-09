@@ -25,10 +25,10 @@
 
     <div class="product-list">
       <div *ngFor="let product of products" class="product-item">
-        <img [src]="product.image" [alt]="product.name" class="product-image">
+        <img [src]="'assets/img/products/' + product.main_image + '.jpg'" [alt]="product.main_image" class="product-image">
         <div class="product-details">
-          <h2>{{ product.name }}</h2>
-          <p>{{ product.description }}</p>
+          <h2>{{ product.brand_name }}</h2>
+          <p>{{ product.product_short_name }}</p>
           <div class="product-options">
             <select [(ngModel)]="product.size">
               <option value="S">S</option>
@@ -41,11 +41,11 @@
             </select>
           </div>
           <div class="product-price">
-            <span class="current-price">₹{{ product.price }}</span>
-            <span class="original-price">₹{{ product.originalPrice }}</span>
-            <span class="discount">({{ product.discount }}% OFF)</span>
+            <span class="current-price">₹{{ product.selling_price }}</span>
+            <span class="original-price">₹{{ product.mrp }}</span>
+            <span class="discount">({{ product.discount_percent }}% OFF)</span>
           </div>
-          <p class="delivery-date">Delivery between {{ product.deliveryDate }}</p>
+          <p class="delivery-date">Delivery between {{ deliveryDate }}</p>
         </div>
         <button class="remove-button">×</button>
       </div>

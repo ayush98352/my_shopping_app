@@ -93,7 +93,7 @@ export class CategoryProductsComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
       .subscribe((response: any) => {
-        if(response.code == 500 && response.message == 'sucess'){
+        if(response.code == 200 && response.message == 'sucess'){
           const productIndex = this.products.findIndex((prod: any) => prod.product_id === product.product_id);
           if (productIndex !== -1) {
               // Update the iswishlisted property for the specific product
@@ -120,7 +120,7 @@ export class CategoryProductsComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
       .subscribe((response: any) => {
         console.log('removeFromWishlist', response)
-        if(response.code == 500 && response.message == 'sucess'){
+        if(response.code == 200 && response.message == 'sucess'){
           const productIndex = this.products.findIndex((prod: any) => prod.product_id === product.product_id);
           if (productIndex !== -1) {
               // Update the iswishlisted property for the specific product

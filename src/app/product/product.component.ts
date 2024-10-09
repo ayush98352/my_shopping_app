@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit{
   public inWishlist: boolean = false;
   public inCart: boolean = false;
   public loggedInUserId = localStorage.getItem('loggedInUserId');
+  public selectedSize = '';
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
@@ -106,7 +107,7 @@ export class ProductComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/checkWishlistStatus', apiParams)
       .subscribe((response: any) => {
         console.log('checkWishlistStatus', response)
-        if(response.code == 500 && response.message == 'sucess'){
+        if(response.code == 200 && response.message == 'sucess'){
           if(response.result[0] && response.result[0].inWishlist === 0){
             this.inWishlist = false;
           }
@@ -165,6 +166,29 @@ export class ProductComponent implements OnInit{
   //     });
   // }
 
+  async setSelectedSize(size: any){
+    this.selectedSize = size;
+  }
+  async addToCart(){
+    if(!this.selectedSize || this.selectedSize == ''){
+      alert('Please select size');
+      return;
+    }
+    else{
+      let apiParams = {
+        user_id: this.loggedInUserId,
+        product_id: this.productId,
+        size: this.selectedSize
+      }
+      await this.apiService.getDataWithParams('/home/addToCart', apiParams)
+        .subscribe((response: any) => {
+          if(response.code == 500 && response.message == 'sucess'){
+            this.inCart = true;
+          }
+        })
+    }
+  }
+
   goToWishlistPage(){
     return this.router.navigate(['/wishlist', this.loggedInUserId] );
   }
@@ -176,4 +200,5 @@ export class ProductComponent implements OnInit{
   goToBagPage(){
     return this.router.navigate(['/cart', this.loggedInUserId ]);
   }
+
 }
