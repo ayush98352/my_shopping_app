@@ -27,19 +27,19 @@ export class ProductComponent implements OnInit{
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
   async ngOnInit() {
-    console.log(this.route);
     this.route.params.subscribe(params => {
       this.productId = params['product_id'];
     });
-
     this.productDetails = this.dataShareService.getProductDetails();
-    if(Object.keys(this.productDetails).length === 0 && this.productId){
-      await this.getProductDetails(this.productId);
-    }
-    this.currentImage = this.productDetails.main_image;
+    // if(Object.keys(this.productDetails).length === 0 && this.productId){
+    //   await this.getProductDetails(this.productId);
+    // }
+    
+    await this.getProductDetails(this.productId);
+    this.currentImage = this.productDetails?.main_image;
     // Create a new array with the combination of main_image and additional_images
-    this.imagesArray = [this.productDetails.main_image, ...this.productDetails.additional_images];
-    await this.getScrollImages();
+    // this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
+    // await this.getScrollImages();
   
   }
   async getScrollImages(){
@@ -70,7 +70,6 @@ export class ProductComponent implements OnInit{
 
     this.checkWishlistStatus();
     // this.checkCartStatus();
-    console.log('iswishliste', this.inWishlist)
 
   }
 
@@ -82,6 +81,11 @@ export class ProductComponent implements OnInit{
       (response) => {
         this.productDetails = response.result[0];
         this.dataShareService.setProductDetails(this.productDetails);
+
+        this.currentImage = this.productDetails?.main_image;
+        // Create a new array with the combination of main_image and additional_images
+        this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
+        this.getScrollImages();
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -106,7 +110,6 @@ export class ProductComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/checkWishlistStatus', apiParams)
       .subscribe((response: any) => {
-        console.log('checkWishlistStatus', response)
         if(response.code == 200 && response.message == 'sucess'){
           if(response.result[0] && response.result[0].inWishlist === 0){
             this.inWishlist = false;
@@ -121,7 +124,6 @@ export class ProductComponent implements OnInit{
         else{
           this.inWishlist = false;
         }
-        console.log('isnode check', this.inWishlist);
     });
   }
 
@@ -148,7 +150,6 @@ export class ProductComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
       .subscribe((response: any) => {
-        console.log('removeFromWishlist', response)
         if(response.code == 500 && response.message == 'sucess'){
           this.inWishlist = false;
         }else{

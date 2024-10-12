@@ -119,13 +119,13 @@
                   <div>
                     <img 
                       ngOptimizedImage
-                      [src]="'assets/img/products/' + recommendedProduct.main_image + '.jpg'"
-                      [alt]="recommendedProduct.main_image"
+                      [src]="'assets/img/products/' + recommendedProduct?.main_image + '.jpg'"
+                      [alt]="recommendedProduct?.main_image"
                     />
                   </div>
                   <div class = "product-name">
-                    <p>{{recommendedProduct.brand_name}}
-                      <span class="short-name">{{recommendedProduct.product_short_name}}</span>
+                    <p>{{recommendedProduct?.brand_name}}
+                      <span class="short-name">{{recommendedProduct?.product_short_name}}</span>
                     </p>
                     <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
                       <img src="assets/svg/wishlist-icon.svg" alt="wishlist" width="19" height="17">
@@ -135,10 +135,10 @@
                     </span> 
                   </div>
                   <p class="price-info">
-                    <span class="selling-price">₹{{recommendedProduct.selling_price}}</span>
+                    <span class="selling-price">₹{{recommendedProduct?.selling_price}}</span>
                     <span class="mrp-discount">
-                      <span class="mrp">₹{{recommendedProduct.mrp}}</span>
-                      (<span class="discount-percent">{{recommendedProduct.discount_percent}}% OFF</span>)
+                      <span class="mrp">₹{{recommendedProduct?.mrp}}</span>
+                      (<span class="discount-percent">{{recommendedProduct?.discount_percent}}% OFF</span>)
                     </span>
                   </p>
                 </div>
@@ -152,7 +152,7 @@
             <img src="assets/svg/home-icon.svg" alt="Home" width="29" height="29">
           </div>
           <div class="icon">
-            <img src="assets/svg/new-icon.svg" alt="New" width="30" height="31">
+            <img src="assets/svg/stores-icon.svg" alt="Stores" width="30" height="31">
           </div>
           <div class="icon">
             <img src="assets/svg/group-icon.svg" alt="Categories" width="24" height="25">

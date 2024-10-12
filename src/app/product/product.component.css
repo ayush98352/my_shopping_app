@@ -169,6 +169,9 @@
   color: #242424;
   max-width: 60px;
 }
+.buy-now-button {
+  background-color: #ffffff;
+}
 .add-to-cart-button {
   background-color: #242424;
   color: #FFFFFF;

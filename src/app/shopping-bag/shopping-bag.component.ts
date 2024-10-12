@@ -31,11 +31,16 @@ export class ShoppingBagComponent implements OnInit{
 
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public products = <any> [];
+  public totalPrice = 0;
+  public totalDiscount = 0;
+  public totalMRP = 0;
+  public totalProductsInBag: Number = 0;
   
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private location: Location) { }
 
   async ngOnInit() { 
     await this.getCartDetails();
+    
   }
 
   async getCartDetails(){
@@ -45,54 +50,84 @@ export class ShoppingBagComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getCartDetails', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
-        console.log('cartpro', this.products);
+        this.calcSummaryPrice();
+        this.totalProductsInBag = this.products.length;
       },
       (error) => {
         console.error('Error fetching data:', error);
       }
     );
+
+    
   }
-  
-  // products: Product[] = [
-  //   {
-  //     name: 'Adidas',
-  //     description: 'Stella McCartney Ultraboost 5 s.',
-  //     size: 'S',
-  //     quantity: 1,
-  //     price: 14400.00,
-  //     originalPrice: 18800.00,
-  //     discount: 18.75,
-  //     image: '/assets/img/products/adidas_ultraboost_21.jpg',
-  //     deliveryDate: '13 Oct - 18 Oct'
-  //   },
-  //   {
-  //     name: 'Adidas',
-  //     description: 'Tiro 21 Jacket',
-  //     size: 'S',
-  //     quantity: 1,
-  //     price: 10400.00,
-  //     originalPrice: 12800.00,
-  //     discount: 18.75,
-  //     image: '/assets/img/products/adidas_tiro_21_jacket.jpg',
-  //     deliveryDate: '13 Oct - 18 Oct'
-  //   },
-  //   {
-  //     name: 'Adidas',
-  //     description: 'Stella McCartney Ultraboost 5 s.',
-  //     size: 'S',
-  //     quantity: 1,
-  //     price: 14400.00,
-  //     originalPrice: 18800.00,
-  //     discount: 18.75,
-  //     image: '/assets/img/products/adidas_tiro_21_jacket.jpg',
-  //     deliveryDate: '13 Oct - 18 Oct'
-  //   }
-  // ];
+
+  async updateCartInfo(product: any) {
+    
+    let apiParams = {
+      product: JSON.stringify(product)
+    }
+
+    await this.apiService.getDataWithParams('/home/updateCartInfo', apiParams).subscribe(
+      (response) => {
+        if (response.code == 200 && response.message == 'sucess' && response.result == 'Cart Updated Succesfully') {
+          // this.products = this.products.filter((p: any) => p.cart_id !== product.cart_id);
+          console.log('data updated');
+          this.calcSummaryPrice();
+        } else {
+          alert('Unable to update cart info');
+        }
+      },
+      (error) => {
+        alert('Unable to update cart info');
+        console.error('Error fetching data:', error);
+      }
+    );
+
+  }
+
+  async removeFromCart(product:any, event: MouseEvent){
+    event.stopPropagation();  // Prevents the click from triggering the parent click event
+    event.preventDefault();   // Prevents the default action (like page refresh)
+
+    let apiParams = {
+      cart_id: product.cart_id
+    }
+    await this.apiService.getDataWithParams('/home/removeFromCart', apiParams).subscribe(
+      (response) => {
+        if (response.code == 200 && response.message == 'sucess' && response.result == 'Removed Succesfully') {
+          this.products = this.products.filter((p: any) => p.cart_id !== product.cart_id);
+          this.calcSummaryPrice();
+        } else {
+          alert('Unable to remove from cart');
+        }
+      },
+      (error) => {
+        alert('Unable to remove from cart');
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
+
+  async calcSummaryPrice(){
+    this.totalPrice = 0;
+    this.totalDiscount = 0;
+    this.totalMRP = 0;
+    this.products.forEach((product: any) => {
+      this.totalPrice += Number(product.selling_price * product.quantity);
+      this.totalMRP += Number(product.mrp * product.quantity);
+    });
+    this.totalDiscount = this.totalMRP - this.totalPrice;
+  }
 
   goToWishlistPage(){
     return this.router.navigate(['/wishlist', this.loggedInUserId] );
   }
   goBackToPreviousPage() {
     this.location.back();
+  }
+
+  gotoShowProductPage(product:any){
+    this.dataShareService.setProductDetails(product);
+    return this.router.navigate(['/product', product.product_id] );
   }
 }

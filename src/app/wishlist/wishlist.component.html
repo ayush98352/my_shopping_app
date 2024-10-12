@@ -19,7 +19,7 @@
             <h2>Wishlist</h2>
         </div>
         <div>
-            <svg class="header-icon" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg" (click)="goToBagPage()">
                 <path d="M12.125 23.25C13.1951 23.25 14.0625 24.1174 14.0625 25.1875C14.0625 26.2576 13.1951 27.125 12.125 27.125C11.0549 27.125 10.1875 26.2576 10.1875 25.1875C10.1875 24.1174 11.0549 23.25 12.125 23.25Z" stroke="#1B1B1B" stroke-width="1.8125"/>
                 <path d="M21.1667 23.25C22.2368 23.25 23.1042 24.1174 23.1042 25.1875C23.1042 26.2576 22.2368 27.125 21.1667 27.125C20.0967 27.125 19.2292 26.2576 19.2292 25.1875C19.2292 24.1174 20.0967 23.25 21.1667 23.25Z" stroke="#1B1B1B" stroke-width="1.8125"/>
                 <path d="M7.927 15.5C7.927 13.6459 7.92906 12.3528 8.06024 11.3772C8.18766 10.4294 8.42074 9.92745 8.77822 9.56997C9.1357 9.21249 9.63761 8.97941 10.5854 8.85199C11.5611 8.7208 12.8542 8.71875 14.7083 8.71875H18.4763C20.6294 8.71875 22.1401 8.72106 23.263 8.88043C24.3589 9.03598 24.9065 9.31952 25.2681 9.74648C25.6298 10.1734 25.8196 10.7602 25.7928 11.8668C25.7654 13.0005 25.5192 14.4911 25.1653 16.6148C24.9035 18.1858 24.7201 19.2753 24.477 20.092C24.2417 20.8826 23.9816 21.301 23.6375 21.5925C23.2933 21.8841 22.838 22.0717 22.0193 22.1739C21.1738 22.2794 20.0691 22.2812 18.4763 22.2812H14.7083C12.8542 22.2812 11.5611 22.2792 10.5854 22.1481C9.63761 22.0206 9.1357 21.7876 8.77822 21.43C8.42074 21.0725 8.18766 20.5707 8.06024 19.6229C7.92906 18.6471 7.927 17.3541 7.927 15.5Z" stroke="#1B1B1B" stroke-width="1.8125"/>
@@ -29,7 +29,7 @@
     </div>
 
 
-    <div class="content">
+    <!-- <div class="content">
         <div class="section">
             <div class="grid">
               <ng-container *ngFor="let product of wishlistedProducts">
@@ -65,6 +65,124 @@
             </div>
         </div>
         
+    </div> -->
+    
+
+    <div class="content">
+        <div class="section">
+            <div class="product-grid">
+                <ng-container *ngFor="let product of wishlistedProducts">
+                  <div class="product-grid-item" (click) = "gotoShowProductPage(product)">
+                    <div>
+                      <img 
+                        ngOptimizedImage
+                        [src]="'assets/img/products/' + product?.main_image + '.jpg'"
+                        [alt]="product?.main_image"
+                      />
+                    </div>
+                    <div class = "product-name">
+                      <p>{{product?.brand_name}}
+                        <span class="short-name">{{product?.product_short_name}}</span>
+                      </p>
+                      <div class="remove-button" (click)="showRemoveConfirmation(product, $event)">
+                        <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button">
+                      </div>
+                    </div>
+                    <p class="price-info">
+                      <span class="selling-price">₹{{product?.selling_price}}</span>
+                      <span class="mrp-discount">
+                        <span class="mrp">₹{{product?.mrp}}</span>
+                        (<span class="discount-percent">{{product?.discount_percent}}% OFF</span>)
+                      </span>
+                    </p>
+                    <div class="action-buttons">
+                        <button class="action-button add-to-cart-button" (click)="showAddToCartConfirmation(product, $event)">Add to cart</button>
+                    </div>
+                  </div>
+                    
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <!-- Remove from Wishlist Pop-up -->
+    <div *ngIf="showRemovePopup" class="popup-overlay">
+        <div class="popup-content">
+            <div style="display: flex; align-items: center; gap: 7px;">
+                <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button">
+                <h3>Remove Product</h3>
+            </div>
+            <p>Are you sure you want to remove this product from your wishlist?</p>
+            <!-- <div class="product-grid-item" style="display: flex;">
+                <div>
+                  <img 
+                    ngOptimizedImage
+                    [src]="'assets/img/products/' + selectedProduct?.main_image + '.jpg'"
+                    [alt]="selectedProduct?.main_image"
+                  />
+                </div>
+                <div class = "product-name">
+                  <p>{{selectedProduct?.brand_name}}
+                    <span class="short-name">{{selectedProduct?.product_short_name}}</span>
+                  </p>
+                </div>
+                <p class="price-info">
+                  <span class="selling-price">₹{{selectedProduct?.selling_price}}</span>
+                  <span class="mrp-discount">
+                    <span class="mrp">₹{{selectedProduct?.mrp}}</span>
+                    (<span class="discount-percent">{{selectedProduct?.discount_percent}}% OFF</span>)
+                  </span>
+                </p>
+              </div> -->
+            <div class="product-item">
+                <img [src]="'assets/img/products/' + selectedProduct?.main_image + '.jpg'" [alt]="selectedProduct?.main_image" class="product-image">
+                <div class="product-details">
+                    <h2>{{ selectedProduct?.brand_name }}</h2>
+                    <p>{{ selectedProduct?.product_short_name }}</p>
+                    
+                    <span class="selling-price">₹{{selectedProduct?.selling_price}} &nbsp;</span>
+                    <span class="mrp-discount">
+                        <span class="mrp">₹{{selectedProduct?.mrp}}</span>
+                        (<span class="discount-percent">{{selectedProduct?.discount_percent}}% OFF</span>)
+                    </span>
+                </div>
+            </div>
+            <div class="popup-buttons">
+                <button class="cancel" (click)="closePopups()">Cancel</button>
+                <button class="confirm" (click)="confirmRemoveFromWishlist()">Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add to Cart Pop-up -->
+    <div *ngIf="showAddToCartPopup" class="popup-overlay">
+        <div class="popup-content">
+            <h3>Select Size</h3>
+            <p>Please select a size for {{ selectedProduct?.product_short_name }}</p>
+            <div class="product-item">
+                <img [src]="'assets/img/products/' + selectedProduct?.main_image + '.jpg'" [alt]="selectedProduct?.main_image" class="product-image">
+                <div class="product-details">
+                    <h2>{{ selectedProduct?.brand_name }}</h2>
+                    <p>{{ selectedProduct?.product_short_name }}</p>
+                    <span class="selling-price">₹{{selectedProduct?.selling_price}} &nbsp;</span>
+                    <span class="mrp-discount">
+                        <span class="mrp">₹{{selectedProduct?.mrp}}</span>
+                        (<span class="discount-percent">{{selectedProduct?.discount_percent}}% OFF</span>)
+                    </span>
+                </div>
+            </div>
+            
+            <div class="size-buttons">
+                <button *ngFor="let size of ['S', 'M', 'L', 'XL']" (click)="saveSelectedSize(size)">{{ size }}</button>
+            </div>
+            <div *ngIf="selectedSize == ''">
+                <p style="align-items: center; text-align: center;"><span style="color: red;">*</span>Please select size</p>
+            </div>
+            <div class="popup-buttons">
+                <button class="cancel" (click)="closePopups()">Cancel</button>
+                
+                <button class="confirm" (click)="confirmAddToCart()">Add To Cart</button>
+            </div>
+        </div>
     </div>
     
 </div>

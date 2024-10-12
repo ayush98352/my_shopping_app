@@ -26,13 +26,13 @@
                     <div>
                       <img 
                         ngOptimizedImage
-                        [src]="'assets/img/products/' + product.main_image + '.jpg'"
-                        [alt]="product.main_image"
+                        [src]="'assets/img/products/' + product?.main_image + '.jpg'"
+                        [alt]="product?.main_image"
                       />
                     </div>
                     <div class = "product-name">
-                      <p>{{product.brand_name}}
-                        <span class="short-name">{{product.product_short_name}}</span>
+                      <p>{{product?.brand_name}}
+                        <span class="short-name">{{product?.product_short_name}}</span>
                       </p>
                       <span *ngIf="product?.iswishlisted != '1'" (click)="addToWishlist(product, $event)">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -46,10 +46,10 @@
                       </span> 
                     </div>
                     <p class="price-info">
-                      <span class="selling-price">₹{{product.selling_price}}</span>
+                      <span class="selling-price">₹{{product?.selling_price}}</span>
                       <span class="mrp-discount">
-                        <span class="mrp">₹{{product.mrp}}</span>
-                        (<span class="discount-percent">{{product.discount_percent}}% OFF</span>)
+                        <span class="mrp">₹{{product?.mrp}}</span>
+                        (<span class="discount-percent">{{product?.discount_percent}}% OFF</span>)
                       </span>
                     </p>
                   </div>

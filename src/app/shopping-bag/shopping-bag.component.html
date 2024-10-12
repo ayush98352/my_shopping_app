@@ -25,29 +25,79 @@
 
     <div class="product-list">
       <div *ngFor="let product of products" class="product-item">
-        <img [src]="'assets/img/products/' + product.main_image + '.jpg'" [alt]="product.main_image" class="product-image">
+        <img [src]="'assets/img/products/' + product?.main_image + '.jpg'" [alt]="product?.main_image" class="product-image" (click)="gotoShowProductPage(product)">
         <div class="product-details">
-          <h2>{{ product.brand_name }}</h2>
-          <p>{{ product.product_short_name }}</p>
+          <div (click)="gotoShowProductPage(product)">
+            <h2>{{ product?.brand_name }}</h2>
+            <p>{{ product?.product_short_name }}</p>
+          </div>
           <div class="product-options">
-            <select [(ngModel)]="product.size">
+            <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
               <option value="S">S</option>
               <option value="M">M</option>
               <option value="L">L</option>
               <option value="XL">XL</option>
             </select>
-            <select [(ngModel)]="product.quantity">
+            <select [(ngModel)]="product.quantity" (change)="updateCartInfo(product)">
               <option [value]="i" *ngFor="let i of [1,2,3,4,5]">{{ i }}</option>
             </select>
           </div>
           <div class="product-price">
-            <span class="current-price">₹{{ product.selling_price }}</span>
-            <span class="original-price">₹{{ product.mrp }}</span>
-            <span class="discount">({{ product.discount_percent }}% OFF)</span>
+            <!-- <span class="current-price">₹{{ product.selling_price }}</span> -->
+            <span class="current-price">₹{{ product?.selling_price * product?.quantity }}</span>
+            <span class="original-price">₹{{ product?.mrp * product?.quantity }}</span>
+            <span class="discount">({{ product?.discount_percent }}% OFF)</span>
           </div>
           <p class="delivery-date">Delivery between {{ deliveryDate }}</p>
         </div>
-        <button class="remove-button">×</button>
+        <!-- <button class="remove-button">
+          <img src ="/assets/svg/cross.svg" alt="delete">
+        </button> -->
+        <img src ="/assets/svg/cross.svg" alt="delete" class="remove-button" (click) = "removeFromCart(product, $event)">
       </div>
+    </div>
+
+    
+    <div class="frame coupon-section">
+        <div class="coupon-header">
+            <h2>Coupon for you 
+              <img src="/assets/svg/coupon-icon.svg" style="margin-bottom: -3px;">
+            </h2>
+            <p>All Coupons</p>
+            <!-- <a href="#">All Coupons</a> -->
+        </div>
+        <div class="coupon-card">
+            <h3>Extra ₹200 OFF</h3>
+            <p>10% off on minimum purchase of ₹1040.00</p>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="coupon-code">COUPON50</span>
+              <button class="apply-coupon">APPLY COUPON</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame price-details">
+        <h3>Price Details ({{totalProductsInBag}} Items)</h3>
+        <div class="price-row">
+            <span>Total MRP</span>
+            <span>₹{{totalMRP}}</span>
+        </div>
+        <div class="price-row">
+            <span>Discount on MRP</span>
+            <span>-₹{{totalDiscount}}</span>
+        </div>
+        <div class="price-row">
+            <span>Shipping Fee</span>
+            <span>₹0</span>
+        </div>
+        <div class="price-row" style="padding-top: 10px">
+            <strong>TOTAL AMOUNT</strong>
+            <strong>₹{{totalPrice}}</strong>
+        </div>
+    </div>
+
+    <div class="frame">
+        <p>{{totalProductsInBag}} Items Selected</p>
+        <button class="place-order">Place Order</button>
     </div>
 </div>
