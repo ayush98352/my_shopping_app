@@ -134,7 +134,7 @@ export class ProductComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
       .subscribe((response: any) => {
-        if(response.code == 500 && response.message == 'sucess'){
+        if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = true;
         }else{
           this.inWishlist = false;
@@ -150,7 +150,7 @@ export class ProductComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
       .subscribe((response: any) => {
-        if(response.code == 500 && response.message == 'sucess'){
+        if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = false;
         }else{
           this.inWishlist = true;
@@ -183,7 +183,7 @@ export class ProductComponent implements OnInit{
       }
       await this.apiService.getDataWithParams('/home/addToCart', apiParams)
         .subscribe((response: any) => {
-          if(response.code == 500 && response.message == 'sucess'){
+          if(response.code == 200 && response.message == 'sucess'){
             this.inCart = true;
           }
         })

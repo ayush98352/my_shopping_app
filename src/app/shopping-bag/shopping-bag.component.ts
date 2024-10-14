@@ -35,6 +35,8 @@ export class ShoppingBagComponent implements OnInit{
   public totalDiscount = 0;
   public totalMRP = 0;
   public totalProductsInBag: Number = 0;
+  public showRemovePopup = false;
+  public selectedProduct: any;
   
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private location: Location) { }
 
@@ -85,10 +87,10 @@ export class ShoppingBagComponent implements OnInit{
 
   }
 
-  async removeFromCart(product:any, event: MouseEvent){
-    event.stopPropagation();  // Prevents the click from triggering the parent click event
-    event.preventDefault();   // Prevents the default action (like page refresh)
-
+  // async removeFromCart(product:any, event: MouseEvent){
+  //   event.stopPropagation();  // Prevents the click from triggering the parent click event
+  //   event.preventDefault();   // Prevents the default action (like page refresh)
+  async removeFromCart(product:any){
     let apiParams = {
       cart_id: product.cart_id
     }
@@ -117,6 +119,47 @@ export class ShoppingBagComponent implements OnInit{
       this.totalMRP += Number(product.mrp * product.quantity);
     });
     this.totalDiscount = this.totalMRP - this.totalPrice;
+  }
+
+  async showRemoveConfirmation(product: any, event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.selectedProduct = product;
+    this.showRemovePopup = true;
+  }
+
+  async confirmRemoveFromWishlist() {
+    if (this.selectedProduct) {
+      await this.removeFromCart(this.selectedProduct);
+      this.closePopups();
+    }
+  }
+
+  async addToWishlist(product: any, event: MouseEvent) {
+    event.stopPropagation();  // Prevents the click from triggering the parent click event
+    event.preventDefault();   // Prevents the default action (like page refresh)
+
+    let apiParams = {
+      user_id: this.loggedInUserId,
+      product_id: product.product_id
+    }
+    await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
+      .subscribe((response: any) => {
+        if(response.code == 200 && response.message == 'sucess'){
+          this.removeFromCart(product);
+          console.log('added to wishlist')
+        }else{
+          // this.products.wishlist = 0;
+          alert('Unable to add to wishlist');
+        }
+    });
+
+    this.closePopups();
+  }
+
+  closePopups() {
+    this.showRemovePopup = false;
+    // this.selectedSize = '';
   }
 
   goToWishlistPage(){

@@ -27,9 +27,12 @@
       <div *ngFor="let product of products" class="product-item">
         <img [src]="'assets/img/products/' + product?.main_image + '.jpg'" [alt]="product?.main_image" class="product-image" (click)="gotoShowProductPage(product)">
         <div class="product-details">
+          <div style="justify-content: space-between; display: flex;">
           <div (click)="gotoShowProductPage(product)">
             <h2>{{ product?.brand_name }}</h2>
             <p>{{ product?.product_short_name }}</p>
+          </div>
+          <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button" (click) = "showRemoveConfirmation(product, $event)">
           </div>
           <div class="product-options">
             <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
@@ -53,7 +56,8 @@
         <!-- <button class="remove-button">
           <img src ="/assets/svg/cross.svg" alt="delete">
         </button> -->
-        <img src ="/assets/svg/cross.svg" alt="delete" class="remove-button" (click) = "removeFromCart(product, $event)">
+        <!-- <img src ="/assets/svg/cross.svg" alt="delete" class="remove-button" (click) = "removeFromCart(product, $event)"> -->
+        <!-- <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button" style="padding: 5px;" (click) = "showRemoveConfirmation(product, $event)"> -->
       </div>
     </div>
 
@@ -100,4 +104,36 @@
         <p>{{totalProductsInBag}} Items Selected</p>
         <button class="place-order">Place Order</button>
     </div>
+
+    <!-- Remove from Wishlist Pop-up -->
+    <div *ngIf="showRemovePopup" class="popup-overlay">
+      <div class="popup-content">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 7px;">
+              <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button" style="position: static;">
+              <h3>Remove Product</h3>
+            </div>
+            <img src ="/assets/svg/cross.svg" alt="cancel" width="15" height="15" (click)="closePopups()">
+          </div>
+          <p>Are you sure you want to remove this product from your Bag?</p>
+          <div class="product-item">
+              <img [src]="'assets/img/products/' + selectedProduct?.main_image + '.jpg'" [alt]="selectedProduct?.main_image" class="product-image">
+              <div class="product-details">
+                  <h2>{{ selectedProduct?.brand_name }}</h2>
+                  <p>{{ selectedProduct?.product_short_name }}</p>
+                  
+                  <span class="selling-price">₹{{selectedProduct?.selling_price}} &nbsp;</span>
+                  <span class="mrp-discount">
+                      <span class="mrp">₹{{selectedProduct?.mrp}}</span>
+                      (<span class="discount-percent">{{selectedProduct?.discount_percent}}% OFF</span>)
+                  </span>
+              </div>
+          </div>
+          
+          <div class="popup-buttons">
+              <button class="cancel" (click)="addToWishlist(selectedProduct, $event)">Move to Wishlist</button>
+              <button class="confirm" (click)="confirmRemoveFromWishlist()">Remove</button>
+          </div>
+      </div>
+  </div>
 </div>

@@ -350,7 +350,7 @@ body {
 }
 .popup-buttons button {
   flex: 1;
-  height: 18px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -385,7 +385,8 @@ body {
 }
 
 .size-buttons button:hover {
-    background-color: #e0e0e0;
+    background-color: #000000;
+    color: #fff;
 }
 
 
