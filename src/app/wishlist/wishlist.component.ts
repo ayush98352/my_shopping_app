@@ -117,6 +117,7 @@ export class WishlistComponent implements OnInit {
           if(response.code == 200 && response.message == 'sucess'){
             // this.inCart = true;
             // this.removeFromWishlist(product);
+            this.removeFromWishlist(product);
           }
         })
     // }
