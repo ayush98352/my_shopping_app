@@ -17,23 +17,165 @@
         
     </div> -->
 
-    <div class="header">
-        <h2>Shopping</h2>
+    <!-- <div class="header">
+        <div class="delivery-container">
+          <div class="delivery-time">
+            <span>Delivery in 8 minutes</span>
+          </div>
+          <div class="address-line">
+            <span>TOWER-F, DEVIN PARADISE ENCLAVE...</span>
+            <span class="dropdown-icon">▼</span>
+          </div>
+         </div>
         <div style="gap: 13px">
-            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M21 21L16.65 16.65" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <!-- <img src="assets/svg/wishlist-header-icon.svg" alt="wishlist"  width="25" height="23" (click) = "goToWishlistPage()"> -->
+            
+            <img src="assets/svg/notification-icon.svg" alt="notification" class="header-icon" height="30">
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click) = "goToWishlistPage()">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
             </svg>
             <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click) = "goToBagPage()">
         </div>
-    </div>
+
+    </div> -->
+
+    <div class="header">
+      <div class="delivery-container" (click)="openAddressPopup()">
+          <div class="delivery-time">
+              <span>Delivery in 60 minutes</span>
+          </div>
+          <div style="display: flex;">
+            <div class="address-line">
+                <span>{{displayAddress}}</span>
+                <!-- <span class="dropdown-icon">▼</span> -->
+            </div>
+            <span class="dropdown-icon">▼</span>
+          </div>
+
+          <!-- Modal Overlay -->
+          <div class="modal-overlay" *ngIf="isAddressPopupOpen" >
+            <div class="modal-content" (click)="$event.stopPropagation()">
+              <!-- Header -->
+              <div class="modal-header">
+                <h2>Select location</h2>
+                <button class="close-button" (click)="closeAddressPopup(); $event.stopPropagation()">✕</button>
+              </div>
+
+              <!-- Search -->
+              <div class="search-container-address">
+                <div class="search-box">
+                  <i class="search-icon">🔍</i>
+                  <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
+                  <!-- <input 
+                    type="text" 
+                    
+                    placeholder="Search for area, street name..."
+                  > -->
+                  <!-- [(ngModel)]="searchQuery" -->
+                </div>
+              </div>
+              <div *ngIf="searchedText.length <= 2">
+                <!-- Current Location -->
+                <div class="action-button">
+                  <div class="icon location-icon">📍</div>
+                  <div class="content">
+                    <div class="primary-text">Use your current location</div>
+                    <div class="secondary-text">{{displayAddress}}</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </div>
+
+                <!-- Add New Address -->
+                <div class="action-button">
+                  <div class="icon add-icon">+</div>
+                  <div class="content">
+                    <div class="primary-text">Add new address</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </div>
+
+                <!-- Saved Addresses -->
+                <div class="saved-addresses">
+                  <h3>Your saved addresses</h3>
+                  <div class="address-list">
+                    <div class="address-item" *ngFor="let address of savedAddresses">
+                      <div class="address-icon">🏠</div>
+                      <div class="address-details">
+                        <div class="address-header">
+                          <span class="address-type">{{address.type}}</span>
+                          <span class="address-label" *ngIf="address.label">{{address.label}}</span>
+                        </div>
+                        <div class="address-text">{{address.address}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="searchedText && searchedText.length > 2">
+                <div class="saved-addresses">
+                  <h3>Searched Suggestions</h3>
+                  <div class="address-list">
+                    <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
+                      <div class="icon location-icon">📍</div>
+                      <div class="address-details">
+                        <div class="address-header">
+                          <span class="address-type">{{suggestion.description}}</span>
+                          <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                        </div>
+                        <div class="address-text">{{suggestion.description}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="icon-container">
+          <img src="assets/svg/notification-icon.svg" alt="notification" class="header-icon" height="30">
+          <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goToWishlistPage()">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+          </svg>
+          <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click)="goToBagPage()">
+      </div>
+  </div>
+  
+
     <div class="content">
       <!-- categories -->
         <div class="section">
+          <!-- <div class="location-container">
+            <h2>Your Location</h2>
+            <div *ngIf="locationDetails">
+              <p><strong>Title:</strong> {{ locationDetails.display_address.title }}</p>
+              <p><strong>Description:</strong> {{ locationDetails.display_address.description }}</p>
+              <p><strong>Address:</strong> {{ locationDetails.display_address.address_line }}</p>
+              <p><strong>City:</strong> {{ locationDetails.location_info.city }}</p>
+              <p><strong>State:</strong> {{ locationDetails.location_info.state }}</p>
+              <p><strong>Country:</strong> {{ locationDetails.location_info.country }}</p>
+              <p><strong>Postal Code:</strong> {{ locationDetails.location_info.postal_code }}</p>
+            </div>
+          </div> -->
+          
+          <div class="search-container"  (click) = "goToSearchPage()">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-input" placeholder="Search for brands and products">
+            <div class="filter-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="21" x2="4" y2="14"></line>
+                    <line x1="4" y1="10" x2="4" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12" y2="3"></line>
+                    <line x1="20" y1="21" x2="20" y2="16"></line>
+                    <line x1="20" y1="12" x2="20" y2="3"></line>
+                    <line x1="1" y1="14" x2="7" y2="14"></line>
+                    <line x1="9" y1="8" x2="15" y2="8"></line>
+                    <line x1="17" y1="16" x2="23" y2="16"></line>
+                </svg>
+            </div>
+          </div>
             <!-- <h3>Categories</h3> -->
             <div class="grid">
               <div class="category-item">

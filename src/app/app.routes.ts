@@ -46,6 +46,9 @@ export const routes: Routes = [
     // },
     {   path: 'cart/:user_id',
         loadComponent: () => import('./shopping-bag/shopping-bag.component').then(m => m.ShoppingBagComponent)
+    }, 
+    {   path: 'search',
+        loadComponent: () => import('./search/search.component').then(m => m.SearchComponent)
     },
 
     // {   path: 'category/:id', 
