@@ -526,11 +526,12 @@ body {
       position: relative;
       
       input {
-        width: 100%;
+        /* width: 100%; */
         padding: 0.75rem 1rem 0.75rem 2.5rem;
         border: 1px solid #ddd;
         border-radius: 8px;
         font-size: 0.875rem;
+        width: -webkit-fill-available;
         
         &::placeholder {
           color: #999;

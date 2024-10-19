@@ -180,9 +180,9 @@ export class HomeComponent implements OnInit {
           this.locationDetails = JSON.parse(JSON.stringify(response));
           this.displayAddress = this.locationDetails.display_address.address_line;
           this.closeAddressPopup();
-          localStorage.setItem('userSearchedAddress', this.locationDetails.display_address.address_line);
-          localStorage.setItem('Searchedlatitude', this.locationDetails.coordinate.lat.toString());
-          localStorage.setItem('Searchedlongitude', this.locationDetails.coordinate.lon.toString());
+          localStorage.setItem('userCurrentAddress', this.locationDetails.display_address.address_line);
+          localStorage.setItem('latitude', this.locationDetails.coordinate.lat.toString());
+          localStorage.setItem('longitude', this.locationDetails.coordinate.lon.toString());
         },
         (error) => {
           console.error('Error fetching location details:', error);
@@ -320,5 +320,9 @@ export class HomeComponent implements OnInit {
     this.isAddressPopupOpen = false;
     this.searchedText = '';
     this.addressSuggestions = [];
+  }
+
+  gotoAddAddressPage(){
+    return this.router.navigate(['/add-address']);
   }
 }

@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* max-width: 375px; */
+    /* position: absolute; */
+    
+    max-width: 600px;
+    margin: 0px auto;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    overflow: hidden; /* Prevent content from overflowing */
+   
+    /* position: relative; */
+}
+
+.map-container {
+    height: 400px;
+    width: 100%;
+}
+
+.location-search {
+    padding: 10px;
+}
+
+.location-details {
+    margin-top: 20px;
+    padding: 10px;
+}
+  

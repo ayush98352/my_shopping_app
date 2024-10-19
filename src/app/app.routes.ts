@@ -49,6 +49,9 @@ export const routes: Routes = [
     }, 
     {   path: 'search',
         loadComponent: () => import('./search/search.component').then(m => m.SearchComponent)
+    }, 
+    {   path: 'add-address',
+        loadComponent: () => import('./add-address/add-address.component').then(m => m.AddAddressComponent)
     },
 
     // {   path: 'category/:id', 

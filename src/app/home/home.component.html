@@ -65,27 +65,21 @@
                 <div class="search-box">
                   <i class="search-icon">🔍</i>
                   <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
-                  <!-- <input 
-                    type="text" 
-                    
-                    placeholder="Search for area, street name..."
-                  > -->
-                  <!-- [(ngModel)]="searchQuery" -->
                 </div>
               </div>
               <div *ngIf="searchedText.length <= 2">
                 <!-- Current Location -->
                 <div class="action-button">
                   <div class="icon location-icon">📍</div>
-                  <div class="content">
+                  <div class="content" (click)="getUserLocation(); closeAddressPopup(); $event.stopPropagation()">
                     <div class="primary-text">Use your current location</div>
-                    <div class="secondary-text">{{displayAddress}}</div>
+                    <!-- <div class="secondary-text">{{displayAddress}}</div> -->
                   </div>
                   <div class="arrow">›</div>
                 </div>
 
                 <!-- Add New Address -->
-                <div class="action-button">
+                <div class="action-button" (click)="gotoAddAddressPage()">
                   <div class="icon add-icon">+</div>
                   <div class="content">
                     <div class="primary-text">Add new address</div>
@@ -97,7 +91,7 @@
                 <div class="saved-addresses">
                   <h3>Your saved addresses</h3>
                   <div class="address-list">
-                    <div class="address-item" *ngFor="let address of savedAddresses">
+                    <div class="address-item" *ngFor="let address of savedAddresses" (click)="closeAddressPopup(); $event.stopPropagation()">
                       <div class="address-icon">🏠</div>
                       <div class="address-details">
                         <div class="address-header">
