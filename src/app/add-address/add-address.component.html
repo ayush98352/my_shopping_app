@@ -1,13 +1,191 @@
+
 <div class="container">
-    <div class="location-search">
-        <input type="text" placeholder="Search for area, street name..." #searchBox />
+    <div style="display: flex; align-items: center;">
+        <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+            <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        
+
+        <div class="search-container-address">
+            <div class="search-box">
+              <i class="search-icon">🔍</i>
+              <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
+            </div>
+          </div>
+    </div>
+
+    <div *ngIf="searchedText && searchedText.length > 2">
+        <div class="saved-addresses">
+          <h3>Searched Suggestions</h3>
+          <div class="address-list">
+            <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
+              <div class="icon location-icon">📍</div>
+              <div class="address-details">
+                <div class="address-header">
+                  <span class="address-type">{{suggestion.description}}</span>
+                  <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                </div>
+                <div class="address-text">{{suggestion.description}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 
     <div #mapContainer class="map-container"></div>
 
+   
+
+    <!-- <div class="location-details">
+        <button (click)="goToCurrentLocation()">Go to Current Location</button>
+        <p>Your Order will be delivered to:</p>
+        <p>{{selectedAddress}}</p>
+        <button (click)="openAddMore()" id="addMoreDeatils">Add more address details > </button>
+    </div> -->
+
     <div class="location-details">
-        <p>Your current location:</p>
-        <!-- <p>{{currentPosition?.lat}}, {{currentPosition?.lng}}</p> -->
+        <button class="current-location-btn" (click)="goToCurrentLocation()">
+            Go to Current Location
+        </button>
+        <p>Your Order will be delivered to:</p>
+        <p>{{selectedAddress}}</p>
+        <button class="add-more-details-btn" (click)="openAddMore()">
+            Add more address details
+            <span>></span>
+        </button>
     </div>
+
+
+    <!-- Modal Popup -->
+    <div class="modal-overlay" *ngIf="openAddMorePopup">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Enter complete address</h2>
+                <button class="close-button" (click)="closeAddMore()">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <form [formGroup]="addressForm" (ngSubmit)="saveAddress()">
+                <div class="form-content">
+                    <div class="form-group">
+                        <label class="form-label">Save address as *</label>
+                        <div class="address-type-options">
+                            <button type="button" 
+                                    class="address-type-button" 
+                                    [class.active]="isAddressTypeSelected('Home')"
+                                    (click)="setAddressType('Home')">
+                                <span>🏠</span>
+                                Home
+                            </button>
+                            <button type="button" 
+                                    class="address-type-button" 
+                                    [class.active]="isAddressTypeSelected('Work')"
+                                    (click)="setAddressType('Work')">
+                                <span>🏢</span>
+                                Work
+                            </button>
+                            <button type="button" 
+                                    class="address-type-button" 
+                                    [class.active]="isAddressTypeSelected('Hotel')"
+                                    (click)="setAddressType('Hotel')">
+                                <span>🏨</span>
+                                Hotel
+                            </button>
+                            <button type="button" 
+                                    class="address-type-button" 
+                                    [class.active]="isAddressTypeSelected('Other')"
+                                    (click)="setAddressType('Other')">
+                                <span>📍</span>
+                                Other
+                            </button>
+                        </div>
+                        <div class="other-address-input" *ngIf="isAddressTypeSelected('Other')">
+                            <input type="text" 
+                                class="form-input"
+                                formControlName="otherAddressType"
+                                placeholder="Save as"
+                                [class.error]="addressForm.get('otherAddressType')?.touched && addressForm.get('otherAddressType')?.invalid">
+                            <div class="error-message" *ngIf="addressForm.get('otherAddressType')?.touched && addressForm.get('otherAddressType')?.invalid">
+                                Please enter an address type
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Flat/House no/ Building name *</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="houseNumber"
+                            placeholder="Enter house number"
+                            [class.error]="addressForm.get('houseNumber')?.touched && addressForm.get('houseNumber')?.invalid">
+                        <div class="error-message" *ngIf="addressForm.get('houseNumber')?.touched && addressForm.get('houseNumber')?.invalid">
+                            House number is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Floor (optional)</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="floor"
+                            placeholder="Enter floor number"
+                            [class.error]="addressForm.get('floor')?.touched && addressForm.get('floor')?.invalid">
+                        <!-- <div class="error-message" *ngIf="addressForm.get('floor')?.touched && addressForm.get('floor')?.invalid">
+                            Floor number is required
+                        </div> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tower / Block (optional)</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="towerBlock"
+                            placeholder="Enter tower or block">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nearby landmark (optional)</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="landmark"
+                            placeholder="Enter nearby landmark">
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="form-label">Your name *</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="name"
+                            placeholder="Enter your name"
+                            [class.error]="addressForm.get('name')?.touched && addressForm.get('name')?.invalid">
+                        <div class="error-message" *ngIf="addressForm.get('name')?.touched && addressForm.get('name')?.invalid">
+                            Name is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your phone no *</label>
+                        <input type="text" 
+                            class="form-input" 
+                            formControlName="phone"
+                            placeholder="Enter your phone no"
+                            [class.error]="addressForm.get('phone')?.touched && addressForm.get('phone')?.invalid"
+                            [ngModel]="phone">
+                        <div class="error-message" *ngIf="addressForm.get('phone')?.touched && addressForm.get('phone')?.invalid">
+                            Phone number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="save-address-btn">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
     

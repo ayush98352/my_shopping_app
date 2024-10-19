@@ -7,12 +7,6 @@ import { Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 
 
-interface Address {
-  type: string;
-  label?: string;
-  address: string;
-  distance?: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -38,20 +32,21 @@ export class HomeComponent implements OnInit {
 
   public searchedText = '';
   public addressSuggestions: any[] = [];
-
+  public savedAddresses: any= [];
+  public location: any = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location') || '{}') : {};
 
 
 
   public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) {}
   async ngOnInit() {
-    // if(localStorage.getItem('locationDetails') && localStorage.getItem('location')){
-    //   this.locationDetails = localStorage.getItem('locationDetails');
-    //   this.userLocation = localStorage.getItem('location');
-    // }else{
-      
-    // }
-    this.displayAddress = localStorage.getItem('userCurrentAddress');
-    this.getUserLocation();
+  
+    
+    if (Object.keys(this?.location).length === 0 ) {
+      this.setUserLocation();
+    }else{
+      this.displayAddress = this.location.display_address.address_line;
+    }
+    
 
     await this.apiService.getData('/home/top-categories').subscribe(
       (response) => {
@@ -72,6 +67,26 @@ export class HomeComponent implements OnInit {
     );
 
     await this.getRecommenedProducts();
+
+    this.getSavedAddress();
+  }
+
+  async setUserLocation(){
+    if (!navigator.geolocation) {
+      console.log('Geolocation is not supported by this browser.');
+      return;
+    }
+
+    try {
+      const position = await this.getCurrentPosition();
+      this.userLocation.latitude = position.coords.latitude;
+      this.userLocation.longitude = position.coords.longitude;
+
+      await this.fetchLocationDetails(this.userLocation.latitude, this.userLocation.longitude);
+      
+    } catch (error) {
+      console.error('Error fetching location:', error);
+    }
   }
 
   async getUserLocation() {
@@ -86,7 +101,8 @@ export class HomeComponent implements OnInit {
       this.userLocation.longitude = position.coords.longitude;
 
       const originalLat = this.userLocation.latitude;
-      const originalLon = this.userLocation.longitude;
+      const originalLon = this.userLocation.longitude; 
+      
 
       const currentLat = localStorage.getItem('latitude');
       const currentLon = localStorage.getItem('longitude');
@@ -138,9 +154,9 @@ export class HomeComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getUserLocation', apiParams).subscribe(
       (response) => {
-        this.locationDetails = JSON.parse(JSON.stringify(response));
-        this.displayAddress = this.locationDetails.display_address.address_line;
-        localStorage.setItem('userCurrentAddress', this.locationDetails.display_address.address_line);
+        this.location = JSON.parse(JSON.stringify(response));
+        this.displayAddress = this.location.display_address.address_line;
+        localStorage.setItem('location', JSON.stringify(response))
       },
       (error) => {
         console.error('Error fetching location details:', error);
@@ -177,12 +193,10 @@ export class HomeComponent implements OnInit {
 
       await this.apiService.getDataWithParams('/home/fetchSelectedAddressDeatils', apiParams).subscribe(
         (response) => {
-          this.locationDetails = JSON.parse(JSON.stringify(response));
-          this.displayAddress = this.locationDetails.display_address.address_line;
+          this.location = JSON.parse(JSON.stringify(response));
+          this.displayAddress = this.location.display_address.address_line;
           this.closeAddressPopup();
-          localStorage.setItem('userCurrentAddress', this.locationDetails.display_address.address_line);
-          localStorage.setItem('latitude', this.locationDetails.coordinate.lat.toString());
-          localStorage.setItem('longitude', this.locationDetails.coordinate.lon.toString());
+          localStorage.setItem('location', JSON.stringify(response))
         },
         (error) => {
           console.error('Error fetching location details:', error);
@@ -191,18 +205,41 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  async getSavedAddress(){
+    let apiParams = {
+      user_id: this.loggedInUserId,
+    }
+    this.apiService.getDataWithParams('/home/getSavedAddress', apiParams).subscribe(
+      (response) => {
+        this.savedAddresses = JSON.parse(JSON.stringify(response.result));
+        console.log('savedAddress', this.savedAddresses)
+        localStorage.setItem('addresses', JSON.stringify(this.savedAddresses));
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
+
   async getRecommenedProducts(){
     let apiParams = {
       user_id: this.loggedInUserId,
     }
     await this.apiService.getDataWithParams('/home/getRecommenedProducts', apiParams).subscribe(
       (response) => {
-        this.recommendedProducts = response.result;
+        this.recommendedProducts = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {
         console.error('Error fetching data:', error);
       }
     );
+  }
+
+  async setSavedAddress(address : any){
+    
+    this.displayAddress = address.house_no + (address.floor_no ? ', ' + address.floor_no : '') + (address.tower_block ? ', ' + address.tower_block : '') + (address.landmark ? ', ' + address.landmark : '') + ', ' + address.full_address;
+    await this.fetchLocationDetails(address.latitude.toString(), address.longitude.toString());
+
   }
 
   async addToWishlist(product: any, event: MouseEvent) {
@@ -291,28 +328,9 @@ export class HomeComponent implements OnInit {
     return this.router.navigate(['/search'] );
   }
 
-  savedAddresses: Address[] = [
-    {
-      type: 'Home',
-      label: 'You are here',
-      address: '7 Floor, Tower A-706, Paradise City, Main Road, Devin Paradise Enclave, Bengaluru'
-    },
-    {
-      type: 'Home',
-      label: '18.38 km away',
-      address: '1st Floor, MM Manor, Sector 6, HSR Layout, Bengaluru',
-      distance: '18.38 km away'
-    },
-    {
-      type: 'Hotel',
-      label: '3.81 km away',
-      address: '4, 2 Floor, Tower E12, Ivory Inn e12, Manyata tech park, Bengaluru',
-      distance: '3.81 km away'
-    }
-  ];
-
   openAddressPopup() {
-    this.isAddressPopupOpen = !this.isAddressPopupOpen;
+    // this.isAddressPopupOpen = !this.isAddressPopupOpen;
+    this.isAddressPopupOpen = true;
     this.searchedText = '';
     this.addressSuggestions = [];
   }

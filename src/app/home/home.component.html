@@ -52,7 +52,7 @@
           </div>
 
           <!-- Modal Overlay -->
-          <div class="modal-overlay" *ngIf="isAddressPopupOpen" >
+          <div class="modal-overlay" *ngIf="isAddressPopupOpen" (click)="closeAddressPopup(); $event.stopPropagation()">
             <div class="modal-content" (click)="$event.stopPropagation()">
               <!-- Header -->
               <div class="modal-header">
@@ -91,14 +91,15 @@
                 <div class="saved-addresses">
                   <h3>Your saved addresses</h3>
                   <div class="address-list">
-                    <div class="address-item" *ngFor="let address of savedAddresses" (click)="closeAddressPopup(); $event.stopPropagation()">
+                    <div class="address-item" *ngFor="let address of savedAddresses" (click)="setSavedAddress(address); closeAddressPopup(); $event.stopPropagation()">
                       <div class="address-icon">🏠</div>
                       <div class="address-details">
                         <div class="address-header">
-                          <span class="address-type">{{address.type}}</span>
-                          <span class="address-label" *ngIf="address.label">{{address.label}}</span>
+                          <span class="address-type">{{address.address_type}}</span>
+                          <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                          <!--  label: '18.38 km away', -->
                         </div>
-                        <div class="address-text">{{address.address}}</div>
+                        <div class="address-text">{{address.house_no + (address.floor_no ? ', ' + address.floor_no : '') + (address.tower_block ? ', ' + address.tower_block : '') + (address.landmark ? ', ' + address.landmark : '') + ', ' + address.full_address}}</div>
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 // import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+// import {HttpClientModule} from '@angular/common/http';
 
 import { Component,Renderer2,HostListener,OnInit,  Inject, PLATFORM_ID  } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
@@ -30,7 +30,7 @@ declare var jdSalesInterface: WebAppInterface;
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule, NgOptimizedImage, FormsModule],
+  imports: [CommonModule, RouterOutlet, NgOptimizedImage, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [ApiService],  // Add your ApiService here if needed

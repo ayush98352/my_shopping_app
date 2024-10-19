@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://localhost:4200/home -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="module" src="./MyApp_files/client"></script>
+
+  
+  <title>MyApp</title>
+  <!--<base href="/">--><base href=".">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="http://localhost:4200/favicon.ico">
+  <script async="" defer="" src="./MyApp_files/js"></script>
+<link rel="stylesheet" href="./MyApp_files/styles.css"><style>
+
+.container[_ngcontent-ng-c3885505210] {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 600px;
+  margin: 0px auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.header[_ngcontent-ng-c3885505210] {
+  background-color: #fff;
+  padding: 20px 0px 20px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.header[_ngcontent-ng-c3885505210]   .back[_ngcontent-ng-c3885505210] {
+  font-size: 20px;
+  cursor: pointer;
+}
+.header[_ngcontent-ng-c3885505210]   h2[_ngcontent-ng-c3885505210] {
+  margin: 0;
+}
+.header[_ngcontent-ng-c3885505210]   .search[_ngcontent-ng-c3885505210] {
+  display: flex;
+  align-items: center;
+}
+.header[_ngcontent-ng-c3885505210]   .search[_ngcontent-ng-c3885505210]   input[_ngcontent-ng-c3885505210] {
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+.header[_ngcontent-ng-c3885505210]   .search[_ngcontent-ng-c3885505210]   i[_ngcontent-ng-c3885505210] {
+  font-size: 20px;
+}
+.header-icon[_ngcontent-ng-c3885505210] {
+  width: 28px;
+  height: 25px;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.content[_ngcontent-ng-c3885505210] {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.section[_ngcontent-ng-c3885505210] {
+  padding: 14px 14px 0px 0px;
+}
+.section[_ngcontent-ng-c3885505210]   h3[_ngcontent-ng-c3885505210] {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.section[_ngcontent-ng-c3885505210]   .view-more[_ngcontent-ng-c3885505210] {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+.grid[_ngcontent-ng-c3885505210] {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.grid[_ngcontent-ng-c3885505210]::-webkit-scrollbar {
+  display: none;
+}
+.grid-item[_ngcontent-ng-c3885505210] {
+  text-align: center;
+  flex: 0 0 auto;
+  background-color: transparent;
+}
+.grid-item[_ngcontent-ng-c3885505210]   img[_ngcontent-ng-c3885505210] {
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: transparent;
+  mix-blend-mode: multiply;
+}
+.button[_ngcontent-ng-c3885505210] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.product-grid[_ngcontent-ng-c3885505210] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+.product-grid-item[_ngcontent-ng-c3885505210] {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 12px 14px 12px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-radius: 10px;
+}
+.product-grid-item[_ngcontent-ng-c3885505210]   img[_ngcontent-ng-c3885505210] {
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+.product-name[_ngcontent-ng-c3885505210] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-name[_ngcontent-ng-c3885505210]   img[_ngcontent-ng-c3885505210] {
+  width: 19px;
+  height: 17px;
+  border-radius: 0px;
+}
+.product-grid-item[_ngcontent-ng-c3885505210]   p[_ngcontent-ng-c3885505210] {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 21px;
+  font-family: "Poppins";
+  font-weight: 500;
+  justify-content: space-between;
+}
+.short-name[_ngcontent-ng-c3885505210] {
+  font-size: 9px;
+  line-height: 12px;
+  display: block;
+  margin-top: -3px;
+  color: #4E5A37;
+}
+.price-info[_ngcontent-ng-c3885505210] {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+}
+.selling-price[_ngcontent-ng-c3885505210] {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+.mrp-discount[_ngcontent-ng-c3885505210] {
+  align-items: center;
+  margin-top: -3px;
+}
+.mrp[_ngcontent-ng-c3885505210] {
+  font-size: 12px;
+  color: #aaa;
+  text-decoration: line-through;
+  margin-right: 5px;
+  font-weight: 400;
+}
+.discount-percent[_ngcontent-ng-c3885505210] {
+  font-size: 12px;
+  color: #ed4a4a;
+  font-weight: 400;
+}
+.new-arrival[_ngcontent-ng-c3885505210] {
+  background-color: #FFD1DC;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.new-arrival-text[_ngcontent-ng-c3885505210] {
+  flex: 1;
+  margin-left: 5px;
+  font-size: smaller;
+}
+.new-arrival-text[_ngcontent-ng-c3885505210]   h2[_ngcontent-ng-c3885505210] {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.new-arrival-image[_ngcontent-ng-c3885505210] {
+  flex: 1;
+  text-align: right;
+}
+.new-arrival-image[_ngcontent-ng-c3885505210]   img[_ngcontent-ng-c3885505210] {
+  max-width: 100%;
+  border-radius: 10px;
+}
+.category-item[_ngcontent-ng-c3885505210] {
+  text-align: center;
+}
+.category-icon[_ngcontent-ng-c3885505210] {
+  width: 98px;
+  height: 98px;
+  background-color: #E1F6F8;
+  border: 3px solid #30EAFC;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.category-icon[_ngcontent-ng-c3885505210]   img[_ngcontent-ng-c3885505210] {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.category-name[_ngcontent-ng-c3885505210] {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #292929;
+}
+.footer[_ngcontent-ng-c3885505210] {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px -2px 50px rgba(0, 0, 0, 0.05);
+  padding: 20px 10px;
+}
+.footer-icons[_ngcontent-ng-c3885505210] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  height: 30px;
+  justify-content: space-between;
+}
+.icon[_ngcontent-ng-c3885505210] {
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.search-container[_ngcontent-ng-c3885505210] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 10px;
+  height: 46px;
+  border: 1px solid #ccc;
+  border-radius: 23px;
+  margin-bottom: 10px;
+}
+.search-icon[_ngcontent-ng-c3885505210] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.search-input[_ngcontent-ng-c3885505210] {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+.filter-icon[_ngcontent-ng-c3885505210] {
+  width: 30px;
+  height: 30px;
+  background-color: #ff9999;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.location-container[_ngcontent-ng-c3885505210] {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+.location-container[_ngcontent-ng-c3885505210]   h2[_ngcontent-ng-c3885505210] {
+  text-align: center;
+  color: #333;
+}
+.location-container[_ngcontent-ng-c3885505210]   p[_ngcontent-ng-c3885505210] {
+  font-size: 16px;
+  color: #555;
+}
+.location-container[_ngcontent-ng-c3885505210]   p[_ngcontent-ng-c3885505210]   strong[_ngcontent-ng-c3885505210] {
+  color: #000;
+}
+.delivery-container[_ngcontent-ng-c3885505210] {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  max-width: calc(100% - 150px);
+}
+.delivery-time[_ngcontent-ng-c3885505210] {
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+.address-line[_ngcontent-ng-c3885505210] {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #6b6b6b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dropdown-icon[_ngcontent-ng-c3885505210] {
+  margin-left: 5px;
+  font-size: 12px;
+  color: #6b6b6b;
+  cursor: pointer;
+}
+.icon-container[_ngcontent-ng-c3885505210] {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.delivery-trigger[_ngcontent-ng-c3885505210] {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.delivery-trigger[_ngcontent-ng-c3885505210]   .delivery-time[_ngcontent-ng-c3885505210] {
+  color: #666;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.delivery-trigger[_ngcontent-ng-c3885505210]   .address-selector[_ngcontent-ng-c3885505210] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delivery-trigger[_ngcontent-ng-c3885505210]   .address-selector[_ngcontent-ng-c3885505210]   .dropdown-icon[_ngcontent-ng-c3885505210] {
+  color: #666;
+}
+.modal-overlay[_ngcontent-ng-c3885505210] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.modal-content[_ngcontent-ng-c3885505210] {
+  background: white;
+  border-radius: 20px 20px 0 0;
+  height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: _ngcontent-ng-c3885505210_slideUp 0.3s ease-out;
+}
+@keyframes _ngcontent-ng-c3885505210_slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.modal-header[_ngcontent-ng-c3885505210] {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header[_ngcontent-ng-c3885505210]   h2[_ngcontent-ng-c3885505210] {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.modal-header[_ngcontent-ng-c3885505210]   .close-button[_ngcontent-ng-c3885505210] {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.modal-header[_ngcontent-ng-c3885505210]   .close-button[_ngcontent-ng-c3885505210]:hover {
+  background: #f5f5f5;
+}
+.search-container-address[_ngcontent-ng-c3885505210] {
+  padding: 1rem;
+}
+.search-container-address[_ngcontent-ng-c3885505210]   .search-box[_ngcontent-ng-c3885505210] {
+  position: relative;
+}
+.search-container-address[_ngcontent-ng-c3885505210]   .search-box[_ngcontent-ng-c3885505210]   input[_ngcontent-ng-c3885505210] {
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  width: -webkit-fill-available;
+}
+.search-container-address[_ngcontent-ng-c3885505210]   .search-box[_ngcontent-ng-c3885505210]   input[_ngcontent-ng-c3885505210]::placeholder {
+  color: #999;
+}
+.search-container-address[_ngcontent-ng-c3885505210]   .search-box[_ngcontent-ng-c3885505210]   .search-icon[_ngcontent-ng-c3885505210] {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+.action-button[_ngcontent-ng-c3885505210] {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  margin: 0 1rem;
+  border-radius: 8px;
+}
+.action-button[_ngcontent-ng-c3885505210]:hover {
+  background: #f5f5f5;
+}
+.action-button[_ngcontent-ng-c3885505210]   .icon[_ngcontent-ng-c3885505210] {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+.action-button[_ngcontent-ng-c3885505210]   .location-icon[_ngcontent-ng-c3885505210] {
+  background: #e6f4ea;
+  color: #34a853;
+}
+.action-button[_ngcontent-ng-c3885505210]   .add-icon[_ngcontent-ng-c3885505210] {
+  background: #e6f4ea;
+  color: #34a853;
+}
+.action-button[_ngcontent-ng-c3885505210]   .content[_ngcontent-ng-c3885505210] {
+  flex: 1;
+}
+.action-button[_ngcontent-ng-c3885505210]   .content[_ngcontent-ng-c3885505210]   .primary-text[_ngcontent-ng-c3885505210] {
+  color: #34a853;
+  font-weight: 500;
+}
+.action-button[_ngcontent-ng-c3885505210]   .content[_ngcontent-ng-c3885505210]   .secondary-text[_ngcontent-ng-c3885505210] {
+  font-size: 0.875rem;
+  color: #666;
+}
+.action-button[_ngcontent-ng-c3885505210]   .arrow[_ngcontent-ng-c3885505210] {
+  color: #999;
+  font-size: 1.25rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210] {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   h3[_ngcontent-ng-c3885505210] {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210] {
+  display: flex;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]:hover {
+  background: #f5f5f5;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-icon[_ngcontent-ng-c3885505210] {
+  width: 2rem;
+  height: 2rem;
+  background: #fff3e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-details[_ngcontent-ng-c3885505210] {
+  flex: 1;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-details[_ngcontent-ng-c3885505210]   .address-header[_ngcontent-ng-c3885505210] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-details[_ngcontent-ng-c3885505210]   .address-header[_ngcontent-ng-c3885505210]   .address-type[_ngcontent-ng-c3885505210] {
+  font-weight: 500;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-details[_ngcontent-ng-c3885505210]   .address-header[_ngcontent-ng-c3885505210]   .address-label[_ngcontent-ng-c3885505210] {
+  color: #00796b;
+  font-size: 0.875rem;
+}
+.saved-addresses[_ngcontent-ng-c3885505210]   .address-list[_ngcontent-ng-c3885505210]   .address-item[_ngcontent-ng-c3885505210]   .address-details[_ngcontent-ng-c3885505210]   .address-text[_ngcontent-ng-c3885505210] {
+  font-size: 0.875rem;
+  color: #666;
+}
+/*# sourceMappingURL=home.component.css.map */</style><script type="text/javascript" charset="UTF-8" src="./MyApp_files/common.js"></script><script type="text/javascript" charset="UTF-8" src="./MyApp_files/util.js"></script></head>
+<body class="vsc-initialized" data-new-gr-c-s-check-loaded="14.1202.0" data-gr-ext-installed=""><!--nghm-->
+  <app-root _nghost-ng-c4184935704="" ng-version="18.2.8" ng-server-context="ssr"><router-outlet _ngcontent-ng-c4184935704=""></router-outlet><app-home _nghost-ng-c3885505210=""><div _ngcontent-ng-c3885505210="" class="container"><div _ngcontent-ng-c3885505210="" class="header"><div _ngcontent-ng-c3885505210="" class="delivery-container"><div _ngcontent-ng-c3885505210="" class="delivery-time"><span _ngcontent-ng-c3885505210="">Delivery in 60 minutes</span></div><div _ngcontent-ng-c3885505210="" style="display: flex;"><div _ngcontent-ng-c3885505210="" class="address-line"><span _ngcontent-ng-c3885505210="">TOWER-F, DEVIN PARADISE ENCLAVE, Nikoo Homes 2 Rd, Devin Paradise Enclave, Bengaluru, Nagareshwara - Nagenahalli, Karnataka 560064, India</span></div><span _ngcontent-ng-c3885505210="" class="dropdown-icon">▼</span></div><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><div _ngcontent-ng-c3885505210="" class="icon-container"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/notification-icon.svg" alt="notification" height="30" class="header-icon"><svg _ngcontent-ng-c3885505210="" width="32" height="31" viewBox="0 0 24 24" fill="none" class="header-icon"><path _ngcontent-ng-c3885505210="" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"></path></svg><img _ngcontent-ng-c3885505210="" src="./MyApp_files/cart-icon.svg" alt="cart" class="header-icon"></div></div><div _ngcontent-ng-c3885505210="" class="content"><div _ngcontent-ng-c3885505210="" class="section"><div _ngcontent-ng-c3885505210="" class="search-container"><svg _ngcontent-ng-c3885505210="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle _ngcontent-ng-c3885505210="" cx="11" cy="11" r="8"></circle><line _ngcontent-ng-c3885505210="" x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><input _ngcontent-ng-c3885505210="" type="text" placeholder="Search for brands and products" class="search-input"><div _ngcontent-ng-c3885505210="" class="filter-icon"><svg _ngcontent-ng-c3885505210="" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line _ngcontent-ng-c3885505210="" x1="4" y1="21" x2="4" y2="14"></line><line _ngcontent-ng-c3885505210="" x1="4" y1="10" x2="4" y2="3"></line><line _ngcontent-ng-c3885505210="" x1="12" y1="21" x2="12" y2="12"></line><line _ngcontent-ng-c3885505210="" x1="12" y1="8" x2="12" y2="3"></line><line _ngcontent-ng-c3885505210="" x1="20" y1="21" x2="20" y2="16"></line><line _ngcontent-ng-c3885505210="" x1="20" y1="12" x2="20" y2="3"></line><line _ngcontent-ng-c3885505210="" x1="1" y1="14" x2="7" y2="14"></line><line _ngcontent-ng-c3885505210="" x1="9" y1="8" x2="15" y2="8"></line><line _ngcontent-ng-c3885505210="" x1="17" y1="16" x2="23" y2="16"></line></svg></div></div><div _ngcontent-ng-c3885505210="" class="grid"><div _ngcontent-ng-c3885505210="" class="category-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/big_sale_logo.svg" alt="Big Sale"><div _ngcontent-ng-c3885505210="" class="category-name">Big Sale</div></div><div _ngcontent-ng-c3885505210="" class="category-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_men_logo.svg" alt="category_men_logo"><div _ngcontent-ng-c3885505210="" class="category-name">Men</div></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={}--><!--ng-container--><div _ngcontent-ng-c3885505210="" class="category-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_women_logo.svg" alt="category_women_logo"><div _ngcontent-ng-c3885505210="" class="category-name">Women</div></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_footwear_logo.jpg" alt="category_footwear_logo"></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--ng-container--><div _ngcontent-ng-c3885505210="" class="category-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_kids_logo.svg" alt="category_kids_logo"><div _ngcontent-ng-c3885505210="" class="category-name">Kids</div></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_sportswear_logo.jpg" alt="category_sportswear_logo"></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_men_essentials_logo.jpg" alt="category_men_essentials_logo"></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/category_women_essentials_logo.jpg" alt="category_women_essentials_logo"></div><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div></div><div _ngcontent-ng-c3885505210="" class="section"><div _ngcontent-ng-c3885505210="" class="new-arrival"><div _ngcontent-ng-c3885505210="" class="new-arrival-image"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/ad.svg" alt="Wishlist"></div></div></div><div _ngcontent-ng-c3885505210="" class="section"><h3 _ngcontent-ng-c3885505210="">Top Brands</h3><div _ngcontent-ng-c3885505210="" class="grid"><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/adidas_logo.jpg" alt="adidas_logo"><p _ngcontent-ng-c3885505210="">Adidas</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/nike_logo.jpg" alt="nike_logo"><p _ngcontent-ng-c3885505210="">Nike</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/puma_logo.jpg" alt="puma_logo"><p _ngcontent-ng-c3885505210="">Puma</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/levis_logo.jpg" alt="levis_logo"><p _ngcontent-ng-c3885505210="">Levis</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/ven_heusen_logo.jpg" alt="ven_heusen_logo"><p _ngcontent-ng-c3885505210="">Van Heusen</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/louis_philippe_logo.jpg" alt="louis_philippe_logo"><p _ngcontent-ng-c3885505210="">Louis Philippe</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/allen_solly_logo.jpg" alt="allen_solly_logo"><p _ngcontent-ng-c3885505210="">Allen Solly</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/westside_logo.jpg" alt="westside_logo"><p _ngcontent-ng-c3885505210="">Westside</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/h&amp;m_logo.jpg" alt="h&amp;m_logo"><p _ngcontent-ng-c3885505210="">H&amp;M</p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="grid-item"><img _ngcontent-ng-c3885505210="" style="height: 50px;" src="./MyApp_files/zara_logo.jpg" alt="zara_logo"><p _ngcontent-ng-c3885505210="">Zara</p></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div></div><div _ngcontent-ng-c3885505210="" class="section"><h3 _ngcontent-ng-c3885505210="">Top Products</h3><div _ngcontent-ng-c3885505210="" class="product-grid"><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/puma_active_shorts.jpg" alt="puma_active_shorts"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Puma <span _ngcontent-ng-c3885505210="" class="short-name">Active Shorts</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹2400.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹3200.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">25.00% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_swoosh_bra.jpg" alt="nike_swoosh_bra"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Swoosh Bra</span></p><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlisted-icon.svg" alt="wishlisted" width="19" height="17" viewbox="0 0 24 24"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹2400.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹3200.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">25.00% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_pro_leggings.jpg" alt="nike_pro_leggings"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Pro Leggings</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹4000.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹5200.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">23.08% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_dri_fit_top.jpg" alt="nike_dri_fit_top"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Dri-FIT Top</span></p><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlisted-icon.svg" alt="wishlisted" width="19" height="17" viewbox="0 0 24 24"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹2800.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹3600.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">22.22% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_structure_23.jpg" alt="nike_structure_23"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Air Zoom Structure</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹8800.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹11200.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">21.43% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_pegasus_38.jpg" alt="nike_pegasus_38"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Air Zoom Pegasus</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹9600.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹12000.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">20.00% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/puma_contender_backpack.jpg" alt="puma_contender_backpack"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Puma <span _ngcontent-ng-c3885505210="" class="short-name">Contender Backpack</span></p><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlisted-icon.svg" alt="wishlisted" width="19" height="17" viewbox="0 0 24 24"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹3200.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹4000.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">20.00% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_air_jordan_1.jpg" alt="nike_air_jordan_1"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Air Jordan 1</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹10400.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹12800.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">18.75% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/puma_suede_classic.jpg" alt="puma_suede_classic"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Puma <span _ngcontent-ng-c3885505210="" class="short-name">Suede Classic</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹5200.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹6400.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">18.75% OFF</span>) </span></p></div><!--ng-container--><div _ngcontent-ng-c3885505210="" class="product-grid-item"><div _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" ngoptimizedimage="" src="./MyApp_files/nike_club_fleece.jpg" alt="nike_club_fleece"></div><div _ngcontent-ng-c3885505210="" class="product-name"><p _ngcontent-ng-c3885505210="">Nike <span _ngcontent-ng-c3885505210="" class="short-name">Club Fleece Sweatshirt</span></p><span _ngcontent-ng-c3885505210=""><img _ngcontent-ng-c3885505210="" src="./MyApp_files/wishlist-icon.svg" alt="wishlist" width="19" height="17"></span><!--bindings={
+  "ng-reflect-ng-if": "true"
+}--><!--bindings={
+  "ng-reflect-ng-if": "false"
+}--></div><p _ngcontent-ng-c3885505210="" class="price-info"><span _ngcontent-ng-c3885505210="" class="selling-price">₹3600.00</span><span _ngcontent-ng-c3885505210="" class="mrp-discount"><span _ngcontent-ng-c3885505210="" class="mrp">₹4400.00</span> (<span _ngcontent-ng-c3885505210="" class="discount-percent">18.18% OFF</span>) </span></p></div><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": "[object Object],[object Object"
+}--></div></div></div><div _ngcontent-ng-c3885505210="" class="footer"><div _ngcontent-ng-c3885505210="" class="footer-icons"><div _ngcontent-ng-c3885505210="" class="icon"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/home-icon.svg" alt="Home" width="29" height="29"></div><div _ngcontent-ng-c3885505210="" class="icon"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/stores-icon.svg" alt="Stores" width="30" height="31"></div><div _ngcontent-ng-c3885505210="" class="icon"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/group-icon.svg" alt="Categories" width="24" height="25"></div><div _ngcontent-ng-c3885505210="" class="icon"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/trends-icon.svg" alt="Trends" width="28" height="21"></div><div _ngcontent-ng-c3885505210="" class="icon"><img _ngcontent-ng-c3885505210="" src="./MyApp_files/profile-icon.svg" alt="Profile" width="28" height="28"></div></div></div></div></app-home><!--container--></app-root>
+<script src="./MyApp_files/polyfills.js" type="module"></script><script src="./MyApp_files/main.js" type="module"></script>
+
+<script id="ng-state" type="application/json">{"__nghData__":[{"t":{"2":"t0","3":"t1"},"c":{"2":[{"i":"t0","r":1}],"3":[]}},{"c":{"0":[{"i":"c1847233876","r":1}]}}]}</script></body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
