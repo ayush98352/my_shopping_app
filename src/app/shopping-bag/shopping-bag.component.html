@@ -102,8 +102,11 @@
 
     <div class="frame">
         <p>{{totalProductsInBag}} Items Selected</p>
-        <button class="place-order">Place Order</button>
+        <button class="place-order" (click)="placeOrder()">Place Order</button>
     </div>
+
+    <!-- Display Payment Error, if any -->
+    <p *ngIf="paymentError" class="error">{{ paymentError }}</p>
 
     <!-- Remove from Wishlist Pop-up -->
     <div *ngIf="showRemovePopup" class="popup-overlay">

@@ -4,6 +4,7 @@ import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Route, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
+import { PaymentService } from '../services/payment.service';
 
 
 // interface Product {
@@ -17,6 +18,8 @@ import { DataShareService } from '../services/data.share.service';
 //   image: string;
 //   deliveryDate: string;
 // }
+
+declare var Razorpay: any;  // Declaring Razorpay to use the Razorpay SDK
 
 @Component({
   selector: 'app-shopping-bag',
@@ -37,8 +40,11 @@ export class ShoppingBagComponent implements OnInit{
   public totalProductsInBag: Number = 0;
   public showRemovePopup = false;
   public selectedProduct: any;
+
+  orderAmount: number = 0; // Example of the total amount to be paid
+  paymentError: string | null = null; // To capture payment error, if any
   
-  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private location: Location) { }
+  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private location: Location, private paymentService: PaymentService) { }
 
   async ngOnInit() { 
     await this.getCartDetails();
@@ -155,6 +161,92 @@ export class ShoppingBagComponent implements OnInit{
     });
 
     this.closePopups();
+  }
+
+  
+  // Handling successful payment
+  handlePaymentSuccess(response: any) {
+    console.log('Payment Success:', response);
+    // You can call a backend API to validate the payment and proceed with the order confirmation
+    alert('Payment successful. Order has been placed.');
+  }
+
+
+
+
+
+  // Function to place an order
+  placeOrder() {
+    // Example: orderAmount is calculated based on the products in the shopping bag
+    this.orderAmount = 1;
+
+    // Step 1: Call createOrder to get order details from backend
+    this.paymentService.createOrder(this.orderAmount).subscribe(
+      (response: any) => {
+        const order = response;
+        console.log('Order details:', order);
+
+        // Step 2: Now pass the order to payment gateway (e.g., Razorpay)
+        this.processPayment(order);
+      },
+      (error) => {
+        console.error('Error creating order:', error);
+        this.paymentError = 'Failed to create payment order';
+      }
+    );
+  }
+  // Function to process payment via the payment gateway
+  processPayment(order: any) {
+    const options = {
+      key: 'rzp_test_O6NVokGEP2mmkE', // Use your payment gateway's key
+      amount: order.amount, // Order amount from backend
+      currency: 'INR',
+      name: 'My-Store',
+      description: 'Test Transaction',
+      order_id: order.id, // Order ID returned from backend
+      handler: (response: any) => {
+        console.log('respne_before', response)
+        // Step 3: On payment success, call verifyPayment
+        this.verifyPayment(response);
+      },
+      prefill: {
+        name: 'Customer Name',
+        email: 'customer@example.com',
+        contact: '8529736991',
+      },
+      method: ['card', 'upi', 'wallet'], // Add UPI here
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    const rzp1 = new (window as any).Razorpay(options); // Razorpay SDK or similar
+    rzp1.open(); // Open the payment window
+
+    // Handling payment failure
+    rzp1.on('payment.failed', (response: any) => {
+      console.error('Payment Failed:', response);
+      this.paymentError = 'Payment failed. Please try again.';
+    });
+  }
+
+
+  // Function to verify payment after processing
+  verifyPayment(paymentData: any) {
+    this.paymentService.verifyPayment(paymentData).subscribe(
+      (response: any) => {
+        console.log('response_verification', response);
+        if (response.status == 'Payment verified successfully!') {
+          alert('Payment successful!');
+        } else {
+          alert('Payment verification failed.');
+        }
+      },
+      (error) => {
+        console.error('Error verifying payment:', error);
+        alert('Payment verification failed. Please contact support.');
+      }
+    );
   }
 
   closePopups() {

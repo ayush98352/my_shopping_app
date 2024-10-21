@@ -45,13 +45,18 @@ export class AppComponent implements OnInit {
 
   data: any;
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object ) {}
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object ) { 
+    this.apiService.fetchCsrfToken(); 
+  }
  
   ngOnInit(): void {
-    this.checkScreenSize()
+    this.checkScreenSize();
+    
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('auth_token');
-      if (token) {
+      const loggedInUserId = localStorage.getItem('loggedInUserId');
+      const phoneNumber = localStorage.getItem('phoneNumber');
+      if (token && loggedInUserId && phoneNumber) {
         this.router.navigate(['/home']);  // Navigate to home if token is present
       } else {
         this.router.navigate(['/login']);  // Otherwise, go to login
@@ -60,6 +65,7 @@ export class AppComponent implements OnInit {
     else{
       this.router.navigate(['/login']);  // Otherwise, go to login
     };
+
 
     // this.apiService.getData().subscribe(
     //   (response) => {
