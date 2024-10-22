@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { DataShareService } from './data.share.service';
 
 @Injectable({
   providedIn: 'root' // Ensure it's provided globally
@@ -12,7 +13,7 @@ export class ApiService implements OnInit {
   
   private csrfToken: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dataShareService: DataShareService) {
     
   }
 
@@ -30,14 +31,17 @@ export class ApiService implements OnInit {
     return this.http.get<{ csrfToken: string }>(apiUrl, { withCredentials: true })
       .subscribe(response => {
         this.csrfToken = response.csrfToken;
-        localStorage.setItem('csrfToken', this.csrfToken);
+        // localStorage.setItem('csrfToken', this.csrfToken);
+        this.dataShareService.setcsrfToken(this.csrfToken);
       });
   }
 
   private getHeaders(): HttpHeaders {
+    let csrf = this.dataShareService.getcsrfToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRF-Token': localStorage.getItem('csrfToken') || this.csrfToken || ''
+      // 'X-CSRF-Token': localStorage.getItem('csrfToken') || this.csrfToken || ''
+      'X-CSRF-Token': csrf || this.csrfToken || ''
     });
   }
 

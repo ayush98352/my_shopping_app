@@ -10,6 +10,7 @@ export class DataShareService {
 
     private data: string | null = null;
     private productDetails = <any>{};
+    private csrfToken = <any>{};
 
     setData(name: string) {
         this.data = name;
@@ -24,5 +25,12 @@ export class DataShareService {
     }
     getProductDetails(): any {
         return this.productDetails;
+    }
+
+    setcsrfToken(csrf:any){
+        this.csrfToken = csrf;
+    }
+    getcsrfToken(): any {
+        return this.csrfToken;
     }
 }
