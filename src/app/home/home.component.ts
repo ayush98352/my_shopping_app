@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   public addressSuggestions: any[] = [];
   public savedAddresses: any= [];
   public location: any = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location') || '{}') : {};
+  public activeTab = 'home';
 
 
 
@@ -299,6 +300,10 @@ export class HomeComponent implements OnInit {
     category.hasError = true;
   }
 
+  changeFooterTab(tab: any){
+    this.activeTab = tab;
+  }
+
   gotoShowCategoryProductsPage(category: any) {
     this.dataShareService.setData(category.category_name);
     // localStorage.setItem('categoryName', category.name);
@@ -342,5 +347,9 @@ export class HomeComponent implements OnInit {
 
   gotoAddAddressPage(){
     return this.router.navigate(['/add-address']);
+  }
+
+  gotoProfilePage(){
+    return this.router.navigate(['/profile']);
   }
 }

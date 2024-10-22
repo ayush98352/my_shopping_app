@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="header">
+        <div class = "header1" >
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2>Profile</h2>
+        </div>
+    </div>
+    <div class="profile-container">
+        <section class="account-section">
+        <h2>Your account</h2>
+        <p class="phone-number">{{ phoneNumber }}</p>
+        </section>
+    
+        <section class="quick-actions">
+        <div class="action-grid">
+            <div class="action-item" *ngFor="let item of navigationItems">
+            <div class="icon-container">
+                <i class="fas fa-{{ item.icon }}"></i>
+            </div>
+            <span>{{ item.label }}</span>
+            </div>
+        </div>
+        </section>
+    
+        <section class="info-section">
+        <h3>YOUR INFORMATION</h3>
+        <div class="menu-items">
+            <div class="menu-item" *ngFor="let item of yourInfoItems">
+            <div class="icon-container">
+                <i class="fas fa-{{ item.icon }}"></i>
+            </div>
+            <span>{{ item.label }}</span>
+            </div>
+        </div>
+        </section>
+    
+        <section class="info-section">
+        <h3>OTHER INFORMATION</h3>
+        <div class="menu-items">
+            <div class="menu-item" *ngFor="let item of otherInfoItems">
+            <div class="icon-container">
+                <i class="fas fa-{{ item.icon }}"></i>
+            </div>
+            <span>{{ item.label }}</span>
+            </div>
+        </div>
+        </section>
+    </div>
+</div>

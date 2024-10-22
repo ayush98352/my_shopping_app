@@ -53,6 +53,9 @@ export const routes: Routes = [
     {   path: 'add-address',
         loadComponent: () => import('./add-address/add-address.component').then(m => m.AddAddressComponent)
     },
+    {   path: 'profile',
+        loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent)
+    },
 
     // {   path: 'category/:id', 
     //     loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent),

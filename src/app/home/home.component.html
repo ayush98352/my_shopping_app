@@ -285,20 +285,20 @@
     </div>
     <div class="footer">
         <div class="footer-icons">
-          <div class="icon">
-            <img src="assets/svg/home-icon.svg" alt="Home" width="29" height="29">
+          <div class="icon" (click)="changeFooterTab('home')">
+            <img [src]="activeTab === 'home' ? 'assets/svg/home-icon-active.svg' : 'assets/svg/home-icon.svg'" alt="Home" width="29" height="29">
           </div>
-          <div class="icon">
-            <img src="assets/svg/stores-icon.svg" alt="Stores" width="30" height="31">
+          <div class="icon" (click)="changeFooterTab('stores')">
+            <img [src]="activeTab === 'stores' ? 'assets/svg/stores-icon-active.svg' : 'assets/svg/stores-icon.svg'" alt="Stores" width="30" height="31">
           </div>
-          <div class="icon">
-            <img src="assets/svg/group-icon.svg" alt="Categories" width="24" height="25">
+          <div class="icon" (click)="changeFooterTab('categories')">
+            <img [src]="activeTab === 'categories' ? 'assets/svg/group-icon-active.svg' : 'assets/svg/group-icon.svg'" alt="Categories" width="24" height="25">
           </div>
-          <div class="icon">
-            <img src="assets/svg/trends-icon.svg" alt="Trends" width="28" height="21">
+          <div class="icon" (click)="changeFooterTab('trends')">
+            <img [src]="activeTab === 'trends' ? 'assets/svg/trends-icon-active.svg' : 'assets/svg/trends-icon.svg'" alt="Trends" width="28" height="21">
           </div>
-          <div class="icon">
-            <img src="assets/svg/profile-icon.svg" alt="Profile" width="28" height="28">
+          <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
+            <img [src]="activeTab === 'profile' ? 'assets/svg/profile-icon-active.svg' : 'assets/svg/profile-icon.svg'" alt="Profile" width="28" height="28">
           </div>
         </div>
     </div>
