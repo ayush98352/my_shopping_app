@@ -5,7 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class PaymentService {
-  private apiLink = 'http://localhost:7399'; // URL of your Node.js API
+  // private apiLink = 'http://localhost:7399'; // URL of your Node.js API
+  private apiLink = 'https://my-shopping-app-node-production.up.railway.app'; // URL of your Node.js API
+
   constructor(private http: HttpClient) {}
 
   private csrfToken: string | null = null;
