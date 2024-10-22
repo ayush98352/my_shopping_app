@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/",
+    "/add-address",
+    "/home",
+    "/login",
+    "/profile",
+    "/search"
+  ]
+}
