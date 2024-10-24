@@ -1,0 +1,18 @@
+ng build 
+
+npx angular-cli-ghpages --dir=dist/my-app
+
+https://ayush98352.github.io/my_shopping_app/
+
+ng build --prod --output-path=dist/my_shopping_app --base-href=/my_shopping_app/
+
+
+npx angular-cli-ghpages --dir=dist/my_shopping_app
+
+https://ayush98352.github.io/my_shopping_app/
+
+
+mysql -h mysql.railway.internal -P 3306 -u root -dgVKNSpayFdFqlPNHCwnokUQaSGZtTdP railway < product_db_backup.sql
+
+
+mysql -h autorack.proxy.rlwy.net -uroot -pFYELiFNucFEDmypKQHLdtpZZhJyUxciX --port 45658 --protocol=TCP railway < product_db_backup.sql
