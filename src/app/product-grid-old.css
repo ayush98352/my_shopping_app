@@ -1,0 +1,100 @@
+
+.product-grid {
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(157px, 1fr));
+    gap: 13px;
+}
+
+/* Grid Items */
+.product-grid-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 12px 14px 12px 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-radius: 10px;
+}
+
+.product-grid-item img {
+    /* width: 100%; */
+    /* height: auto; */
+    /* /* width: 157px; */
+    width: 157px;
+    height: 160px; 
+    /* border-bottom: 1px solid #e0e0e0; */
+    border-radius: 10px;
+    object-fit: contain;
+     /* Ensures the image fills the space while maintaining the aspect ratio */
+    background-color: #ffffff; 
+    /* Optional: add a background color to fill the empty space */
+
+}
+
+.product-name {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+.product-name img{
+    width: 19px;
+    height: 17px;
+    border-radius: 0px;
+}
+
+.product-grid-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    justify-content: space-between; /* Pushes the icon to the right */
+}
+
+.short-name {
+    font-size: 9px;
+    line-height: 12px;    
+    display: block;  /* This will place MRP on a new line */
+    margin-top: -3px;
+    color: #4E5A37;
+}
+
+/* Style for the main container */
+.price-info {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Selling price style */
+  .selling-price {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000; /* Black for selling price */
+  }
+  
+  /* Container for MRP and discount */
+  .mrp-discount {
+    /* display: flex; */
+    align-items: center; /* Keep MRP and discount aligned on the same line */
+    margin-top: -3px;
+  }
+  
+  /* MRP style */
+  .mrp {
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: line-through;
+    margin-right: 5px; /* Spacing between MRP and discount */
+    font-weight: 400;
+  }
+  
+  /* Discount style */
+  .discount-percent {
+    font-size: 12px;
+    color: #ed4a4a;
+    font-weight: 400;
+  }

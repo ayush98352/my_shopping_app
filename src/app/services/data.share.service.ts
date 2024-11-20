@@ -11,6 +11,7 @@ export class DataShareService {
     private data: string | null = null;
     private productDetails = <any>{};
     private csrfToken = <any>{};
+    private filters = <any>{};
 
     setData(name: string) {
         this.data = name;
@@ -32,5 +33,12 @@ export class DataShareService {
     }
     getcsrfToken(): any {
         return this.csrfToken;
+    }
+
+    setFilters(filters: any) {
+        this.filters = filters;
+    }
+    getFilters(): any {
+        return this.filters;
     }
 }

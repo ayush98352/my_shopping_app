@@ -40,8 +40,9 @@
 
     <div class="header">
       <div class="delivery-container" (click)="openAddressPopup()">
-          <div class="delivery-time">
-              <span>Delivery in 60 minutes</span>
+          <div class="company-logo">
+              <span>Zen<span style="color: #e66666">do</span>
+              </span>
           </div>
           <div style="display: flex;">
             <div class="address-line">
@@ -56,21 +57,25 @@
             <div class="modal-content" (click)="$event.stopPropagation()">
               <!-- Header -->
               <div class="modal-header">
-                <h2>Select location</h2>
+                <h2>SELECT LOCATION</h2>
                 <button class="close-button" (click)="closeAddressPopup(); $event.stopPropagation()">✕</button>
               </div>
 
               <!-- Search -->
               <div class="search-container-address">
                 <div class="search-box">
-                  <i class="search-icon">🔍</i>
+                  <i class="search-icon">
+                    <img src="assets/svg/search-icon.svg" alt="search-location">
+                  </i>
                   <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
                 </div>
               </div>
               <div *ngIf="searchedText.length <= 2">
                 <!-- Current Location -->
                 <div class="action-button">
-                  <div class="icon location-icon">📍</div>
+                  <div class="icon location-icon">
+                    <img src="assets/svg/location-icon.svg" alt="Go to current location">
+                  </div>
                   <div class="content" (click)="setUserLocation(); closeAddressPopup(); $event.stopPropagation()">
                     <div class="primary-text">Use your current location</div>
                     <!-- <div class="secondary-text">{{displayAddress}}</div> -->
@@ -80,7 +85,9 @@
 
                 <!-- Add New Address -->
                 <div class="action-button" (click)="gotoAddAddressPage()">
-                  <div class="icon add-icon">+</div>
+                  <div class="icon add-icon">
+                    <img src="assets/svg/plus-red-icon.svg" alt="Add new address">
+                  </div>
                   <div class="content">
                     <div class="primary-text">Add new address</div>
                   </div>
@@ -92,7 +99,11 @@
                   <h3>Your saved addresses</h3>
                   <div class="address-list">
                     <div class="address-item" *ngFor="let address of savedAddresses" (click)="setSavedAddress(address); closeAddressPopup(); $event.stopPropagation()">
-                      <div class="address-icon">🏠</div>
+                      <div class="address-icon">
+                        <img src="assets/svg/home-address-icon.svg" alt="Address Icon" *ngIf="address.address_type === 'Home'">
+                        <img src="assets/svg/office-icon.svg" alt="Address Icon" *ngIf="address.address_type === 'Work'">
+                        <img src="assets/svg/friends-icon.svg" alt="Address Icon" *ngIf="address.address_type !== 'Work' && address.address_type !== 'Home'">
+                      </div>
                       <div class="address-details">
                         <div class="address-header">
                           <span class="address-type">{{address.address_type}}</span>
@@ -179,7 +190,7 @@
                   alt="Big Sale"
                 />
                 <div class="category-name">Big Sale</div>
-            </div>
+              </div>
               <ng-container *ngFor="let category of categories">
                 <!-- <div class="grid-item" (click)="gotoShowCategoryProductsPage(category)">
                   <img
@@ -236,11 +247,12 @@
             <div class="grid">
                 <ng-container *ngFor="let brand of brands">
                   <div class="grid-item" (click) = "gotoShowBrandProductsPage(brand)">
-                    <img style="height: 50px"
+                    <img
                       [src]="'assets/img/' + brand.brand_logo + '.jpg'"
                       [alt]="brand.brand_logo"
                     />
-                    <p>{{brand.brand_name}}</p>
+                    <!-- <p>{{brand.brand_name}}</p> -->
+                    <div class="category-name">{{brand.brand_name}}</div>
                   </div>
                 </ng-container>
             </div>
@@ -254,11 +266,11 @@
               <ng-container *ngFor="let recommendedProduct of recommendedProducts">
                 <div class="product-grid-item" (click) = "gotoShowProductPage(recommendedProduct)">
                   <div>
-                    <img 
-                      ngOptimizedImage
-                      [src]="'assets/img/products/' + recommendedProduct?.main_image + '.jpg'"
-                      [alt]="recommendedProduct?.main_image"
-                    />
+                    <img *ngIf="recommendedProduct?.images"
+                        ngOptimizedImage
+                        [src]="recommendedProduct?.images.split('|')[0]"
+                        [alt]="recommendedProduct?.images.split('|')[0]"
+                      />
                   </div>
                   <div class = "product-name">
                     <p>{{recommendedProduct?.brand_name}}
@@ -291,8 +303,8 @@
           <div class="icon" (click)="changeFooterTab('stores')">
             <img [src]="activeTab === 'stores' ? 'assets/svg/stores-icon-active.svg' : 'assets/svg/stores-icon.svg'" alt="Stores" width="30" height="31">
           </div>
-          <div class="icon" (click)="changeFooterTab('categories')">
-            <img [src]="activeTab === 'categories' ? 'assets/svg/group-icon-active.svg' : 'assets/svg/group-icon.svg'" alt="Categories" width="24" height="25">
+          <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()">
+            <img [src]="activeTab === 'explore' ? 'assets/svg/group-icon-active.svg' : 'assets/svg/group-icon.svg'" alt="Explore" width="24" height="25">
           </div>
           <div class="icon" (click)="changeFooterTab('trends')">
             <img [src]="activeTab === 'trends' ? 'assets/svg/trends-icon-active.svg' : 'assets/svg/trends-icon.svg'" alt="Trends" width="28" height="21">

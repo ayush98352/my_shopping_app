@@ -25,7 +25,14 @@
 
     <div class="product-list">
       <div *ngFor="let product of products" class="product-item">
-        <img [src]="'assets/img/products/' + product?.main_image + '.jpg'" [alt]="product?.main_image" class="product-image" (click)="gotoShowProductPage(product)">
+
+        <img *ngIf="product?.images"
+          ngOptimizedImage
+          [src]="product?.images.split('|')[0]"
+          [alt]="product?.images.split('|')[0]"
+          class="product-image"
+          (click)="gotoShowProductPage(product)"
+        />
         <div class="product-details">
           <div style="justify-content: space-between; display: flex;">
           <div (click)="gotoShowProductPage(product)">
@@ -102,7 +109,7 @@
 
     <div class="frame">
         <p>{{totalProductsInBag}} Items Selected</p>
-        <button class="place-order" (click)="placeOrder()">Place Order</button>
+        <button *ngIf="totalProductsInBag != 0"class="place-order" (click)="placeOrder()">Place Order</button>
     </div>
 
     <!-- Display Payment Error, if any -->
@@ -120,7 +127,14 @@
           </div>
           <p>Are you sure you want to remove this product from your Bag?</p>
           <div class="product-item">
-              <img [src]="'assets/img/products/' + selectedProduct?.main_image + '.jpg'" [alt]="selectedProduct?.main_image" class="product-image">
+
+              <img *ngIf="selectedProduct?.images"
+                ngOptimizedImage
+                [src]="selectedProduct?.images.split('|')[0]"
+                [alt]="selectedProduct?.images.split('|')[0]"
+                class="product-image"
+              />
+
               <div class="product-details">
                   <h2>{{ selectedProduct?.brand_name }}</h2>
                   <p>{{ selectedProduct?.product_short_name }}</p>

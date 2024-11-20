@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="header">
+        <div class = "header1" >
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2>My Addresses</h2>
+        </div>
+    </div>
+
+    <div class="section">
+        <!-- Add New Address -->
+        <div class="action-button" (click)="gotoAddAddressPage()">
+            <div class="icon add-icon">+</div>
+            <div class="content">
+            <div class="primary-text">Add new address</div>
+            </div>
+            <div class="arrow">›</div>
+        </div>
+
+        <!-- Saved Addresses -->
+        <div class="saved-addresses">
+            <h3>Your saved addresses</h3>
+            <div class="address-list">
+            <div class="address-item" *ngFor="let address of savedAddresses">
+                <div class="address-icon">🏠</div>
+                <div class="address-details">
+                <div class="address-header">
+                    <span class="address-type">{{address.address_type}}</span>
+                    <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                    <!--  label: '18.38 km away', -->
+                </div>
+                <div class="address-text">{{address.house_no + (address.floor_no ? ', ' + address.floor_no : '') + (address.tower_block ? ', ' + address.tower_block : '') + (address.landmark ? ', ' + address.landmark : '') + ', ' + address.full_address}}</div>
+                </div>
+            </div>
+            </div>
+        </div>
+          
+    </div>
+</div>

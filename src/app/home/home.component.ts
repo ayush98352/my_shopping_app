@@ -213,7 +213,6 @@ export class HomeComponent implements OnInit {
     this.apiService.getDataWithParams('/home/getSavedAddress', apiParams).subscribe(
       (response) => {
         this.savedAddresses = JSON.parse(JSON.stringify(response.result));
-        console.log('savedAddress', this.savedAddresses)
         localStorage.setItem('addresses', JSON.stringify(this.savedAddresses));
       },
       (error) => {
@@ -251,6 +250,11 @@ export class HomeComponent implements OnInit {
       user_id: this.loggedInUserId,
       product_id: product.product_id
     }
+    if(!this.loggedInUserId){
+      this.router.navigate(['/login']);
+      return;
+    }
+
     await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
@@ -322,11 +326,11 @@ export class HomeComponent implements OnInit {
   }
 
   goToWishlistPage(){
-    return this.router.navigate(['/wishlist', this.loggedInUserId] );
+    return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
-    return this.router.navigate(['/cart', this.loggedInUserId ]);
+    return this.router.navigate(['/cart']);
   }
 
   goToSearchPage(){
@@ -351,5 +355,9 @@ export class HomeComponent implements OnInit {
 
   gotoProfilePage(){
     return this.router.navigate(['/profile']);
+  }
+
+  gotoExplorePage(){
+    return this.router.navigate(['/explore']);
   }
 }

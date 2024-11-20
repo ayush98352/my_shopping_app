@@ -129,7 +129,7 @@ export class WishlistComponent implements OnInit {
   }
  
   goToBagPage(){
-    return this.router.navigate(['/cart', this.loggedInUserId ]);
+    return this.router.navigate(['/cart']);
   }
 
   goBackToPreviousPage() {

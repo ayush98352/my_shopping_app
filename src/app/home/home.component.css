@@ -10,7 +10,8 @@ body {
     /* max-width: 375px; */
     /* position: absolute; */
     
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 1200px;
     margin: 0px auto;
     box-sizing: border-box; /* Ensure padding is included in width calculations */
     overflow: hidden; /* Prevent content from overflowing */
@@ -64,13 +65,7 @@ body {
     overflow-y: auto;
 }
 .section {
-    /* background-color: #fff; */
-    /* padding: 15px;
-    margin-bottom: 15px; */
-    /* border-radius: 10px; */
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    /* padding: 1rem; */
-    padding: 14px 14px 0px 0px;
+    padding: 14px 0px 0px 0px;
 }
 .section h3 {
     margin-top: 0;
@@ -135,104 +130,6 @@ body {
 }
 
 
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 13px;
-}
-
-/* Grid Items */
-.product-grid-item {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    /* padding: 10px; */
-    padding: 12px 14px 12px 14px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-    border-radius: 10px;
-}
-
-.product-grid-item img {
-    width: 100%;
-    /* height: auto; */
-    /* /* width: 157px; */
-    height: 160px; 
-    /* border-bottom: 1px solid #e0e0e0; */
-    border-radius: 10px;
-    object-fit: contain;
-     /* Ensures the image fills the space while maintaining the aspect ratio */
-    background-color: #ffffff; 
-    /* Optional: add a background color to fill the empty space */
-
-}
-
-.product-name {
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-}
-.product-name img{
-    width: 19px;
-    height: 17px;
-    border-radius: 0px;
-}
-
-.product-grid-item p {
-    margin: 5px 0;
-    font-size: 14px;
-    line-height: 21px;
-    font-family: 'Poppins';
-    font-weight: 500;
-    justify-content: space-between; /* Pushes the icon to the right */
-}
-
-.short-name {
-    font-size: 9px;
-    line-height: 12px;    
-    display: block;  /* This will place MRP on a new line */
-    margin-top: -3px;
-    color: #4E5A37;
-}
-
-/* Style for the main container */
-.price-info {
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Selling price style */
-  .selling-price {
-    font-size: 14px;
-    font-weight: 500;
-    color: #000; /* Black for selling price */
-  }
-  
-  /* Container for MRP and discount */
-  .mrp-discount {
-    /* display: flex; */
-    align-items: center; /* Keep MRP and discount aligned on the same line */
-    margin-top: -3px;
-  }
-  
-  /* MRP style */
-  .mrp {
-    font-size: 12px;
-    color: #aaa;
-    text-decoration: line-through;
-    margin-right: 5px; /* Spacing between MRP and discount */
-    font-weight: 400;
-  }
-  
-  /* Discount style */
-  .discount-percent {
-    font-size: 12px;
-    color: #ed4a4a;
-    font-weight: 400;
-  }
 
 
   .new-arrival {
@@ -370,7 +267,7 @@ body {
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 1200px;
     margin: 20px auto;
   }
   
@@ -397,10 +294,13 @@ body {
     max-width: calc(100% - 150px);
 }
 
-.delivery-time {
-    font-weight: bold;
-    font-size: 16px;
+.company-logo {
     color: #000;
+    font-family: Aclonica;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 22.67px;
+    text-align: left;
 }
 
 .address-line {
@@ -445,10 +345,12 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   
-    .delivery-time {
+    .company-logo {
       color: #666;
       font-size: 0.875rem;
       margin-bottom: 0.25rem;
+      font-family: Aclonica;
+      font-size: 20px;
     }
   
     .address-selector {
@@ -476,12 +378,16 @@ body {
   }
   
   .modal-content {
-    background: white;
+    background: white; 
     border-radius: 20px 20px 0 0;
     height: 85vh;
     overflow-y: auto;
     position: relative;
     animation: slideUp 0.3s ease-out;
+    animation: _ngcontent-ng-c811307737_slideUp 0.3s ease-out;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
   }
   
   @keyframes slideUp {
@@ -495,14 +401,15 @@ body {
   
   .modal-header {
     padding: 1rem;
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
     display: flex;
     justify-content: space-between;
     align-items: center;
   
     h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: 21px;
+      font-weight: 400;
+      font-family: 'Times New Roman', Times, serif;
     }
   
     .close-button {
@@ -521,6 +428,7 @@ body {
   
   .search-container-address {
     padding: 1rem;
+    margin-bottom: 15px;
   
     .search-box {
       position: relative;
@@ -528,13 +436,19 @@ body {
       input {
         /* width: 100%; */
         padding: 0.75rem 1rem 0.75rem 2.5rem;
-        border: 1px solid #ddd;
+        border: 1px solid rgba(167, 167, 167, 0.46);
         border-radius: 8px;
         font-size: 0.875rem;
         width: -webkit-fill-available;
         
+
         &::placeholder {
-          color: #999;
+          color: #808080;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 18px;
         }
       }
   
@@ -543,7 +457,7 @@ body {
         left: 0.75rem;
         top: 50%;
         transform: translateY(-50%);
-        color: #999;
+        color: #808080;
       }
     }
   }
@@ -551,26 +465,39 @@ body {
   .action-button {
     display: flex;
     align-items: center;
-    padding: 1rem;
+    /* padding: 1rem; */
     cursor: pointer;
     margin: 0 1rem;
     border-radius: 8px;
+    flex-direction: row;
+    border: 1px solid rgba(251, 129, 140, 0.46);
+    margin-bottom: 10px;
+    padding: 0px 15px;
+    height: 40px;
+    font-size: 14px;
+    font-family: Poppins;
   
     &:hover {
       background: #f5f5f5;
     }
   
     .icon {
-      width: 2rem;
-      height: 2rem;
+      /* width: 2rem;
+      height: 2rem; */
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 8px;
       margin-right: 1rem;
+
+      /* position: absolute; */
+      width: 29px;
+      height: 29px;
+      left: 0px;
+      top: 0px;
     }
   
-    .location-icon {
+    /* .location-icon {
       background: #e6f4ea;
       color: #34a853;
     }
@@ -578,13 +505,14 @@ body {
     .add-icon {
       background: #e6f4ea;
       color: #34a853;
-    }
+    } */
   
     .content {
       flex: 1;
   
       .primary-text {
-        color: #34a853;
+        /* color: #34a853; */
+        color: #FB818C;
         font-weight: 500;
       }
   
@@ -595,29 +523,35 @@ body {
     }
   
     .arrow {
-      color: #999;
+      color: #FB818C;
       font-size: 1.25rem;
     }
   }
   
   .saved-addresses {
     padding: 1rem;
-    border-top: 1px solid #eee;
-    margin-top: 1rem;
+    /* border-top: 1px solid #eee; */  
+    /* used to fgive a line */
+    /* margin-top: 1rem; */
+    font-family: 'Poppins';
   
     h3 {
-      color: #666;
+      color: #808080;
       margin-bottom: 1rem;
-      font-size: 0.875rem;
+      font-size: 14px;
+
     }
   
     .address-list {
+      
       .address-item {
         display: flex;
-        padding: 1rem;
+        /* padding: 1rem; */
         border-radius: 8px;
         margin-bottom: 0.5rem;
         cursor: pointer;
+        padding-top: 10px;
+        padding-bottom: 7px;
   
         &:hover {
           background: #f5f5f5;
@@ -626,7 +560,7 @@ body {
         .address-icon {
           width: 2rem;
           height: 2rem;
-          background: #fff3e0;
+          /* background: #fff3e0; */
           border-radius: 8px;
           display: flex;
           align-items: center;
@@ -644,7 +578,7 @@ body {
             margin-bottom: 0.25rem;
   
             .address-type {
-              font-weight: 500;
+              font-weight: 600;
             }
   
             .address-label {
@@ -661,3 +595,168 @@ body {
       }
     }
   }
+
+
+
+
+
+  /* Container Styles
+.section {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+} */
+
+/* Grid Layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  width: 100%;
+  /* padding: 8px; */
+}
+
+/* Product Card */
+.product-grid-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  /* padding: 10px; */
+  padding: 12px 14px 12px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.product-grid-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image */
+.product-grid-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+/* Product Name Section */
+.product-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 8px 0;
+  gap: 8px;
+}
+
+.product-name p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+  flex: 1;
+}
+
+.product-name img {
+  width: 19px;
+  height: 17px;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+/* Product Short Name */
+.short-name {
+  font-size: 9px;
+  line-height: 1.3;
+  color: #4E5A37;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Price Information */
+.price-info {
+  margin-top: auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.selling-price {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mrp-discount {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.mrp {
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+.discount-percent {
+  color: #ed4a4a;
+}
+
+/* Responsive Breakpoints */
+
+@media screen and (max-width: 2000px) {
+  .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(157px, 1fr));
+      gap: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+  }
+  
+  .product-grid-item {
+      padding: 8px;
+  }
+  
+  .product-name p {
+      font-size: 12px;
+  }
+  
+  .selling-price {
+      font-size: 13px;
+  }
+  
+  .mrp-discount {
+      font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .product-grid {
+      grid-template-columns: 1fr;
+  }
+  
+}
+

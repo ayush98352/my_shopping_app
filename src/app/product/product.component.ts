@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit{
   public inCart: boolean = false;
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public selectedSize = '';
+  public inCartSize = '';
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
@@ -37,7 +38,10 @@ export class ProductComponent implements OnInit{
     
     await this.getProductDetails(this.productId);
     this.currentImage = this.productDetails?.main_image;
-    // Create a new array with the combination of main_image and additional_images
+    if(this.productDetails?.images){
+      this.currentImage = this.productDetails?.images.split('|')[0];
+    }
+     // Create a new array with the combination of main_image and additional_images
     // this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
     // await this.getScrollImages();
   
@@ -81,10 +85,18 @@ export class ProductComponent implements OnInit{
       (response) => {
         this.productDetails = response.result[0];
         this.dataShareService.setProductDetails(this.productDetails);
-
-        this.currentImage = this.productDetails?.main_image;
+        if(this.productDetails?.images){
+          this.currentImage = this.productDetails?.images.split('|')[0]
+          this.imagesArray = this.productDetails?.images.split('|').map((img: string) => img.trim()).filter(Boolean)  
+        }else{
+          this.currentImage = this.productDetails?.main_image;
+          this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
+        }
+        
+        
+        // this.currentImage = this.productDetails?.main_image;
         // Create a new array with the combination of main_image and additional_images
-        this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
+        // this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
         this.getScrollImages();
       },
       (error) => {
@@ -132,13 +144,22 @@ export class ProductComponent implements OnInit{
       user_id: this.loggedInUserId,
       product_id: this.productId
     }
+    if(!this.loggedInUserId){
+      this.router.navigate(['/login']);
+      return;
+    }
     await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = true;
         }else{
           this.inWishlist = false;
-          alert('Unable to add to wishlist');
+          if(!this.loggedInUserId){
+            this.router.navigate(['/login']);
+          }
+          else{
+            alert('Unable to add to wishlist');
+          }
         }
     });
   }
@@ -169,12 +190,23 @@ export class ProductComponent implements OnInit{
 
   async setSelectedSize(size: any){
     this.selectedSize = size;
+    if(this.inCartSize == size){
+      this.inCart = true;
+    }
+    else{
+      this.inCart = false;
+    }
   }
   async addToCart(){
+    if(!this.loggedInUserId){
+      this.router.navigate(['/login']);
+      return;
+    }
     if(!this.selectedSize || this.selectedSize == ''){
       alert('Please select size');
       return;
     }
+    
     else{
       let apiParams = {
         user_id: this.loggedInUserId,
@@ -185,13 +217,14 @@ export class ProductComponent implements OnInit{
         .subscribe((response: any) => {
           if(response.code == 200 && response.message == 'sucess'){
             this.inCart = true;
+            this.inCartSize = this.selectedSize;
           }
         })
     }
   }
 
   goToWishlistPage(){
-    return this.router.navigate(['/wishlist', this.loggedInUserId] );
+    return this.router.navigate(['/wishlist']);
   }
 
   goBackToPreviousPage() {
@@ -199,7 +232,7 @@ export class ProductComponent implements OnInit{
   }
   
   goToBagPage(){
-    return this.router.navigate(['/cart', this.loggedInUserId ]);
+    return this.router.navigate(['/cart']);
   }
 
 }

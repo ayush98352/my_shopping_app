@@ -10,7 +10,7 @@
   /* margin: 0 auto; */
   /* position: absolute; */
   
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0px auto;
 
 }
@@ -175,6 +175,26 @@
 .add-to-cart-button {
   background-color: #242424;
   color: #FFFFFF;
+  transition: transform 0.2s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+  background-color: #3a3a3a;
+  transform: scale(1.02);
+}
+
+.add-to-cart-button:active {
+  transform: scale(0.98);
+  animation: vibrate 0.15s linear;
+}
+
+@keyframes vibrate {
+  0% { transform: translate(0); }
+  25% { transform: translate(-2px); }
+  50% { transform: translate(2px); }
+  75% { transform: translate(-2px); }
+  100% { transform: translate(0); }
 }
 
 /* Carousel Navigation */

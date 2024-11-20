@@ -29,6 +29,9 @@ export const routes: Routes = [
     // {   path: 'category',
     //     loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent)
     // },
+    {   path: 'category',
+        loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent)
+    },
     {   path: 'category/:category_id',
         loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent)
     },
@@ -38,13 +41,13 @@ export const routes: Routes = [
     {   path: 'product/:product_id',
         loadComponent: () => import('./product/product.component').then(m => m.ProductComponent)
     },
-    {   path: 'wishlist/:user_id',
+    {   path: 'wishlist',
         loadComponent: () => import('./wishlist/wishlist.component').then(m => m.WishlistComponent) 
     },
     // {   path: 'cart/:user_id',
     //     loadComponent: () => import('./bag/bag.component').then(m => m.BagComponent)
     // },
-    {   path: 'cart/:user_id',
+    {   path: 'cart',
         loadComponent: () => import('./shopping-bag/shopping-bag.component').then(m => m.ShoppingBagComponent)
     }, 
     {   path: 'search',
@@ -55,6 +58,12 @@ export const routes: Routes = [
     },
     {   path: 'profile',
         loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent)
+    }, 
+    {   path: 'address-book',
+        loadComponent: () => import('./address-book/address-book.component').then(m => m.AddressBookComponent)
+    }, 
+    {   path: 'explore',
+        loadComponent: () => import('./explore/explore.component').then(m => m.ExploreComponent)
     },
 
     // {   path: 'category/:id', 

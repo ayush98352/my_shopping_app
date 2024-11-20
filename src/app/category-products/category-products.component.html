@@ -24,10 +24,16 @@
                 <ng-container *ngFor="let product of products">
                   <div class="product-grid-item" (click) = "gotoShowProductPage(product)">
                     <div>
-                      <img 
+                      <img *ngIf="product?.main_image"
                         ngOptimizedImage
                         [src]="'assets/img/products/' + product?.main_image + '.jpg'"
                         [alt]="product?.main_image"
+                      />
+
+                      <img *ngIf="product?.images"
+                        ngOptimizedImage
+                        [src]="product?.images.split('|')[0]"
+                        [alt]="product?.images.split('|')[0]"
                       />
                     </div>
                     <div class = "product-name">

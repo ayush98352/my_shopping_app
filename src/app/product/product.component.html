@@ -23,7 +23,8 @@
     <!-- <img class="product-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)"> -->
     <div class="content">
         <div class="product-images">
-            <img class="product-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)">
+            <img class="product-image" *ngIf="productDetails?.images !== null" [src]="currentImage" [alt]="currentImage" (error)="onImageError($event)">
+            <img class="product-image" *ngIf="productDetails?.images === null" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)">
             <button class="carousel-prev">‹</button>
             <button class="carousel-next">›</button>
         </div>
@@ -87,7 +88,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF3F6C"><path d="M16.23 3c-1.62-.01-3.15.69-4.23 1.92A5.513 5.513 0 0 0 7.79 3C4.6 3 2 5.76 2 9.16c0 4.92 6.71 9.83 9.59 11.71.12.09.27.13.41.13.14 0 .29-.04.41-.12C15.29 18.99 22 14.08 22 9.16 22 5.76 19.4 3 16.23 3Z" fill="#FF3F6C"></path></svg>
             </button> -->
             <button class="action-button buy-now-button">Buy Now</button>
-            <button class="action-button add-to-cart-button" (click) = "addToCart()">Add to cart</button>
+            <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
         </div>
     </div>
 </div>  

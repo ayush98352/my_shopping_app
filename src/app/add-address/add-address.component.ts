@@ -109,9 +109,7 @@ export class AddAddressComponent implements OnInit {
     geocoder.geocode({ location: position }, (results: google.maps.GeocoderResult[] | null, status: google.maps.GeocoderStatus) => {
       if (status === google.maps.GeocoderStatus.OK) {
         if (results && results.length > 0) {
-          console.log('result', results[0])
           this.selectedAddress = results[0].formatted_address;
-          console.log('Address:', this.selectedAddress);
           // You can display the address below the map
           this.cdr.detectChanges();
         }
@@ -170,9 +168,6 @@ export class AddAddressComponent implements OnInit {
         (response) => {
           this.searchedText = '';
           let locationDetails = JSON.parse(JSON.stringify(response));
-          console.log('locationDetails', locationDetails)
-          console.log('locationDetails.coordinate.lat', locationDetails.coordinate.lat)
-          console.log('locationDetails.coordinate.lon', locationDetails.coordinate.lon)
           this.selectedAddress = locationDetails.display_address.address_line;
           this.currentPosition = {
             lat: parseFloat(locationDetails.coordinate.lat),

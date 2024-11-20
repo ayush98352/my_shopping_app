@@ -1,0 +1,95 @@
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h2>EXPLORE ALL</h2>
+        </div>
+        
+        <div class="icon-container">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goToWishlistPage()">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+            </svg>
+            <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click)="goToBagPage()">
+        </div>
+  </div>
+  
+
+    <div class="content">
+      <!-- categories -->
+        <div class="section">
+            <div class="search-container"  (click) = "goToSearchPage()">
+                <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
+                <input type="text" class="search-input" placeholder="Search for jeans">
+                <div class="filter-icon">
+                    <img src="assets/svg/filter-icon.svg" alt="filter" class="header-icon">
+                </div>
+            </div>
+
+            <div class="main-categories">
+                <div *ngFor="let category of mainCategories" style="margin: auto;">
+                    <div (click)="changeFashionTab(category.label);">
+                        <!-- <img [src]="'assets/svg/' + category.image + '.svg'" [alt]="category.title"> -->
+                        <img [src]="activeFashionTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-container">
+               
+                <!-- Dashboard Content -->
+                <div class="content-container">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <div *ngFor="let category of sidebarCategories[activeFashionTab]">
+                            <div class="sidebar-item" [class.active]="activeSidebarCategories === category" (click)="changeSidebarTab(category);">
+                                <div>
+                                    {{ category }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <!-- Dresses Banner -->
+                        <div class="banner">
+                        <h2>{{activeSidebarCategories}}</h2>
+                        <img src="assets/svg/dresses-banner.svg" alt="Dresses Collection">
+                        </div>
+                
+                        <!-- Dress Categories Grid -->
+                        <div class="dress-grid">
+                        <!-- <div class="dress-card" *ngFor="let dress of dressCategories[activeSidebarCategories]"> -->
+                        <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
+                            <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
+                                <!-- <img [src]="dress.image" [alt]="dress.title"> -->
+                                <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title">
+                            </div>
+                            <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-icons">
+          <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
+            <img [src]="activeTab === 'home' ? 'assets/svg/home-icon-active.svg' : 'assets/svg/home-icon.svg'" alt="Home" width="29" height="29">
+          </div>
+          <div class="icon" (click)="changeFooterTab('stores')">
+            <img [src]="activeTab === 'stores' ? 'assets/svg/stores-icon-active.svg' : 'assets/svg/stores-icon.svg'" alt="Stores" width="30" height="31">
+          </div>
+          <div class="icon" (click)="changeFooterTab('explore')">
+            <img [src]="activeTab === 'explore' ? 'assets/svg/group-icon-active.svg' : 'assets/svg/group-icon.svg'" alt="Explore" width="24" height="25">
+          </div>
+          <div class="icon" (click)="changeFooterTab('trends')">
+            <img [src]="activeTab === 'trends' ? 'assets/svg/trends-icon-active.svg' : 'assets/svg/trends-icon.svg'" alt="Trends" width="28" height="21">
+          </div>
+          <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
+            <img [src]="activeTab === 'profile' ? 'assets/svg/profile-icon-active.svg' : 'assets/svg/profile-icon.svg'" alt="Profile" width="28" height="28">
+          </div>
+        </div>
+    </div>
+</div>

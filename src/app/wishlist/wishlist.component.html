@@ -29,55 +29,16 @@
     </div>
 
 
-    <!-- <div class="content">
-        <div class="section">
-            <div class="grid">
-              <ng-container *ngFor="let product of wishlistedProducts">
-                
-                 
-                <div class="grid-item" (click) = "gotoShowProductPage(product)">
-                    <div class="remove-button" (click)="removeFromWishlist(product, $event)">
-                        <svg width="16" height="16" viewBox="0 0 24 24">
-                            <g fill="none" fill-rule="evenodd">
-                                <path d="M0 0h24v24H0z" opacity="0.05"></path>
-                                <path fill="#282C3F"
-                                    d="M12.967 12L19.3 5.666a.685.685 0 000-.967.686.686 0 00-.967 0L12 11.033 5.666 4.7a.686.686 0 00-.967 0 .685.685 0 000 .967L11.033 12 4.7 18.334a.685.685 0 000 .967.686.686 0 00.967 0L12 12.967l6.334 6.334a.686.686 0 00.967 0 .685.685 0 000-.967L12.967 12z">
-                                </path>
-                            </g>
-                        </svg>
-                    </div>
-                    <img
-                      [src]="'assets/img/products/' + product.main_image + '.jpg'"
-                      [alt]="product.main_image"
-                    />
-                    <p>{{product.product_name}}</p>
-                    <p>
-                        {{product.selling_price}}
-                      <span class="mrp">{{product.mrp}}</span>
-                      (<span class="discount-percent">{{product.discount_percent}}% OFF</span>)
-                    </p>
-                    <div class="action-button" >
-                        <div class="action-text">MOVE TO BAG</div>
-                    </div>
-                </div>
-                
-              </ng-container>
-            </div>
-        </div>
-        
-    </div> -->
-    
-
     <div class="content">
         <div class="section">
             <div class="product-grid">
                 <ng-container *ngFor="let product of wishlistedProducts">
                   <div class="product-grid-item" (click) = "gotoShowProductPage(product)">
                     <div>
-                      <img 
+                      <img *ngIf="product?.images"
                         ngOptimizedImage
-                        [src]="'assets/img/products/' + product?.main_image + '.jpg'"
-                        [alt]="product?.main_image"
+                        [src]="product?.images.split('|')[0]"
+                        [alt]="product?.images.split('|')[0]"
                       />
                     </div>
                     <div class = "product-name">

@@ -25,27 +25,32 @@
         </section>
     
         <section class="info-section">
-        <h3>YOUR INFORMATION</h3>
-        <div class="menu-items">
-            <div class="menu-item" *ngFor="let item of yourInfoItems">
-            <div class="icon-container">
-                <i class="fas fa-{{ item.icon }}"></i>
+            <h3>YOUR INFORMATION</h3>
+            <div class="menu-items">
+                <div *ngFor="let item of yourInfoItems" >
+                    <div class="menu-item" (click)="item.clicked === 'gotoYourOrdersPage' ? gotoYourOrdersPage() : item.clicked === 'gotoAddressBookPage' ? gotoAddressBookPage() : item.clicked === 'gotoCollectedCouponsPage' ? gotoCollectedCouponsPage() : item.clicked === 'gotoBookmarkedRecipesPage' ? gotoBookmarkedRecipesPage() : null" >
+                        <div class="icon-container">
+                            <i class="fas fa-{{ item.icon }}"></i>
+                        </div>
+                        <span>{{ item.label }}</span>
+                    </div>
+                </div>
             </div>
-            <span>{{ item.label }}</span>
-            </div>
-        </div>
         </section>
     
         <section class="info-section">
-        <h3>OTHER INFORMATION</h3>
-        <div class="menu-items">
-            <div class="menu-item" *ngFor="let item of otherInfoItems">
-            <div class="icon-container">
-                <i class="fas fa-{{ item.icon }}"></i>
+            <h3>OTHER INFORMATION</h3>
+            <div class="menu-items">
+                <div *ngFor="let item of otherInfoItems">
+                    <div class="menu-item" (click)="item.clicked === 'shareAppLink' ? shareAppLink() : item.clicked === 'gotoAboutUsPage' ? gotoAboutUsPage() : item.clicked === 'gotoAccPrivacyPage' ? gotoAccPrivacyPage() : item.clicked === 'logout' ? logout() : null" >
+                        <div class="icon-container">
+                            <i class="fas fa-{{ item.icon }}"></i>
+                        </div>
+                        <span>{{ item.label }}</span>
+                    </div>
+                </div>
             </div>
-            <span>{{ item.label }}</span>
-            </div>
-        </div>
         </section>
     </div>
+
 </div>

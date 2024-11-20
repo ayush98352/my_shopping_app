@@ -18,9 +18,14 @@ export class CategoryProductsComponent implements OnInit{
   public categoryId:any;
   public brandId:any;
   public displayName: any;
-  public category=<any>{};
+  // public category=<any>{};
   public products: any = [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
+  public category: any;
+  public sub_catgeory: any;
+  public gender: any;
+  public searchedText: any;
+  public searchedList: any;
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {
     this.route.queryParams.subscribe(params => {
@@ -40,14 +45,28 @@ export class CategoryProductsComponent implements OnInit{
 
     // Get query parameters
     // this.route.queryParamMap.subscribe(queryParams => {
-    //   this.categoryName = queryParams.get('categoryName');
+    //   // this.categoryName = queryParams.get('categoryName');
     // });
     
+    this.route.queryParams.subscribe(queryParams => {
+      // this.categoryName = queryParams.get('categoryName');
+ 
+      this.category = queryParams['sidebarCategory'];
+      this.sub_catgeory = queryParams['dressCategory'];
+      this.gender = queryParams['fashionTab'];
+      this.searchedText = queryParams['searchedText'];
+      // this.searchedList = JSON.parse(JSON.stringify(queryParams['searchedList']));
+    });
+
     if(this.categoryId){
       await this.getAllCategoryProducts(this.categoryId);
     }
-    if(this.brandId){
+    else if(this.brandId){
       await this.getAllBrandProducts(this.brandId);
+    }
+    else if(this.category && this.sub_catgeory && this.gender){
+      this.displayName = this.sub_catgeory;
+      await this.getAllExploreCategoryProducts();
     }
     
   }
@@ -60,7 +79,6 @@ export class CategoryProductsComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getSelectedCategoryProduct', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
-        console.log('products', this.products)
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -82,6 +100,23 @@ export class CategoryProductsComponent implements OnInit{
       }
     );
   }
+  
+  async getAllExploreCategoryProducts(){
+    let apiParams = {
+      user_id: this.loggedInUserId,
+      category: this.category,
+      sub_category: this.sub_catgeory,
+      gender: this.gender
+    }
+    await this.apiService.getDataWithParams('/home/getExploreCategoryProduct', apiParams).subscribe(
+      (response) => {
+        this.products = JSON.parse(JSON.stringify(response.result));
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
 
   async addToWishlist(product: any, event: MouseEvent) {
     event.stopPropagation();  // Prevents the click from triggering the parent click event
@@ -90,6 +125,10 @@ export class CategoryProductsComponent implements OnInit{
     let apiParams = {
       user_id: this.loggedInUserId,
       product_id: product.product_id
+    }
+    if(!this.loggedInUserId){
+      this.router.navigate(['/login']);
+      return;
     }
     await this.apiService.getDataWithParams('/home/addToWishlist', apiParams)
       .subscribe((response: any) => {
@@ -119,7 +158,6 @@ export class CategoryProductsComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
       .subscribe((response: any) => {
-        console.log('removeFromWishlist', response)
         if(response.code == 200 && response.message == 'sucess'){
           const productIndex = this.products.findIndex((prod: any) => prod.product_id === product.product_id);
           if (productIndex !== -1) {
@@ -142,15 +180,33 @@ export class CategoryProductsComponent implements OnInit{
   }
 
   goToWishlistPage(){
-    return this.router.navigate(['/wishlist', this.loggedInUserId] );
+    return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
-    return this.router.navigate(['/cart', this.loggedInUserId ]);
+    return this.router.navigate(['/cart']);
   }
 
   goBackToPreviousPage() {
-    this.location.back();
+    if(this.category && this.sub_catgeory && this.gender && !this.searchedText){
+      this.location.back()
+      this.dataShareService.setFilters({
+        activeSidebarCategories: this.category,
+        activeDressCategory: this.sub_catgeory,
+        activeFashionTab: this.gender
+      })
+    }
+    else if(this.searchedText ){
+      this.location.back()
+      // console.log(this.searchedText, this.searchedList);
+      this.dataShareService.setFilters({
+        searchedText: this.searchedText,
+        // searchedList: this.searchedList
+      })
+    }
+    else{
+      this.location.back()
+    }
   }
 
 }

@@ -8,8 +8,8 @@ import { DataShareService } from './data.share.service';
 })
 
 export class ApiService implements OnInit {
-  // private apiLink = 'http://localhost:7399'; // URL of your Node.js API
-  private apiLink = 'https://my-shopping-app-node-production.up.railway.app'
+  private apiLink = 'http://localhost:7399'; // URL of your Node.js API
+  // private apiLink = 'https://my-shopping-app-node-production.up.railway.app'
   
   private csrfToken: string = '';
 
