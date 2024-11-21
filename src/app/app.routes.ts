@@ -65,6 +65,11 @@ export const routes: Routes = [
     {   path: 'explore',
         loadComponent: () => import('./explore/explore.component').then(m => m.ExploreComponent)
     },
+    {   path: 'my-orders',
+        loadComponent: () => import('./my-orders/my-orders.component').then(m => m.MyOrdersComponent)
+    },
+
+    
 
     // {   path: 'category/:id', 
     //     loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent),

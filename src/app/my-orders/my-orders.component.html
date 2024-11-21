@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="header">
+        <div class = "header1" >
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2>Your orders</h2>
+        </div>
+    </div>
+    <div class="order-list">
+      <div class="order-item" *ngFor="let order of ordersList">
+        <div class="order-header">
+            <div class="order-info">
+                <div *ngIf="order?.shipping_status === 'delivered' && order?.delivery_date !== null && order?.order_status !== 'failed'">Order Arrived in {{ order?.deliveryTime }} minutes</div>
+                <div *ngIf="order?.shipping_status !== 'delivered' && order?.delivery_date == null && order?.order_status !== 'failed'">Order In Progress</div>
+                <div *ngIf="order?.order_status === 'failed'">Order Failed</div>
+                <div class="order-receiver">
+                    <span>{{ order?.shipping_status === 'delivered' || order?.shipping_status === 'returned' ? 'Delivered to: ' : 'Deliver to: ' }}{{ order?.receiver_name }}, {{ order?.shipping_address?.display_address?.title }}</span>
+                </div>
+            </div>
+            <div class="arrow">→</div>
+          
+        </div>
+
+        <div class="order-images-scroll">
+            <div class="order-image-container">
+                <img *ngFor="let image of order?.product_images" [src]="image" alt="Product Image" />
+            </div>
+        </div>
+
+        <div class="order-details-row">
+            <div class="order-date-status">
+                <div class="placed-date">Order Placed on {{ order?.order_date }}</div>
+                <div class="shipping-status">{{ order?.shipping_status }}</div>
+            </div>
+            <div class="order-total">₹{{ order?.total_amount }}</div>
+        </div>
+
+        <div class="order-bottom-row">
+            <div class="order-id-container">
+                <span class="order-id">Order #{{ order?.order_id }}</span>
+                <button class="copy-btn" (click)="copyOrderId(order?.order_id)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M8 4v12h12V4H8zm11 11H9V5h10v10z" fill="currentColor"/>
+                        <path d="M4 20V8h2v10h10v2H4z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+            <button class="rate-btn">Rate order</button>
+        </div>
+      </div>
+    </div>
+</div>

@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
   }
 
   gotoYourOrdersPage(){
-    console.log('order')
+    this.router.navigate(['/my-orders']);
   }
 
   gotoCollectedCouponsPage(){

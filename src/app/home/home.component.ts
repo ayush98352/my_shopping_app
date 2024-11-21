@@ -2,8 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { CommonModule, NgOptimizedImage, provideImgixLoader } from '@angular/common'; // Import CommonModule
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 
 
