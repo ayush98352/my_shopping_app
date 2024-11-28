@@ -68,6 +68,12 @@ export const routes: Routes = [
     {   path: 'my-orders',
         loadComponent: () => import('./my-orders/my-orders.component').then(m => m.MyOrdersComponent)
     },
+    {   path: 'order-summary',
+        loadComponent: () => import('./order-summary/order-summary.component').then(m => m.OrderSummaryComponent)
+    },
+    {   path: 'review-rating',
+        loadComponent: () => import('./review-rating/review-rating.component').then(m => m.ReviewRatingComponent)
+    },
 
     
 

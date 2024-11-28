@@ -1,0 +1,162 @@
+
+<div class="container">
+  <div class="header">
+      <div class = "header1" >
+          <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+              <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h2>Ratings & Reviews</h2>
+      </div>
+  </div>
+  <div class="rate-order-container">
+    
+      <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+        <!-- Delivery Rating Section -->
+        <div class="delivery-rating-section">
+          <h2>How was your delivery experience?</h2>
+          <p class="delivery-person">with {{deliveryPersonName}}</p>
+          
+          <div class="rating-stars">
+            <button 
+              type="button"
+              *ngFor="let star of [1,2,3,4,5]"
+              (click)="onDeliveryRatingChange(star)"
+              class="star-button"
+              [class.active]="star <= (reviewForm.get('deliveryRating')?.value || 0)">
+              <i class="far fa-star" [class.fas]="star <= (reviewForm.get('deliveryRating')?.value || 0)"></i>
+            </button>
+          </div>
+          
+          <div class="delivery-person-avatar">
+            <img src="assets/svg/delivery-boy-icon.svg" alt="Delivery Person">
+          </div>
+        </div>
+    
+        <!-- Items Rating Section -->
+        <div class="items-section">
+          <h2>Please tell us about items in your order</h2>
+          
+          <div class="items-list" formArrayName="items">
+            <div *ngFor="let item of itemForms; let i = index" [formGroupName]="i" class="item-review">
+              <div class="item-info">
+                <img [src]="orderItemsList[i]?.images" [alt]="orderItemsList[i]?.product_short_name" class="item-image">
+                <h3>{{orderItemsList[i]?.brand_name}} {{orderItemsList[i]?.product_short_name}}</h3>
+              </div>
+    
+              <div class="rating-stars">
+                <button 
+                  type="button"
+                  *ngFor="let star of [1,2,3,4,5]"
+                  (click)="onItemRatingChange(i, star)"
+                  class="star-button"
+                  [class.active]="star <= (item.get('rating')?.value || 0)">
+                  <i class="fas fa-star"></i>
+                </button>
+              </div>
+    
+              <div class="review-input" *ngIf="item.get('rating')?.value > 0">
+                <textarea 
+                  formControlName="review"
+                  placeholder="Tell us about your experience"
+                  rows="4">
+                </textarea>
+    
+                <!-- <button type="button" class="add-photo-btn" (click)="fileInput.click()">
+                  <i class="fas fa-camera"></i>
+                  Add photos
+                </button>
+                <input 
+                  #fileInput
+                  type="file"
+                  accept="image/*"
+                  (change)="onPhotoAdded(i, $event)"
+                  style="display: none"> -->
+
+                  <div class="photo-upload-section">
+                    <div class="upload-controls">
+                      <button 
+                        type="button" 
+                        class="add-photo-btn" 
+                        (click)="fileInput.click()"
+                        [disabled]="(photos.get(i)?.length || 0) >= 5">
+                        <i class="fas fa-camera"></i>
+                        Add photos ({{ photos.get(i)?.length || 0 }}/{{ maxPhotos }})
+                      </button>
+                      <input 
+                        #fileInput
+                        type="file"
+                        accept="image/*"
+                        (change)="onPhotoAdded(i, $event)"
+                        multiple
+                        style="display: none">
+                    </div>
+                
+                    <!-- Photo previews -->
+                    <div class="photos-grid" *ngIf="photos.get(i)?.length">
+                      <div class="photo-item" *ngFor="let photo of photos.get(i)">
+                        <!-- {{photo | json}} -->
+                        <div class="preview-container" [class.error]="photo.status === 'error'" (click)="openPhoto(photo?.previewUrl || ''); $event.stopPropagation(); $event.preventDefault();">
+                          <img [src]="photo?.previewUrl || photo" alt="Uploaded photo">                          
+                          <!-- Upload Progress -->
+                          <div class="overlay" *ngIf="photo?.status === 'uploading'">
+                            <div class="progress-ring">
+                              <svg viewBox="0 0 36 36">
+                                <path 
+                                  d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                  [style.strokeDasharray]="(photo.uploadProgress || 0) * 1.005"
+                                  class="progress"
+                                />
+                              </svg>
+                              <span>{{ photo.uploadProgress || 0 }}%</span>
+                            </div>
+                          </div>
+                
+                          <!-- Error State -->
+                          <div class="overlay error" *ngIf="photo.status === 'error'">
+                            <div class="error-content">
+                              <i class="fas fa-exclamation-circle"></i>
+                              <span>{{ photo.errorMessage }}</span>
+                              <button (click)="retryUpload(i, photo.id)">
+                                <i class="fas fa-redo"></i> Retry
+                              </button>
+                            </div>
+                          </div>
+                
+                          <!-- Delete Button -->
+                          <button class="delete-btn" (click)="deletePhoto(i, photo.id); $event.stopPropagation(); $event.preventDefault();">
+                            <i class="fas fa-times"></i>
+                          </button>
+                
+                          <!-- View Full Image Button -->
+                          <!-- <button 
+                            class="view-btn" 
+                            *ngIf="photo.status === 'uploaded'"
+                            (click)="openPhoto(photo?.previewUrl || ''); $event.stopPropagation(); $event.preventDefault();">
+                            <i class="fas fa-expand"></i>
+                          </button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+    
+        <!-- Submit Button  -->
+        <!-- <button type="submit" class="submit-button" [disabled]="!reviewForm.valid"> -->
+
+        <button type="submit" class="submit-button" [disabled]="showSubmitButton === false">
+          Submit
+        </button>
+      </form>
+
+      <button class="submit-button" (click)="onSubmit()" [disabled]="showSubmitButton === false">
+        Submit
+      </button>
+  </div>
+</div>

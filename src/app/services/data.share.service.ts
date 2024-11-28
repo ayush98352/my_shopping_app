@@ -12,6 +12,8 @@ export class DataShareService {
     private productDetails = <any>{};
     private csrfToken = <any>{};
     private filters = <any>{};
+    private orderId :any ;
+    private orderDetails = <any>{};
 
     setData(name: string) {
         this.data = name;
@@ -40,5 +42,19 @@ export class DataShareService {
     }
     getFilters(): any {
         return this.filters;
+    }
+    setOrderId(name: string) {
+        this.orderId = name;
+    }
+
+    getOrderId(): string | null {
+        return this.orderId;
+    }
+
+    setOrderDetails(orderDetails: any) {
+        this.orderDetails = orderDetails;
+    }
+    getOrderDetails(): any {
+        return this.orderDetails;
     }
 }

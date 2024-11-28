@@ -1,0 +1,136 @@
+<div class="container">
+  <div class="header">
+      <div class = "header1" >
+          <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+              <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h2>Order Summary</h2>
+      </div>
+  </div>
+
+  <div class="order-summary-container">
+      
+    
+      <!-- Arrival Time -->
+      <div class="arrival-time">
+        <!-- <p>Arrived at {{orderDetails?.order_date}}</p> -->
+        <p *ngIf="orderDetails?.shipping_status === 'delivered' && orderDetails?.delivery_date !== null && orderDetails?.order_status !== 'failed'"> Order Arrived at {{ orderDetails?.deliveryTime }} minutes</p>
+        <p *ngIf="orderDetails?.shipping_status !== 'delivered' && orderDetails?.delivery_date == null && orderDetails?.order_status !== 'failed'"><span style="font-weight: 600;"> In Progress</span>: Placed at {{ orderDetails?.order_date }}</p>
+        <p *ngIf="orderDetails?.order_status === 'failed'"> Order Failed 
+          <span *ngIf="orderDetails?.payment_status == 'failed'">: Payment failure </span>
+        </p>
+
+        <div class="download-invoice" (click)="downloadInvoice()">Download Invoice <i class="fas fa-download"></i>
+        </div>
+        
+      </div>
+    
+      <!-- Order Items -->
+      <div class="order-items">
+        <h2>{{orderItemsList?.length}} 
+          {{ orderItemsList?.length > '1'  ? 'items' : 'item' }} in this order
+        </h2>
+        <div class="item-card" *ngFor="let item of orderItemsList">
+          <div class="item-image">
+            <img [src]="item?.images" [alt]="item?.product_short_name">
+          </div>
+          <div class="item-details">
+            <h3>{{item?.brand_name}} {{item?.product_short_name}}</h3>
+            <div class="quantity">Size: {{item?.size}} Quantity: {{item?.quantity}}</div>
+            <div class="price">
+              <span class="current-price">₹{{item?.selling_price}}</span>
+              <span class="original-price">₹{{item?.mrp}}</span>
+              <span class="discount-percent" *ngIf="item?.discount_percent > 0">({{item?.discount_percent}}) % OFF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Rate Order -->
+      <div class="rate-order">
+        <div class="rate-prompt">
+          <i class="fas fa-star"></i>
+          <span>How were your ordered items?</span>
+        </div>
+        <button class="rate-button" (click)="goTorReviewRatingPage()">Rate now</button>
+      </div>
+    
+      <!-- Bill Details -->
+      <div class="bill-details">
+        <h2>Bill details</h2>
+        <div class="bill-item">
+          <span>MRP</span>
+          <span>₹{{orderDetails?.mrp}}</span>
+        </div>
+        <div class="bill-item discount" *ngIf="orderDetails?.product_discount > 0">
+          <span>Product discount</span>
+          <span>-₹{{orderDetails?.product_discount}}</span>
+        </div>
+        <div class="bill-item discount" *ngIf="orderDetails?.promo_discount > 0">
+          <span>Promo discount 
+            {{(orderDetails?.coupon_code)}}
+          </span>
+          <span>-₹{{orderDetails?.promo_discount}}</span>
+        </div>
+        <div class="bill-item">
+          <span>Item total</span>
+          <span>₹{{orderDetails?.item_total}}</span>
+        </div>
+       
+        <div class="bill-item" *ngIf="orderDetails?.extra_charges > 0">
+          <span>{{orderDetails?.extra_charges_name}}</span>
+          <span>+₹{{orderDetails?.extra_charges}}</span>
+        </div>
+        <div class="bill-item">
+          <span>Delivery charges</span>
+          <span>+₹{{orderDetails?.delivery_charges}}</span>
+        </div>
+        <div class="bill-item" *ngIf="orderDetails?.tax_amount > 0">
+          <span>Tax amount</span>
+          <span>+₹{{orderDetails?.tax_amount}}</span>
+        </div>
+        <div class="bill-item total">
+          <span>Bill total</span>
+          <span>₹{{orderDetails?.total_amount}}</span>
+        </div>
+      </div>
+    
+      <!-- Order Details -->
+      <div class="order-details">
+        <h2>Order details</h2>
+        <div class="detail-item">
+          <span class="label">Order id</span>
+          <div class="value-with-copy">
+            <span>{{orderId}}</span>
+            <i class="fas fa-copy" (click)="copyOrderId(orderId)"></i>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="label">Payment</span>
+          <span>{{orderDetails?.payment_method}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Deliver to</span>
+          <span class="address">{{ orderDetails?.receiver_name }}, {{ orderDetails?.shipping_address?.display_address?.address_line }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Order placed</span>
+          <!-- <span>placed on Fri, 11 Oct'24, 12:02 AM</span> -->
+          <span>placed on {{orderDetails?.order_date}}</span>
+        </div>
+      </div>
+    
+      <!-- Help Section -->
+      <div class="help-section">
+        <h2>Need help with your order?</h2>
+        <button class="chat-button" (click)="chatSupport()">
+          <i class="fas fa-comment"></i>
+          <div class="chat-text">
+            <span>Chat with us</span>
+            <span class="subtitle">About any issues related to your order</span>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+  </div>
+</div>

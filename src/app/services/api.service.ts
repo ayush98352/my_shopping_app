@@ -1,7 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataShareService } from './data.share.service';
+import { map } from 'rxjs/operators';
+
+export interface UploadResponse {
+  url: string;
+  message: string;
+}
 
 @Injectable({
   providedIn: 'root' // Ensure it's provided globally
@@ -72,6 +78,68 @@ export class ApiService implements OnInit {
       headers: this.getHeaders(),
       withCredentials: true,
     });
+  }
+
+  // New method for file upload
+  uploadPhoto(file: File, additionalParams?: Record<string, any>): Observable<UploadResponse> {
+    const formData = new FormData();
+
+    // Check if file is valid
+    if (file && file instanceof File) {
+      console.log('Appending file to formData:', file); // Debugging log
+      formData.append('photo', file);
+    } else {
+      console.error('No valid file found');
+      return null as any;
+    }
+   
+
+    // Add any additional parameters to formData if needed
+    if (additionalParams) {
+      Object.entries(additionalParams).forEach(([key, value]) => {
+        formData.append(key, value as string);
+      });
+    }
+    // Log FormData entries
+    for (let [key, value] of (formData as any).entries()) {
+      if (value instanceof File) {
+        console.log(`${key}: File Name: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    }
+      return this.http.post<UploadResponse>(
+      `${this.apiLink}/home/upload-photo`,
+      formData,
+      {
+        reportProgress: true,
+        observe: 'events'
+      }
+    ).pipe(
+      map(event => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            const progress = event.total
+              ? Math.round(100 * event.loaded / event.total)
+              : 0;
+            return { type: 'progress', progress } as any;
+          
+          case HttpEventType.Response:
+            return event.body as UploadResponse;
+          
+          default:
+            return null as any;
+        }
+      })
+    );
+  }
+
+  // Method for multiple file upload
+  uploadMultiplePhotos(
+    files: File[], 
+    additionalParams?: Record<string, any>
+  ): Observable<UploadResponse>[] {
+    return files.map(file => this.uploadPhoto(file, additionalParams));
   }
 }
 

@@ -77,7 +77,6 @@ export class ShoppingBagComponent implements OnInit{
 
   async ngOnInit() { 
     await this.getCartDetails();
-    
   }
 
   async getCartDetails(){
@@ -87,7 +86,6 @@ export class ShoppingBagComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getCartDetails', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
-        console.log('products', this.products);
         this.calcSummaryPrice();
         this.totalProductsInBag = this.products.length;
       },
@@ -243,9 +241,6 @@ export class ShoppingBagComponent implements OnInit{
     this.addOrderParams['transaction_details'] =  JSON.stringify(this.transaction_details);
     this.addOrderParams['shipping_address'] = shipping_address;
 
-    console.log('this.addOrderParams', this.addOrderParams);
-
-
     await this.apiService.getDataWithParams('/home/addOrder', this.addOrderParams).subscribe(
       (response) => {
         console.log('Order added successfully:', response);
@@ -339,7 +334,9 @@ export class ShoppingBagComponent implements OnInit{
 
           this.addOrder();
 
-          alert('Payment successful!');
+
+          // alert('Payment successful!');
+          this.router.navigate(['/my-orders']);
 
           // updateOrder -> payment status = paid and transaction_details = transaction_details and order_status = placed and payment_method = online
         } else {
@@ -367,10 +364,6 @@ export class ShoppingBagComponent implements OnInit{
         alert('Payment verification failed. Please contact support.');
       }
     );
-  }
-
-  async updateOrder(){
-
   }
 
 
