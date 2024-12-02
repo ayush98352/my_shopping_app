@@ -25,6 +25,7 @@ export class LoginComponent {
   isResendEnabled = false;
   countdown = 30;
   timer: any;
+  public body :any;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, private fb: FormBuilder, private location: Location) {
     this.loginForm = this.fb.group({
@@ -42,6 +43,11 @@ export class LoginComponent {
       otp5: new FormControl('', [Validators.required]),
       otp6: new FormControl('', [Validators.required]),
     });
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.body = document.body;
+      this.body.style.overflowY = 'auto';  
+    }
+    
   }
 
   clearNumber() {
@@ -64,6 +70,7 @@ export class LoginComponent {
         .subscribe(response => {
           this.otpSent = true;
           this.startResendOtpTimer();
+          this.body.style.overflowY = 'hidden';  
         }, error => {
           alert('Error sending OTP');
         });
@@ -86,6 +93,7 @@ export class LoginComponent {
             localStorage.setItem('auth_token', response.token); // Save token in local storage
             localStorage.setItem('phoneNumber', this.phoneNumber); // Save phone number in local storage
             localStorage.setItem('loggedInUserId', response.userDetails.result[0].user_id)
+            
             this.router.navigate(['/home']); // Navigate to home page
           }
         }, error => {
@@ -155,16 +163,18 @@ export class LoginComponent {
 
   goBackToLogin(){
     this.otpSent = false;
+    this.body.style.overflowY = 'auto';  
   }
 
   skipLogin(){
 
-  let navId: any = this.location.getState()
-  if(navId.navigationId === 1){
-    this.router.navigate(['/home']);
-  }
-  else{
-    this.location.back();
-  }
+    let navId: any = this.location.getState()
+    if(navId.navigationId === 1){
+      this.router.navigate(['/home']);
+    }
+    else{
+      this.location.back();
+    }
+    this.body.style.overflowY = 'hidden';  
   }
 }

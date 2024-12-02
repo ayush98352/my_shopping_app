@@ -1,5 +1,5 @@
 // import { Component } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 // import {HttpClientModule} from '@angular/common/http';
 
@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 import { ApiService } from './services/api.service';
 import { isPlatformBrowser } from '@angular/common';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 
 
 
@@ -30,7 +32,7 @@ declare var jdSalesInterface: WebAppInterface;
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NgOptimizedImage, FormsModule],
+  imports: [CommonModule, RouterOutlet, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [ApiService],  // Add your ApiService here if needed
@@ -44,13 +46,16 @@ export class AppComponent implements OnInit {
   dwstarted = false;
 
   data: any;
+  isNotch: boolean = false;
+  padding: string = '20px';  // Default padding for iPhones without notch
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object ) { 
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService ) { 
     this.apiService.fetchCsrfToken(); 
   }
  
   ngOnInit(): void {
-    this.checkScreenSize();
+    // this.checkScreenSize();
+    this.detectDevice();
     
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('auth_token');
@@ -66,16 +71,6 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);  // Otherwise, go to login
     };
 
-
-    // this.apiService.getData().subscribe(
-    //   (response) => {
-    //     this.data = response;
-    //     console.log('Data from Node.js:', this.data);
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // );
 
     /* set android fcmtoken and sending users data to android app on every login*/
     // this.router.events.subscribe((event) => {
@@ -113,21 +108,7 @@ export class AppComponent implements OnInit {
   // }
 
   
-
-  autoAdjustiPhoneScreen() {
-    const body = document.body;
-    body.classList.remove('notchtop', 'nonnotchtop');
-
-    const userAgent = navigator.userAgent;
-    const isIphone = /iPhone/.test(userAgent);
-    if (isIphone) {
-      if (screen.height >= 812 && screen.width >= 375) {
-        body.classList.add('notchtop');
-      } else if (screen.height >= 560 && screen.height < 812) {
-        body.classList.add('nonnotchtop');
-      }
-    }
-  }
+  
 
   @HostListener("window:resize")
   checkScreenSize() {
@@ -144,13 +125,50 @@ export class AppComponent implements OnInit {
           body.classList.remove('webview');
         }
       }
-      //this.autoAdjustiPhoneScreen()
+      this.detectDevice();
     }
   }
+  
 
 
 
   public setTitle( newTitle: string) {
     this.titleService.setTitle( newTitle );
   }
+
+
+  detectDevice() {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+
+      const body = document.body;
+      body.classList.remove('status-bar-height-44', 'status-bar-height-20');
+      const userAgent = navigator.userAgent;
+      const isIphone = /iPhone/.test(userAgent);
+      const isAndroid = /Android/.test(userAgent);
+  
+      // Detect Notch or Dynamic Island (iPhone X and newer)
+      if (isIphone && this.isIphoneWithNotch()) {
+        this.isNotch = true;
+        this.padding = '44px';  // Apply padding for newer iPhones with notch or Dynamic Island
+        body.classList.add('status-bar-height-44');
+        
+      } else if (isIphone) {
+        this.padding = '20px';  // Apply padding for older iPhones
+        body.classList.add('status-bar-height-20');
+      } else if (isAndroid) {
+        this.padding = '20px';  // Apply padding for Android (customize as needed)
+        body.classList.add('status-bar-height-20');
+      }
+    }
+  }
+
+  // Check if iPhone has a notch (iPhone X and newer)
+  isIphoneWithNotch(): boolean {
+    const screenHeight = window.innerHeight;
+    const screenWidth = window.innerWidth;
+    const isNotch = screenHeight >= 812 && screenWidth >= 375;
+    localStorage.setItem('isNotch', isNotch.toString());
+    return isNotch;
+  }
+
 }

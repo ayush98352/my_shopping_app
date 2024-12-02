@@ -42,13 +42,6 @@ export class MyOrdersComponent implements OnInit {
         
   }
 
-  // reorderItem(order: Order) {
-  //   // Implement reorder functionality
-  // }
-
-  // rateOrder(order: Order) {
-  //   // Implement rate order functionality
-  // }
 
   copyOrderId(orderId: string) {
     navigator.clipboard.writeText(orderId).then(() => {

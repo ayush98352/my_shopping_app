@@ -11,6 +11,7 @@
     padding-bottom: env(safe-area-inset-bottom); /* Ensure content is above the bottom bar */
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+    border-radius: 24px;
   }
 
   .background {
@@ -26,7 +27,6 @@
   }
 
 .login-container {
-    /* height: 100vh; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,7 +61,7 @@
     position: absolute;
     font-family: 'Poppins', sans-serif;
     top: 24px;
-    left: 24px;
+    left: 40px;
     color: #000;
     font-weight: 500;
     line-height: 30px;
@@ -72,7 +72,7 @@
     position: absolute;
     font-family: 'Poppins', sans-serif;
     top: 24px;
-    right: 24px;
+    right: 40px;
     color: #000;
     font-weight: 500;
     cursor: pointer;
@@ -191,15 +191,12 @@
   /*  */
 
   .otp-page-container {
-    /* min-height: 100vh; */
-    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
     padding: 20px;
     position: relative;
-    /* overflow-x: hidden; */
     max-width: 400px;
     margin: 0 auto;
     padding: 20px 0px;

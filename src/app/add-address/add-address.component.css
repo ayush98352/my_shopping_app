@@ -80,24 +80,21 @@
     position: relative;
     max-height: 80vh;
     overflow-y: auto;
-    /* display: flex;
-    flex-direction: column;
-    height: 80vh;
-    padding: 0; */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin-bottom: 24px; */
-    /* padding: 24px 24px 16px 24px; */
 }
 .form-content {
     flex: 1;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
     overflow-x: hidden;
-    /* padding: 0 24px; */
 }
 
 .close-button {
@@ -153,7 +150,6 @@
 
 
 .form-footer {
-    /* padding: 16px 24px; */
     background: white;
     border-top: 1px solid #eee;
     position: sticky;
@@ -174,7 +170,6 @@
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    /* margin-top: 24px; */
 }
 
 
@@ -249,7 +244,6 @@
       position: relative;
       
       input {
-        /* width: 100%; */
         padding: 0.75rem 1rem 0.75rem 2.5rem;
         border: 1px solid #ddd;
         border-radius: 8px;

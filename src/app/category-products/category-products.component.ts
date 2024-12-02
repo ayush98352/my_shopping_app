@@ -18,7 +18,6 @@ export class CategoryProductsComponent implements OnInit{
   public categoryId:any;
   public brandId:any;
   public displayName: any;
-  // public category=<any>{};
   public products: any = [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public category: any;
@@ -198,10 +197,8 @@ export class CategoryProductsComponent implements OnInit{
     }
     else if(this.searchedText ){
       this.location.back()
-      // console.log(this.searchedText, this.searchedList);
       this.dataShareService.setFilters({
         searchedText: this.searchedText,
-        // searchedList: this.searchedList
       })
     }
     else{

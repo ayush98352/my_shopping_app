@@ -13,47 +13,39 @@
             </div>
           </div>
     </div>
-
-    <div *ngIf="searchedText && searchedText.length > 2">
-        <div class="saved-addresses">
-          <h3>Searched Suggestions</h3>
-          <div class="address-list">
-            <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
-              <div class="icon location-icon">📍</div>
-              <div class="address-details">
-                <div class="address-header">
-                  <span class="address-type">{{suggestion.description}}</span>
-                  <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+    <div class= 'content' style="overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
+        <div *ngIf="searchedText && searchedText.length > 2">
+            <div class="saved-addresses">
+            <h3>Searched Suggestions</h3>
+            <div class="address-list">
+                <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
+                <div class="icon location-icon">📍</div>
+                <div class="address-details">
+                    <div class="address-header">
+                    <span class="address-type">{{suggestion.description}}</span>
+                    <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                    </div>
+                    <div class="address-text">{{suggestion.description}}</div>
                 </div>
-                <div class="address-text">{{suggestion.description}}</div>
-              </div>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
-    </div>
+    
+        <div #mapContainer class="map-container"></div>
 
-    <div #mapContainer class="map-container"></div>
-
-   
-
-    <!-- <div class="location-details">
-        <button (click)="goToCurrentLocation()">Go to Current Location</button>
-        <p>Your Order will be delivered to:</p>
-        <p>{{selectedAddress}}</p>
-        <button (click)="openAddMore()" id="addMoreDeatils">Add more address details > </button>
-    </div> -->
-
-    <div class="location-details">
-        <button class="current-location-btn" (click)="goToCurrentLocation()">
-            Go to Current Location
-        </button>
-        <p>Your Order will be delivered to:</p>
-        <p>{{selectedAddress}}</p>
-        <button class="add-more-details-btn" (click)="openAddMore()">
-            Add more address details
-            <span>></span>
-        </button>
-    </div>
+        <div class="location-details">
+            <button class="current-location-btn" (click)="goToCurrentLocation()">
+                Go to Current Location
+            </button>
+            <p>Your Order will be delivered to:</p>
+            <p>{{selectedAddress}}</p>
+            <button class="add-more-details-btn" (click)="openAddMore()">
+                Add more address details
+                <span>></span>
+            </button>
+        </div>
+    </div> 
 
 
     <!-- Modal Popup -->

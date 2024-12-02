@@ -6,19 +6,6 @@ import { RouterModule, Route, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 import { PaymentService } from '../services/payment.service';
 
-
-// interface Product {
-//   name: string;
-//   description: string;
-//   size: string;
-//   quantity: number;
-//   price: number;
-//   originalPrice: number;
-//   discount: number;
-//   image: string;
-//   deliveryDate: string;
-// }
-
 declare var Razorpay: any;  // Declaring Razorpay to use the Razorpay SDK
 
 @Component({
@@ -120,9 +107,6 @@ export class ShoppingBagComponent implements OnInit{
 
   }
 
-  // async removeFromCart(product:any, event: MouseEvent){
-  //   event.stopPropagation();  // Prevents the click from triggering the parent click event
-  //   event.preventDefault();   // Prevents the default action (like page refresh)
   async removeFromCart(product:any){
     let apiParams = {
       cart_id: product.cart_id
@@ -185,7 +169,6 @@ export class ShoppingBagComponent implements OnInit{
         if(response.code == 200 && response.message == 'sucess'){
           this.removeFromCart(product);
         }else{
-          // this.products.wishlist = 0;
           alert('Unable to add to wishlist');
         }
     });

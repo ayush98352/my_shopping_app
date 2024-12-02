@@ -62,10 +62,6 @@ export class WishlistComponent implements OnInit {
   }
 
   async removeFromWishlist(product: any) {
-    // event.stopPropagation();  // Prevents the click from triggering the parent click event
-    // event.preventDefault();   // Prevents the default action (like page refresh)
-
-
     let apiParams = {
       user_id: this.loggedInUserId,
       product_id: product.product_id
@@ -100,27 +96,18 @@ export class WishlistComponent implements OnInit {
   }
 
   async addToCart(product: any, size: string) {
-    // event.stopPropagation();  // Prevents the click from triggering the parent click event
-    // event.preventDefault();   // Prevents the default action (like page refresh)
-    // if(!this.selectedSize || this.selectedSize == ''){
-    //   alert('Please select size');
-    //   return;
-    // }
-    // else{
-      let apiParams = {
-        user_id: this.loggedInUserId,
-        product_id: product.product_id,
-        size: size
+  let apiParams = {
+    user_id: this.loggedInUserId,
+    product_id: product.product_id,
+    size: size
+  }
+  await this.apiService.getDataWithParams('/home/addToCart', apiParams)
+    .subscribe((response: any) => {
+      if(response.code == 200 && response.message == 'sucess'){
+        // this.inCart = true;
+        this.removeFromWishlist(product);
       }
-      await this.apiService.getDataWithParams('/home/addToCart', apiParams)
-        .subscribe((response: any) => {
-          if(response.code == 200 && response.message == 'sucess'){
-            // this.inCart = true;
-            // this.removeFromWishlist(product);
-            this.removeFromWishlist(product);
-          }
-        })
-    // }
+    })
   }
 
   gotoShowProductPage(product:any){

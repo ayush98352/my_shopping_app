@@ -1,17 +1,20 @@
-:host {
+/* :host {
     display: flex;
     flex-direction: column;
     height: 100vh;
     max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    margin: auto auto;
     padding-top: env(safe-area-inset-top, env(viewport-top, 0px)); 
     padding-bottom:  env(safe-area-inset-bottom, env(viewport-bottom, 0px)); 
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+    text-rendering: optimizeLegibility;
+    -webkit-appearance: none;
+    border: none;
   }
   
   router-outlet {
     flex: 1;
     overflow: hidden;
-  }
+  } */
+

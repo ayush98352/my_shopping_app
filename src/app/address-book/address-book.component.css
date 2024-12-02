@@ -51,6 +51,8 @@
 .section {
     padding: 14px 0px 0px 0px;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 
 }
 
@@ -59,7 +61,6 @@
 .action-button {
     display: flex;
     align-items: center;
-    /* padding: 1rem; */
     padding-top: 5px;
     cursor: pointer;
     margin: 0 1rem;
@@ -89,7 +90,7 @@
       color: #34a853;
     }
   
-    .content {
+    .content-type {
       flex: 1;
   
       .primary-text {

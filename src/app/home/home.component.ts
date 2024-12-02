@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { CommonModule, NgOptimizedImage, provideImgixLoader } from '@angular/common'; // Import CommonModule
+import { CommonModule} from '@angular/common'; // Import CommonModule
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
@@ -10,7 +10,7 @@ import { DataShareService } from '../services/data.share.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgOptimizedImage],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
 
 
   public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) {}
+  
   async ngOnInit() {
   
     

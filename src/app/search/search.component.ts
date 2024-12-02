@@ -26,8 +26,6 @@ export class SearchComponent implements OnInit {
       // this.searchedList = JSON.parse(JSON.stringify(savedFilters?.searchedList));
       await this.getSearchedlist();    
     }
-    console.log('searchedText', this.searchedText);
-    console.log('searchedList', this.searchedList)
   }
 
   
@@ -35,7 +33,6 @@ export class SearchComponent implements OnInit {
 
   async onSearch(event: Event) {
     const target = event.target as HTMLInputElement;
-    console.log(target.value);
     this.searchedText = target.value;
     await this.getSearchedlist();
     // do nothing
@@ -49,7 +46,6 @@ export class SearchComponent implements OnInit {
     await this.apiService.getDataWithParams('/home/getSearchedList', apiParams).subscribe(
       (response) => {
         this.searchedList = JSON.parse(JSON.stringify(response.result));
-        console.log('searchedList', this.searchedList)
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -58,7 +54,6 @@ export class SearchComponent implements OnInit {
   }
 
   gotoCategoryProductPage(searchCategory: any){
-    console.log('searchCategory', searchCategory);
     return this.router.navigate(['/category'], { 
       queryParams: { 
         dressCategory: searchCategory?.category_name,

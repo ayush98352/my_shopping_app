@@ -1,20 +1,6 @@
-<!-- <p>login works!</p>
-
-<div *ngIf="!otpSent">
-    <h3>Enter your phone number</h3>
-    <input type="text" [(ngModel)]="phoneNumber" placeholder="Phone Number" />
-    <button (click)="sendOtp()">Send OTP</button>
-  </div>
-  
-  <div *ngIf="otpSent">
-    <h3>Enter the OTP</h3>
-    <input type="text" [(ngModel)]="otp" placeholder="Enter OTP" />
-    <button (click)="verifyOtp()">Verify OTP</button>
-  </div>
-   -->
-  
 <div class="page-container">
   <div class="background"></div>
+  
   <div class="login-container" *ngIf="!otpSent">
     <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse">
     <div class="skip-button" (click)="skipLogin()">Skip</div>
@@ -96,7 +82,6 @@
         </form>
       </div>
     </div>
-     <!-- 8529736991 -->    
   </div>
   
 </div>

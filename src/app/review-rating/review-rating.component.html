@@ -94,7 +94,6 @@
                     <!-- Photo previews -->
                     <div class="photos-grid" *ngIf="photos.get(i)?.length">
                       <div class="photo-item" *ngFor="let photo of photos.get(i)">
-                        <!-- {{photo | json}} -->
                         <div class="preview-container" [class.error]="photo.status === 'error'" (click)="openPhoto(photo?.previewUrl || ''); $event.stopPropagation(); $event.preventDefault();">
                           <img [src]="photo?.previewUrl || photo" alt="Uploaded photo">                          
                           <!-- Upload Progress -->

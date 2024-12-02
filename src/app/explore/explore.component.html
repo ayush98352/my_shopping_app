@@ -58,14 +58,12 @@
                 
                         <!-- Dress Categories Grid -->
                         <div class="dress-grid">
-                        <!-- <div class="dress-card" *ngFor="let dress of dressCategories[activeSidebarCategories]"> -->
-                        <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
-                            <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
-                                <!-- <img [src]="dress.image" [alt]="dress.title"> -->
-                                <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title">
+                            <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
+                                <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
+                                    <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title">
+                                </div>
+                                <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
                             </div>
-                            <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
-                        </div>
                         </div>
                     </div>
                 </div>

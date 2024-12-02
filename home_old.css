@@ -52,6 +52,8 @@ body {
     /* padding: 15px; */
     flex-grow: 1;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 .section {
     /* background-color: #fff; */

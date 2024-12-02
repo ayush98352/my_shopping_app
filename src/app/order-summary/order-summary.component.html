@@ -13,7 +13,6 @@
     
       <!-- Arrival Time -->
       <div class="arrival-time">
-        <!-- <p>Arrived at {{orderDetails?.order_date}}</p> -->
         <p *ngIf="orderDetails?.shipping_status === 'delivered' && orderDetails?.delivery_date !== null && orderDetails?.order_status !== 'failed'"> Order Arrived at {{ orderDetails?.deliveryTime }} minutes</p>
         <p *ngIf="orderDetails?.shipping_status !== 'delivered' && orderDetails?.delivery_date == null && orderDetails?.order_status !== 'failed'"><span style="font-weight: 600;"> In Progress</span>: Placed at {{ orderDetails?.order_date }}</p>
         <p *ngIf="orderDetails?.order_status === 'failed'"> Order Failed 
@@ -115,7 +114,6 @@
         </div>
         <div class="detail-item">
           <span class="label">Order placed</span>
-          <!-- <span>placed on Fri, 11 Oct'24, 12:02 AM</span> -->
           <span>placed on {{orderDetails?.order_date}}</span>
         </div>
       </div>

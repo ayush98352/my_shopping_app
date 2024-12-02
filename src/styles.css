@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+.status-bar-height-44{
+    padding-top: 44px;
+    padding-bottom: 16px;
+    padding-right: 8px;
+    padding-left: 8px;
+    .content{
+        padding-bottom: 60px;
+    }
+    /* .modal-content{
+        padding-bottom: 72px;
+    } */
+}
+
+.status-bar-height-20{
+    padding-top: 20px;
+    padding-bottom: 16px;
+    padding-right: 8px;
+    padding-left: 8px;
+    .content {
+        padding-bottom: 36px;
+    }
+    /* .modal-content{
+        padding-bottom: 50px;
+    } */
+}
+
+
+/* Hide scrollbars globally in WebKit-based browsers (iOS Safari, Chrome, etc.) */
+::-webkit-scrollbar {
+    display: none;
+}
+  
+  
