@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+html, body {
+    touch-action: manipulation; /* Prevent double-tap zoom */
+   
+  }
+  body{
+    overflow: hidden; /* Prevent accidental scrolling */
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling on mobile devices */
+    text-size-adjust: 100%;
+  }
+  
 
 .status-bar-height-44{
     padding-top: 44px;
@@ -32,5 +42,13 @@
 ::-webkit-scrollbar {
     display: none;
 }
+  
+
+svg {
+    shape-rendering: geometricPrecision;
+    image-rendering: optimizeQuality;
+    text-rendering: optimizeLegibility;
+  }
+
   
   
