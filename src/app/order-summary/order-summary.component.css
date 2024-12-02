@@ -5,10 +5,6 @@
   max-width: 1200px;
   margin: 0px auto;
   overflow: hidden;
-  padding-top: env(safe-area-inset-top); /* Ensure content is below the status bar */
-  padding-bottom: env(safe-area-inset-bottom); /* Ensure content is above the bottom bar */
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
 }
 
 .header {

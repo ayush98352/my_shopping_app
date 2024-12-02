@@ -1,10 +1,14 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 interface Category {
   title: string;
@@ -22,7 +26,8 @@ interface DressCategory {
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })
@@ -33,6 +38,8 @@ export class ExploreComponent implements OnInit{
   public activeFashionTab :any;
   public activeSidebarCategories: any;
   public activeDressCategory: any;
+  public imagepath: any;
+
 
   mainCategories: Category[] = [
     { title: 'Men Fashion', image: 'men-fashion-icon', route: '/men', label: 'Men' },
@@ -290,7 +297,8 @@ export class ExploreComponent implements OnInit{
     ],
   };
 
-  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) {}
+  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer) {}
 
 
   ngOnInit(): void {
@@ -357,6 +365,14 @@ export class ExploreComponent implements OnInit{
         }
       });   
       // return this.router.navigate(['/category', this.activeFashionTab , this.selectedSidebarCategories, this.selectedDressCategory ]);
+  }
+  setSvg(imageName: string) {
+    this.matIconRegistry.addSvgIcon(
+      imageName,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/explore-logos/${imageName}.svg`)  
+    );
+    this.imagepath = `assets/svg/explore-logos/${imageName}.svg`;
+    return true;
   }
 
 }

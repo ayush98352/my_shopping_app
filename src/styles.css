@@ -8,15 +8,24 @@ html, body {
     overflow: hidden; /* Prevent accidental scrolling */
     -webkit-text-size-adjust: 100%; /* Prevent font scaling on mobile devices */
     text-size-adjust: 100%;
+    padding-top: env(safe-area-inset-top, env(viewport-top, 0px)); 
+    padding-bottom:  env(safe-area-inset-bottom, env(viewport-bottom, 0px)); 
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    /* .content{
+        padding-bottom: calc(env(safe-area-inset-top, env(viewport-top, 0px)) + env(safe-area-inset-bottom, env(viewport-bottom, 0px)));
+        padding-bottom: 20px;
+    } */
   }
   
 
 .status-bar-height-44{
-    padding-top: 44px;
+    /* padding-top: 44px;
     padding-bottom: 16px;
     padding-right: 8px;
-    padding-left: 8px;
+    padding-left: 8px; */
     .content{
+        /* padding-bottom: 20px; */
         padding-bottom: 60px;
     }
     /* .modal-content{
@@ -25,10 +34,10 @@ html, body {
 }
 
 .status-bar-height-20{
-    padding-top: 20px;
+    /* padding-top: 20px;
     padding-bottom: 16px;
     padding-right: 8px;
-    padding-left: 8px;
+    padding-left: 8px; */
     .content {
         padding-bottom: 36px;
     }
@@ -44,11 +53,20 @@ html, body {
 }
   
 
+/* 
 svg {
     shape-rendering: geometricPrecision;
     image-rendering: optimizeQuality;
     text-rendering: optimizeLegibility;
-  }
+} 
+*/
+
+img, svg {
+    image-rendering: -webkit-optimize-contrast; /* Ensures high-quality rendering in Safari */
+    image-rendering: crisp-edges;              /* For non-WebKit browsers */
+    text-rendering: optimizeLegibility;
+}
+  
 
   
   
