@@ -60,10 +60,10 @@
                         <div class="dress-grid">
                             <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
                                 <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
-                                    <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title">
-                                    <!-- <ng-container *ngIf="setSvg(dress.image)">
+                                    <!-- <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title"> -->
+                                    <ng-container *ngIf="setSvg(dress.image)">
                                         <mat-icon [svgIcon]="dress.image" class="custom-svg-icon"></mat-icon>
-                                    </ng-container> -->
+                                    </ng-container>
                                 </div>
                                 <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
                             </div>
