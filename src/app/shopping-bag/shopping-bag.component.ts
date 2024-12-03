@@ -5,13 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Route, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 import { PaymentService } from '../services/payment.service';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
 
 declare var Razorpay: any;  // Declaring Razorpay to use the Razorpay SDK
 
 @Component({
   selector: 'app-shopping-bag',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './shopping-bag.component.html',
   styleUrl: './shopping-bag.component.css'
 })

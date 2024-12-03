@@ -4,11 +4,18 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CommonModule } from '@angular/common'; 
 import { DataShareService } from '../services/data.share.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })

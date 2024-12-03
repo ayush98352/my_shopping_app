@@ -1,16 +1,21 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { CommonModule} from '@angular/common'; // Import CommonModule
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -37,7 +42,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) {}
+  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService) {}
   
   async ngOnInit() {
   

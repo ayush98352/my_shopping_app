@@ -4,12 +4,19 @@ import { RouterModule , Router, ActivatedRoute} from '@angular/router';
 import { CommonModule } from '@angular/common'; 
 import { DataShareService } from '../services/data.share.service';
 import { Location } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 
 @Component({
   selector: 'app-category-products',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './category-products.component.html',
   styleUrl: './category-products.component.css'
 })

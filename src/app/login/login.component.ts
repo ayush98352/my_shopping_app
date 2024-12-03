@@ -7,12 +7,19 @@ import { RouterModule } from '@angular/router';
 import { CommonModule} from '@angular/common'; // Import CommonModule
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
+
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

@@ -32,7 +32,7 @@
               <h2>{{ product?.brand_name }}</h2>
               <p>{{ product?.product_short_name }}</p>
             </div>
-            <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button" (click) = "showRemoveConfirmation(product, $event)">
+            <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" style="width:20px; height:20px"  (click) = "showRemoveConfirmation(product, $event)"></mat-icon>
             </div>
             <div class="product-options">
               <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
@@ -59,7 +59,7 @@
       <div class="frame coupon-section">
           <div class="coupon-header">
               <h2>Coupon for you 
-                <img src="/assets/svg/coupon-icon.svg" style="margin-bottom: -3px;">
+                <mat-icon [svgIcon]="'coupon-icon'" [alt]="'coupon-icon'" style="width:18px; height:18px; margin-bottom: -3px;"></mat-icon>
               </h2>
               <p>All Coupons</p>
           </div>
@@ -106,10 +106,10 @@
         <div class="popup-content">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div style="display: flex; gap: 7px;">
-                <img src = "assets/svg/delete-icon.svg" alt="delete" width="20" height="20" class="remove-button" style="position: static;">
+                <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" style="position: static; width:20px; height:20px"></mat-icon>
                 <h3>Remove Product</h3>
               </div>
-              <img src ="/assets/svg/cross.svg" alt="cancel" width="15" height="15" (click)="closePopups()">
+              <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:15px; height:15px" (click)="closePopups()"></mat-icon>
             </div>
             <p>Are you sure you want to remove this product from your Bag?</p>
             <div class="product-item">

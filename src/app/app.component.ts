@@ -9,7 +9,7 @@ import { Router, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart,Resol
 import { DataShareService } from './services/data.share.service';
 import { DataAccessService } from './services/data-access.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-
+import { SvgRegistryService } from './services/svg-registry.service';
 import { ApiService } from './services/api.service';
 import { isPlatformBrowser } from '@angular/common';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -49,13 +49,16 @@ export class AppComponent implements OnInit {
   isNotch: boolean = false;
   padding: string = '20px';  // Default padding for iPhones without notch
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService ) { 
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService ) { 
     this.apiService.fetchCsrfToken(); 
   }
  
   ngOnInit(): void {
     // this.checkScreenSize();
     this.detectDevice();
+
+    const svgNames = ['ellipse', 'login-page-main', 'indian-flag', 'search-icon', 'notification-icon', 'cart-icon', 'big_sale_logo', 'ad', 'filter-icon', 'wishlist-icon', 'wishlisted-icon', 'home-icon', 'home-icon-active', 'stores-icon-active', 'stores-icon', 'group-icon-active', 'group-icon', 'trends-icon', 'trends-icon-active', 'profile-icon', 'profile-icon-active', 'delete-icon', 'cross', 'coupon-icon']; // Your SVG names
+    svgNames.forEach(name => this.svgRegistryService.registerSvgIcon(name));
     
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('auth_token');

@@ -8,6 +8,7 @@ import { DataShareService } from '../services/data.share.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
 
 
 interface Category {
@@ -297,10 +298,14 @@ export class ExploreComponent implements OnInit{
     ],
   };
 
-  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer) {}
+  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService) {}
 
   ngOnInit(): void {
+
+    const svgNames = ['men-fashion-icon', 'men-fashion-icon-active', 'women-fashion-icon', 'women-fashion-icon-active', 'kids-fashion-icon', 'kids-fashion-icon-active', 'dresses-banner']; // Your SVG names
+    svgNames.forEach(name => this.svgRegistryService.registerSvgIcon(name));
+
+
     // (this.activeFashionTab + '-' + this.activeSidebarCategories)
     let savedFilters = this.dataShareService.getFilters();
     if(savedFilters && Object.keys(savedFilters).length > 0){
@@ -365,13 +370,18 @@ export class ExploreComponent implements OnInit{
       });   
       // return this.router.navigate(['/category', this.activeFashionTab , this.selectedSidebarCategories, this.selectedDressCategory ]);
   }
-  setSvg(imageName: string) {
-    this.matIconRegistry.addSvgIcon(
-      imageName,
-      this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/explore-logos/${imageName}.svg`)  
-    );
-    this.imagepath = `assets/svg/explore-logos/${imageName}.svg`;
+
+  setSvgExploreIcons(imageName: string) {
+    // Register the SVG icon (will only register once)
+    this.svgRegistryService.registerSvgExploreIcons(imageName);
     return true;
   }
+
+  setSvgIcons(imageName: string) {
+    // Register the SVG icon (will only register once)
+    this.svgRegistryService.registerSvgIcon(imageName);
+    return true;
+  }
+
 
 }

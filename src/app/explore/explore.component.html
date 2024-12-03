@@ -9,7 +9,7 @@
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goToWishlistPage()">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
             </svg>
-            <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click)="goToBagPage()">
+            <mat-icon [svgIcon]="'cart-icon'"  [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
         </div>
   </div>
   
@@ -21,15 +21,18 @@
                 <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
                 <input type="text" class="search-input" placeholder="Search for jeans">
                 <div class="filter-icon">
-                    <img src="assets/svg/filter-icon.svg" alt="filter" class="header-icon">
+                    <mat-icon [svgIcon]="'filter-icon'" [alt]="'filter'"  class="header-icon"></mat-icon>
                 </div>
             </div>
 
             <div class="main-categories">
                 <div *ngFor="let category of mainCategories" style="margin: auto;">
                     <div (click)="changeFashionTab(category.label);">
-                        <!-- <img [src]="'assets/svg/' + category.image + '.svg'" [alt]="category.title"> -->
-                        <img [src]="activeFashionTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
+                        <!-- <img [src]="activeFashionTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title"> -->
+                        <!-- <ng-container *ngIf="setSvgIcons(activeFashionTab === category.label ? category.image + '-active' : category.image)">
+                            
+                        </ng-container> -->
+                        <mat-icon [svgIcon]="activeFashionTab === category.label ? category.image + '-active' : category.image" [alt]="'category.title'" style="height: 45px; width: 114px;"></mat-icon>
                     </div>
                 </div>
             </div>
@@ -52,8 +55,9 @@
                     <div class="main-content">
                         <!-- Dresses Banner -->
                         <div class="banner">
-                        <h2>{{activeSidebarCategories}}</h2>
-                        <img src="assets/svg/dresses-banner.svg" alt="Dresses Collection">
+                            <h2>{{activeSidebarCategories}}</h2>
+                            <mat-icon [svgIcon]="'dresses-banner'" [alt]="'Dresses Collection'"></mat-icon>
+                            <!-- <img src="assets/svg/dresses-banner.svg" alt="Dresses Collection"> -->
                         </div>
                 
                         <!-- Dress Categories Grid -->
@@ -61,8 +65,8 @@
                             <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
                                 <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
                                     <!-- <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title"> -->
-                                    <ng-container *ngIf="setSvg(dress.image)">
-                                        <mat-icon [svgIcon]="dress.image" class="custom-svg-icon"></mat-icon>
+                                    <ng-container *ngIf="setSvgExploreIcons(dress.image)">
+                                        <mat-icon [svgIcon]="dress.image" [alt]="dress.title" class="custom-svg-icon"></mat-icon>
                                     </ng-container>
                                 </div>
                                 <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
@@ -77,19 +81,19 @@
     <div class="footer">
         <div class="footer-icons">
           <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
-            <img [src]="activeTab === 'home' ? 'assets/svg/home-icon-active.svg' : 'assets/svg/home-icon.svg'" alt="Home" width="29" height="29">
+            <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('stores')">
-            <img [src]="activeTab === 'stores' ? 'assets/svg/stores-icon-active.svg' : 'assets/svg/stores-icon.svg'" alt="Stores" width="30" height="31">
+            <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('explore')">
-            <img [src]="activeTab === 'explore' ? 'assets/svg/group-icon-active.svg' : 'assets/svg/group-icon.svg'" alt="Explore" width="24" height="25">
+            <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('trends')">
-            <img [src]="activeTab === 'trends' ? 'assets/svg/trends-icon-active.svg' : 'assets/svg/trends-icon.svg'" alt="Trends" width="28" height="21">
+            <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
-            <img [src]="activeTab === 'profile' ? 'assets/svg/profile-icon-active.svg' : 'assets/svg/profile-icon.svg'" alt="Profile" width="28" height="28">
+             <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
           </div>
         </div>
     </div>

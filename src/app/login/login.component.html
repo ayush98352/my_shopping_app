@@ -2,20 +2,21 @@
   <div class="background"></div>
   
   <div class="login-container" *ngIf="!otpSent">
-    <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse">
+    <!-- <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse"> -->
+    <mat-icon [svgIcon]="'ellipse'"  [alt]="'background'" class="background-ellipse"></mat-icon>
     <div class="skip-button" (click)="skipLogin()">Skip</div>
     <div class="login-text">Login/Register</div>
     <div class="login-card">
     
     
-    <img src="assets/svg/login-page-main.svg" alt="login" class="phone-icon">
+    <mat-icon [svgIcon]="'login-page-main'" [alt]="'login'" class="phone-icon"></mat-icon>
     
     <h1>What's your mobile number?</h1>
     <p class="subtitle">A verification code will be sent to this number.</p>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!otpSent">
       <div class="phone-input">
-        <img src="assets/svg/indian-flag.svg" alt="flag" class="flag-icon">
+        <mat-icon [svgIcon]="'indian-flag'" [alt]="'flag'" class="flag-icon"></mat-icon>
         <input 
           type="tel" 
           formControlName="phoneNumber"
@@ -48,7 +49,7 @@
 
   <div *ngIf="otpSent">
     <div class="otp-page-container">
-      <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse">
+      <mat-icon [svgIcon]="'ellipse'" [alt]="'background'" class="background-ellipse"></mat-icon>
  
       <div class="otp-container">
         <div class="login-text" (click)="goBackToLogin()">&larr;</div>

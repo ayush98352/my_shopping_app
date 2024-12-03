@@ -1,18 +1,23 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 import { Location } from '@angular/common';
 import { event } from 'jquery';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SvgRegistryService } from '../services/svg-registry.service';
 
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css'
 })
@@ -50,7 +55,7 @@ export class WishlistComponent implements OnInit {
   showRemoveConfirmation(product: any, event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
-    this.selectedProduct = product;
+    this.selectedProduct = JSON.parse(JSON.stringify(product));
     this.showRemovePopup = true;
   }
 
