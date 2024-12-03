@@ -5,8 +5,8 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatIconRegistry } from '@angular/material/icon';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
 
@@ -26,7 +26,8 @@ interface DressCategory {
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  // imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
@@ -297,9 +298,10 @@ export class ExploreComponent implements OnInit{
     ],
   };
 
-  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry,
+  // public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry,
+  //   private domSanitizer: DomSanitizer) {}
+  public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService,
     private domSanitizer: DomSanitizer) {}
-
 
   ngOnInit(): void {
     // (this.activeFashionTab + '-' + this.activeSidebarCategories)
@@ -366,13 +368,13 @@ export class ExploreComponent implements OnInit{
       });   
       // return this.router.navigate(['/category', this.activeFashionTab , this.selectedSidebarCategories, this.selectedDressCategory ]);
   }
-  setSvg(imageName: string) {
-    this.matIconRegistry.addSvgIcon(
-      imageName,
-      this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/explore-logos/${imageName}.svg`)  
-    );
-    this.imagepath = `assets/svg/explore-logos/${imageName}.svg`;
-    return true;
-  }
+  // setSvg(imageName: string) {
+  //   this.matIconRegistry.addSvgIcon(
+  //     imageName,
+  //     this.domSanitizer.bypassSecurityTrustResourceUrl(`assets/svg/explore-logos/${imageName}.svg`)  
+  //   );
+  //   this.imagepath = `assets/svg/explore-logos/${imageName}.svg`;
+  //   return true;
+  // }
 
 }
