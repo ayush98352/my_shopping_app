@@ -365,4 +365,7 @@ export class HomeComponent implements OnInit {
   gotoExplorePage(){
     return this.router.navigate(['/explore']);
   }
+  gotoShopsPage(){
+    return this.router.navigate(['/shops']);
+  }
 }

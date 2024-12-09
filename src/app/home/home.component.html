@@ -308,7 +308,7 @@
             <!-- <img [src]="activeTab === 'home' ? 'assets/svg/home-icon-active.svg' : 'assets/svg/home-icon.svg'" alt="Home" width="29" height="29"> -->
             <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
           </div>
-          <div class="icon" (click)="changeFooterTab('stores')">
+          <div class="icon" (click)="changeFooterTab('stores'); gotoShopsPage()">
             <!-- <img [src]="activeTab === 'stores' ? 'assets/svg/stores-icon-active.svg' : 'assets/svg/stores-icon.svg'" alt="Stores" width="30" height="31"> -->
             <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
           </div>

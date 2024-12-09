@@ -1,0 +1,250 @@
+
+select * from test.myntra_products;
+
+-- category_id -> men/women/kids/footware
+-- is active
+-- availability In Stock
+-- discount_percent
+-- brand_id
+-- brand_name
+--   b.product_short_name, b.images, b.selling_price, b.mrp, b.discount_percent
+-- product_top_category_id, product_category_name
+-- product_top_category_id, product_top_category_name
+
+alter table test.myntra_products
+add column category_id int DEFAULT NULL,
+add column discount_percent  decimal(5,2) DEFAULT NULL,
+add column product_short_name varchar(255) DEFAULT NULL,
+add column product_category_id int DEFAULT NULL,
+add column product_category_name varchar(255) DEFAULT NULL,
+add column product_top_category_id int DEFAULT NULL,
+add column product_top_category_name varchar(255) DEFAULT NULL;
+
+update test.myntra_products 
+set category_id = 3 where `type` like '%foot%';
+
+
+update test.myntra_products 
+set category_id = 1 where ideal_for = 'Men' and category_id is null;
+ 
+update test.myntra_products 
+set category_id = 2 where ideal_for = 'Women' and category_id is null;
+
+update test.myntra_products 
+set category_id = 4 where ideal_for in ('Boys', 'Girls') and category_id is null;
+
+update test.myntra_products 
+set category_id = 5 where `type` like '%Home/%' and category_id is null;
+
+update test.myntra_products 
+set category_id = 6 where `type` like '%Personal Care/%' and category_id is null;
+
+UPDATE test.myntra_products 
+SET product_short_name = TRIM(REPLACE(title, brand, ''));
+
+UPDATE test.myntra_products 
+SET discount_percent = ROUND(((variant_compare_at_price - variant_price) / variant_compare_at_price) * 100, 2);
+
+select title, product_type, ideal_for, product_details, product_category_name from test.myntra_products;
+
+update test.myntra_products a
+join products.product_categories b
+on a.ideal_for=b.ideal_for and a.product_type=b.category_name
+set a.product_category_name = b.category_name;
+
+update test.myntra_products a
+join products.product_categories b
+on a.ideal_for in ('Boys', 'Girls') and b.ideal_for='Kids' and a.product_type=b.category_name
+set a.product_category_name = b.category_name;
+
+
+UPDATE test.myntra_products AS a
+JOIN products.product_categories AS b
+ON a.ideal_for = b.ideal_for AND a.title LIKE CONCAT('%', b.category_name, '%')
+SET a.product_category_name = b.category_name 
+where a.product_category_name is null;
+
+
+UPDATE test.myntra_products 
+set product_category_name = 'Tops', product_category_id='50'
+where ideal_for = 'Women' and product_type='Top';
+
+UPDATE test.myntra_products 
+set product_category_name = 'Kurtis', product_category_id='63'
+where ideal_for = 'Women' and product_type like '%kurta%';
+
+UPDATE test.myntra_products 
+set product_category_name = 'Kurta Sets', product_category_id='67'
+where ideal_for = 'Women' and product_type like '%kurta%' and product_type like '%with%';
+
+UPDATE test.myntra_products 
+set product_category_name = 'Tunics', product_category_id='52'
+where ideal_for = 'Women' and product_type = 'Tunic';
+
+select product_id, link, title, product_type, type, ideal_for, product_category_name from test.myntra_products where ideal_for = 'Women' and product_category_name is null;
+
+select * from test.myntra_products where ideal_for = 'Women';
+
+
+alter table test.myntra_products
+add column product_main_type varchar(100) after product_type;
+
+select * from test.myntra_products; 
+
+update test.myntra_products
+set product_main_type = SUBSTRING_INDEX(SUBSTRING_INDEX(type, '/', 3), '/', -1);
+
+
+
+update test.myntra_products a
+join products.product_categories b
+on a.ideal_for=b.ideal_for and a.product_main_type=b.category_name
+set a.product_category_name = b.category_name;
+
+UPDATE test.myntra_products 
+set product_category_name = 'Patiala Set', product_category_id='66'
+where ideal_for = 'Women' and product_main_type = 'Patiala' and product_category_name is null;
+
+UPDATE test.myntra_products 
+set product_category_name = 'Kurta Sets', product_category_id='67'
+where ideal_for = 'Women' and product_main_type = 'Kurtas' and title like '%with%' and product_category_name is null;
+
+
+UPDATE test.myntra_products 
+set product_category_name = 'Kurtis', product_category_id='63'
+where ideal_for = 'Women' and product_main_type = 'Kurtas' and product_category_name is null;
+
+UPDATE test.myntra_products 
+set product_category_name = 'Salwar Suit', product_category_id='62'
+where ideal_for = 'Women' and product_main_type = 'Salwar' and product_category_name is null;
+
+UPDATE test.myntra_products 
+set product_category_name = 'Salwar Suit', product_category_id='62'
+where ideal_for = 'Women' and product_main_type = 'Churidar' and product_category_name is null;
+
+update test.myntra_products 
+set product_category_name = 'Necklace and Chains', product_category_id='95'
+where product_id in ('3451808', '2148295', '2342181');
+
+
+update test.myntra_products 
+set product_top_category_name = 'Dresses', product_top_category_id='8'
+where ideal_for = 'Women' and product_category_name is null and product_main_type = 'Dresses';
+
+select * from test.myntra_products where ideal_for = 'Women' and product_category_name is null;
+
+update test.myntra_products 
+set product_category_name = 'Fit & Flare Dress', product_category_id='42'
+where ideal_for = 'Women' and product_category_name is null and product_type = 'Fit and Flare Dress';
+
+update test.myntra_products 
+set product_category_name = 'Shirt Dress', product_category_id='43'
+where ideal_for = 'Women' and product_category_name is null and product_type = 'Shirt';
+
+select title, product_type, product_main_type, product_category_name from test.myntra_products where ideal_for = 'women' and product_category_name ='Trousers';
+
+## men
+select title, product_type, product_main_type, product_category_name from test.myntra_products where ideal_for = 'Men' and product_category_name ='Trousers';
+
+select distinct product_main_type from test.myntra_products where ideal_for = 'Men' and product_category_name is null;
+
+select product_id, link, title, product_type, product_main_type, product_category_name from test.myntra_products where ideal_for = 'Men' and product_category_name is null;
+
+update test.myntra_products 
+set product_category_name = 'Kurta & Kurta Sets', product_category_id='11'
+where ideal_for = 'men' and product_category_name is null and product_main_type in ('Kurtas', 'Kurta Sets');
+
+update test.myntra_products 
+set product_category_name = 'Casual Shirts', product_category_id='1'
+where ideal_for = 'men' and product_category_name is null and product_type in ('Casual Shirt', 'Shirt');
+
+update test.myntra_products 
+set product_category_name = 'Sherwanis', product_category_id='12'
+where ideal_for = 'men' and product_category_name is null and product_main_type = 'Sherwani';
+
+
+update test.myntra_products 
+set product_category_name = 'Kurta & Kurta Sets', product_category_id='11'
+where product_id = '7541700';
+
+
+## boys
+
+select product_id, link, title, product_type, product_main_type, product_category_name, ideal_for from test.myntra_products where ideal_for = 'Boys' and product_category_name is null;
+
+select distinct product_main_type from test.myntra_products where ideal_for = 'Boys' and product_category_name is null;
+
+
+update test.myntra_products 
+set product_category_name = 'Shirts', product_category_id='97'
+where ideal_for = 'Boys' and product_category_name is null and product_main_type = 'Shirts';
+
+
+update test.myntra_products 
+set product_category_name = 'Ethnic Wear', product_category_id='102'
+where ideal_for = 'Boys' and product_category_name is null and product_main_type in ('Kurtas', 'Kurta Sets', 'Sherwani', 'Nehru Jackets');
+
+## girls
+
+select product_id, link, title, product_type, product_main_type, product_category_name, ideal_for from test.myntra_products where ideal_for = 'Girls' and product_category_name is null;
+
+select distinct product_main_type from test.myntra_products where ideal_for = 'Girls' and product_category_name is null;
+
+update test.myntra_products 
+set product_category_name = 'Dresses', product_category_id='108'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type in ('Dresses', 'Jumpsuit');
+
+update test.myntra_products 
+set product_category_name = 'Tights & Leggins', product_category_id='115'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type = 'Leggings';
+
+update test.myntra_products 
+set product_category_name = 'Tops', product_category_id='109'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type in ('Tops', 'Tunics');
+
+update test.myntra_products 
+set product_category_name = 'Tshirts', product_category_id='110'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type = 'Shirts';
+
+
+update test.myntra_products 
+set product_category_name = 'Skirts & Shorts', product_category_id='114'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type in ('Shorts', 'Skirts');
+
+update test.myntra_products 
+set product_category_name = 'Ethnic Wear', product_category_id='112'
+where ideal_for = 'Girls' and product_category_name is null and product_main_type in ('Kurtas', 'Kurta Sets', 'Kurtis', 'Lehenga Choli');
+
+
+SELECT a.title, b.category_name, a.ideal_for, a.product_main_type
+FROM test.myntra_products AS a
+JOIN products.product_categories AS b
+ON a.ideal_for=b.ideal_for and a.product_main_type=b.category_name
+where a.product_category_name is null;
+
+select * from test.myntra_products where product_category_name is null and product_top_category_name is null;
+
+UPDATE test.myntra_products AS a
+JOIN products.product_categories AS b
+ON a.product_category_name = b.category_name
+SET a.product_category_id = b.category_id, a.product_top_category_name=b.top_category_name, a.product_top_category_id=b.top_category_id;
+
+
+select count(distinct product_id), count(1) from test.myntra_products ;
+
+drop table if exists test.myntra_products_unique;
+create table test.myntra_products_unique(KEY(product_id))
+select * from test.myntra_products group by product_id;
+
+select * from test.myntra_products_unique limit 1000;
+
+
+INSERT INTO products.products_master(product_name, product_short_name, sizes, category_id, brand_name, selling_price, mrp, discount_percent, product_type,
+product_sub_category, product_category_id, product_category_name, product_top_category_id, product_top_category_name, ideal_for, images, availability, sku,
+is_active, actual_color, dominant_color, dominant_material, myntra_product_id, created_at, updated_at, product_description, care_instructions, size_fit,
+complete_the_look)
+SELECT title, product_short_name, sizes, category_id, brand, variant_price, variant_compare_at_price, discount_percent, product_main_type, product_type, 
+product_category_id, product_category_name, product_top_category_id, product_top_category_name, ideal_for, images, is_in_stock, variant_sku, TRUE, actual_color,
+dominant_color, dominant_material, product_id, current_timestamp(), current_timestamp(), product_details, care_instructions, size_fit, complete_the_look
+FROM test.myntra_products_unique;
+ 

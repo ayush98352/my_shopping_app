@@ -1,0 +1,316 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0px auto;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    font-family: 'Poppins';
+}
+
+/* Fixed Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; 
+  width: 100%;
+  max-width: 100%; /* Prevent it from expanding beyond the container */
+}
+
+.header h2 {
+    font-size: 21px;
+    font-weight: 400;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+
+.icon-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.header-icon {
+    width: 28px;
+    height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+.content {
+  flex: 1;
+  /* overflow: hidden; */
+  overflow-y: auto;
+  position: relative;
+  height: calc(100vh - 130px); /* Adjust based on header + footer height */
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.section {
+    padding: 14px 0px 0px 0px;
+}
+
+.grid {
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
+    gap: 10px;
+    overflow-x: auto; /* Enable horizontal scroll */
+    white-space: nowrap; /* Prevent line breaks */
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    height: 154px;
+    padding-bottom: 16px;
+}
+.grid::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.grid-item {
+    text-align: center;
+    flex: 0 0 auto; /* Prevent shrinking */
+    /* background-color: transparent; Ensure background is transparent */
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 107px;
+    padding: 4px 0px 0px 0px;
+    transition: all 0.3s ease;
+    height: 145px;
+}
+
+.grid-item img {
+    width: 86px;
+    height: 117px;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: transparent; /* Ensure the image background is transparent */
+    mix-blend-mode: multiply; /* Try blending the white background */
+}
+
+.category-name {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #292929;
+}
+
+/* footer */
+.footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    box-shadow: 0px -2px 50px rgba(0, 0, 0, 0.05);
+    padding: 10px 10px;
+  
+}
+
+.footer-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    height: 50px;
+    justify-content: space-between;
+}
+
+.icon {
+    width: 40px;
+    height: 45px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px;
+    height: 46px;
+    border-radius: 23px;
+    margin-bottom: 10px;
+
+   
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+
+    &::placeholder {
+        color: #808080;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+    }
+}
+
+.filter-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #ff9999;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.main-categories {
+    display: flex;
+    margin-bottom: 16px;
+    height: 47.68px;
+    gap: 25px;
+}
+
+img {
+    image-rendering: -webkit-optimize-contrast; /* Ensures high-quality rendering in Safari */
+    image-rendering: crisp-edges;              /* For non-WebKit browsers */
+    text-rendering: optimizeLegibility;
+}
+
+/*  */
+
+/* General styles */
+
+  /* Card styles */
+  .shop-card {
+    position: relative;
+    /* width: 300px; */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    padding: 14px;
+    gap: 15px;
+  }
+  
+  .shop-card:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Image section */
+  .image-container {
+    position: relative;
+    height: 150px;
+  }
+  
+  .mall-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .promoted-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #1EB518;
+    background-color: #B9FABB;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px 4px 12px;
+    border-radius: 8px;
+    border: 1px solid #1EB518;
+    gap: 8px;
+  }
+  
+  .offer-tag {
+    position: absolute;
+    bottom: 0px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 21px;
+    /* width: 189px; */
+    height: 30px;
+    padding: 0px 46px 0px 9px;
+    gap: 8px;
+    border-radius: 0px 0px 0px 8px;
+    background: linear-gradient(90deg, #6D1CB8 0%, #9E9AED 50%, rgba(231, 237, 250, 0) 100%);
+  }
+  
+  /* Details section */
+  .shop-details {
+    padding-top: 15px;
+  }
+  
+  .mall-name {
+    font-size: 16px;
+    font-weight: 500px;
+    line-height: 24px;
+    margin: 0 0 5px;
+    color: #000000;
+  }
+  
+  .mall-address {
+    font-size: 14px;
+    font-weight: 300;
+    color: #000000;
+    margin: 0 0 10px;
+    line-height: 24px;
+  }
+  
+  .closing-time {
+    font-size: 14px;
+    line-height: 24px;
+    color: #FB818C;
+  }
+  
+  .distance {
+    font-size: 14px;
+    color: #242424;
+    font-weight: bold;
+  }
+  
+  /* Favorite icon */
+  .favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    color: #999999;
+    cursor: pointer;
+  }
+  
+  .favorite-icon:hover {
+    color: #ff5252;
+  }
+  
+
+  .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 4px 0;
+    gap: 8px;
+  }

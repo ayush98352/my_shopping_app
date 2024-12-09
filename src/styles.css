@@ -61,7 +61,7 @@ svg {
 } 
 */
 
-img, svg {
+svg {
     image-rendering: -webkit-optimize-contrast; /* Ensures high-quality rendering in Safari */
     image-rendering: crisp-edges;              /* For non-WebKit browsers */
     text-rendering: optimizeLegibility;

@@ -1,0 +1,52 @@
+drop table if exists products.malls;
+CREATE TABLE products.malls (
+    mall_id INT PRIMARY KEY AUTO_INCREMENT,      -- Unique identifier for each mall
+    name VARCHAR(255) NOT NULL,                  -- Name of the mall
+    address VARCHAR(500) NOT NULL,               -- Full address of the mall
+    pincode VARCHAR(50) NOT NULL,                  -- pincode where the mall is located
+	city VARCHAR(100) NOT NULL,                  -- City where the mall is located
+    state VARCHAR(100) NOT NULL,                 -- State where the mall is located
+    longitude DECIMAL(10, 8) NOT NULL,           -- Longitude for geolocation
+    latitude DECIMAL(10, 8) NOT NULL,            -- Latitude for geolocation
+    images Text,                         -- Image(s) of the mall
+    contact_info Varchar(20),					 -- mall contact
+    timings VARCHAR(100),                        -- mall operating timings
+    no_of_stores int default 0,                  -- total no of stores in mall 
+    description TEXT                             -- Additional description about the mall
+);
+
+drop table if exists products.stores;
+CREATE TABLE products.stores (
+    store_id INT PRIMARY KEY AUTO_INCREMENT,     -- Unique identifier for each store
+    mall_id INT NOT NULL,                        -- Foreign key referencing the mall
+    name VARCHAR(255) NOT NULL,                  -- Name of the store
+    type VARCHAR(100) NOT NULL,                  -- Type/category of the store
+    floor_no INT NOT NULL,                       -- Floor number where the store is located
+    full_address VARCHAR(500),                   -- Full address of the store (optional)
+    shop_no VARCHAR(50) NOT NULL,                -- Shop number or identifier
+    images Text,                         		 -- Image(s) of the store
+    timings VARCHAR(100),                        -- Store operating timings
+    review VARCHAR(100),                         -- Reviews summary
+    rating DECIMAL(3, 2),                        -- Average rating of the store
+    instore_offers VARCHAR(255),                         -- Ongoing in-store offers
+    contact_no VARCHAR(15),                      -- Store contact number
+    longitude DECIMAL(10, 8),                    -- Longitude for geolocation
+    latitude DECIMAL(10, 8),                     -- Latitude for geolocation
+    description TEXT,                            -- Description about the store
+    FOREIGN KEY (mall_id) REFERENCES malls(mall_id) ON DELETE CASCADE -- Relationship with malls
+);
+
+
+
+INSERT INTO products.stores (mall_id, name, type, floor_no, full_address, shop_no, images, timings, review, rating, instore_offers, contact_no, longitude, latitude, description)
+VALUES
+(1, 'Zara', 'Clothing', 1, 'Orion Mall, Bengaluru', '101', 'zara.jpg', '10:00 AM - 9:30 PM', '4.5', 4.5, 'Flat 25% off on selected items', '080-12345678', 77.5720, 13.0120, 'Trendy fashion store offering the latest collections.'),
+(1, 'Nike', 'Footwear', 2, 'Orion Mall, Bengaluru', '202', 'nike.jpg', '10:00 AM - 9:30 PM', '4.7', 4.7, 'Up to 40% off on sportswear', '080-87654321', 77.5722, 13.0122, 'Premium sports footwear and apparel.'),
+(1, 'H&M', 'Clothing', 1, 'Orion Mall, Bengaluru', '103', 'hm.jpg', '10:00 AM - 9:30 PM', '4.6', 4.6, 'New arrivals available', '080-11223344', 77.5724, 13.0124, 'Affordable fashion for men, women, and kids.'),
+(1, 'Reliance Digital', 'Electronics', 3, 'Orion Mall, Bengaluru', '305', 'reliance_digital.jpg', '10:00 AM - 9:30 PM', '4.5', 4.5, 'Special discounts on gadgets', '080-99887766', 77.5726, 13.0126, 'One-stop shop for electronics.'),
+(1, 'Lifestyle', 'Clothing', 1, 'Orion Mall, Bengaluru', '107', 'lifestyle.jpg', '10:00 AM - 9:30 PM', '4.4', 4.4, 'Buy 2, Get 1 Free on apparel', '080-55667788', 77.5728, 13.0128, 'Clothing and lifestyle products.'),
+(1, 'Croma', 'Electronics', 3, 'Orion Mall, Bengaluru', '308', 'croma.jpg', '10:00 AM - 9:30 PM', '4.5', 4.5, 'Exciting offers on smartphones', '080-22334455', 77.5730, 13.0130, 'All-in-one electronics store.'),
+(1, 'Decathlon', 'Sportswear', 2, 'Orion Mall, Bengaluru', '209', 'decathlon.jpg', '10:00 AM - 9:30 PM', '4.8', 4.8, 'Flat 20% off on select items', '080-33445566', 77.5732, 13.0132, 'Sporting goods and activewear.'),
+(1, 'Samsung', 'Electronics', 3, 'Orion Mall, Bengaluru', '311', 'samsung.jpg', '10:00 AM - 9:30 PM', '4.7', 4.7, 'Exclusive offers on smartphones', '080-66778899', 77.5734, 13.0134, 'Samsung-authorized store.'),
+(1, 'Levi\'s', 'Clothing', 1, 'Orion Mall, Bengaluru', '112', 'levis.jpg', '10:00 AM - 9:30 PM', '4.6', 4.6, 'Buy 1, Get 1 on denim', '080-99887744', 77.5736, 13.0136, 'Casual and denim wear.'),
+(1, 'Apple Store', 'Electronics', 3, 'Orion Mall, Bengaluru', '314', 'apple_store.jpg', '10:00 AM - 9:30 PM', '4.9', 4.9, 'Special offers on iPhones and accessories', '080-22334477', 77.5738, 13.0138, 'Premium Apple products.');

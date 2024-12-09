@@ -383,5 +383,8 @@ export class ExploreComponent implements OnInit{
     return true;
   }
 
+  gotoShopsPage(){
+    return this.router.navigate(['/shops']);
+  }
 
 }

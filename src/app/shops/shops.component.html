@@ -1,0 +1,104 @@
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h2>SHOPS</h2>
+        </div>
+        
+        <div class="icon-container">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goToWishlistPage()">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+            </svg>
+            <mat-icon [svgIcon]="'cart-icon'"  [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- categories -->
+        <div class="section">
+            <div class="search-container"  (click) = "goToSearchPage()">
+                <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
+                <input type="text" class="search-input" placeholder="Shop by store, mall, location">
+                <!-- <div class="filter-icon">
+                    <mat-icon [svgIcon]="'filter-icon'" [alt]="'filter'"  class="header-icon"></mat-icon>
+                </div> -->
+            </div>
+        </div>
+        
+        <div class="grid">
+            <ng-container *ngFor="let category of shopsCategory">
+              <div class="grid-item">
+                <img
+                  [src]="'assets/img/' + category.image + '.jpg'"
+                  [alt]="category.image"
+                />
+                <div class="category-name">{{category.name}}</div>
+              </div>
+            </ng-container>
+        </div>
+
+        <div class="main-categories">
+            <div *ngFor="let category of mainCategories">
+                <div (click)="changeExploreTab(category.label);">
+                    <img [src]="activeExploreTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
+                    <!-- <ng-container *ngIf="setSvgIcons(activeFashionTab === category.label ? category.image + '-active' : category.image)">
+                        
+                    </ng-container> -->
+                    <!-- <mat-icon [svgIcon]="activeFashionTab === category.label ? category.image + '-active' : category.image" [alt]="'category.title'" style="height: 45px; width: 114px;"></mat-icon> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsList : shopsList)">
+            <div class="image-container" >
+              <img src="assets/img/bhartiya-mall.jpg" alt="Bhartiya Mall of Bengaluru" class="mall-image">
+              <div class="promoted-badge">Promoted</div>
+              <!-- <div class="offer-tag">Off upto 30%</div> -->
+
+              <div class="offer-tag" *ngIf="item?.instore_offers">{{item?.instore_offers}}</div>
+            </div>
+            <div class="shop-details">
+                <div class="title-container">
+                    <!-- <h2 class="mall-name">Bhartiya Mall of Bengaluru</h2> -->
+                    <h2 class="mall-name">{{item?.name}}</h2>
+                    <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon>
+                </div>
+                <!-- <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
+                    <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon>
+                </span> 
+                    <span *ngIf="recommendedProduct?.iswishlisted == '1'" (click)="removeFromWishlist(recommendedProduct, $event)">
+                <mat-icon [svgIcon]="'wishlisted-icon'"  [alt]="'wishlisted'" style="width:19px; height:17px;"></mat-icon>
+                </span>  -->
+                <!-- <p class="mall-address">BHARTIYA CITY, THANISANDRA MAIN ROAD, BENGALURU</p> -->
+                <p class="mall-address">{{item?.address}}</p>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <!-- <div class="closing-time">closes in 3 hour 24 minutes</div> -->
+                    <div class="closing-time">Timing: {{item?.timings}}</div>
+                    <div class="distance">{{item?.distance}} km</div>
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <div class="footer">
+        <div class="footer-icons">
+          <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
+            <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('stores')">
+            <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()" >
+            <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('trends')">
+            <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
+             <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
+          </div>
+        </div>
+    </div>
+</div>
+        
+  

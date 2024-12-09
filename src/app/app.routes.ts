@@ -74,7 +74,9 @@ export const routes: Routes = [
     {   path: 'review-rating',
         loadComponent: () => import('./review-rating/review-rating.component').then(m => m.ReviewRatingComponent)
     },
-
+    {   path: 'shops',
+        loadComponent: () => import('./shops/shops.component').then(m => m.ShopsComponent)
+    },
     
 
     // {   path: 'category/:id', 
