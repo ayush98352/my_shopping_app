@@ -1,8 +1,11 @@
 
 <div class="container">
     <div class="header">
-        <div>
-            <h2>SHOPS</h2>
+        <div class = "header1">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2>{{ mallDetails?.name }}</h2>
         </div>
         
         <div class="icon-container">
@@ -14,66 +17,62 @@
     </div>
 
     <div class="content">
-        <!-- categories -->
         <div class="section">
             <div class="search-container"  (click) = "goToSearchPage()">
                 <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                <input type="text" class="search-input" placeholder="Shop by stores, malls, products, location...">
-                <!-- <div class="filter-icon">
-                    <mat-icon [svgIcon]="'filter-icon'" [alt]="'filter'"  class="header-icon"></mat-icon>
-                </div> -->
+                <input type="text" class="search-input" placeholder="Search for stores, products...">
             </div>
         </div>
-        
-        <div class="grid">
-            <ng-container *ngFor="let category of shopsCategory">
-              <div class="grid-item">
-                <img
-                  [src]="'assets/img/' + category.image + '.jpg'"
-                  [alt]="category.image"
-                />
-                <div class="category-name">{{category.name}}</div>
-              </div>
-            </ng-container>
-        </div>
+        <!-- mall details -->
 
-        <div class="main-categories">
-            <div *ngFor="let category of mainCategories">
-                <div (click)="changeExploreTab(category.label);">
-                    <img [src]="activeExploreTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
-                    <!-- <ng-container *ngIf="setSvgIcons(activeFashionTab === category.label ? category.image + '-active' : category.image)">
-                        
-                    </ng-container> -->
-                    <!-- <mat-icon [svgIcon]="activeFashionTab === category.label ? category.image + '-active' : category.image" [alt]="'category.title'" style="height: 45px; width: 114px;"></mat-icon> -->
+        <div class="mall-card">
+            <div class="mall-image-container">
+              <img [src]="'assets/img/stores/' + mallDetails?.images + ''" [alt]="mallDetails?.images" class="mall-image">
+            </div>
+            <div class="mall-details-container">
+              <div class="mall-details">
+                <div class="mall-title-container">
+                  <h2 class="mall-name">{{ mallDetails?.name }}</h2>
+                  <div class="mall-distance">{{ mallDetails?.distance }} km</div>
                 </div>
+                <p class="mall-address">{{ mallDetails?.address }}</p>
+              </div>
+            </div>
+          </div>
+
+        <div class="shops-content">
+            <div class="info-tags">
+              <button class="tag-button">Category</button>
+              <button class="tag-button">New</button>
+              <button class="tag-button">Trendy</button>
+              <button class="tag-button">Free Delivery</button>
+            </div>
+            <div class="no-of-stores" *ngIf="mallDetails?.no_of_stores">
+              <p>No. of stores ({{mallDetails?.no_of_stores}})</p>
             </div>
         </div>
         
-        <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsList : shopsList)">
-            <div class="image-container" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
+       
+        
+        
+        <div class="shop-card" *ngFor="let item of shopsList">
+            <div class="image-container" (click)="goToStorePage(item)">
               <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
               <div class="promoted-badge">Promoted</div>
               <div class="offer-tag" *ngIf="item?.instore_offers">{{item?.instore_offers}}</div>
             </div>
-            <div class="shop-details" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
+            <div class="shop-details" (click)="goToStorePage(item)">
                 <div class="title-container">
-                    <h2 class="mall-name">{{item?.name}}
+                    <h2 class="shop-name">{{item?.name}} 
                         <span *ngIf="item?.floor_no">| {{item?.floor_no}}{{getNumberSuffix(item?.floor_no)}} Floor </span>
                         <span *ngIf="item?.shop_no">| SN. {{item?.shop_no}}</span>
                     </h2>
                     <!-- <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon> -->
                 </div>
-                <!-- <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
-                    <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon>
-                </span> 
-                    <span *ngIf="recommendedProduct?.iswishlisted == '1'" (click)="removeFromWishlist(recommendedProduct, $event)">
-                <mat-icon [svgIcon]="'wishlisted-icon'"  [alt]="'wishlisted'" style="width:19px; height:17px;"></mat-icon>
-                </span>  -->
-                <p class="mall-address">{{item?.address}}</p>
+                
+                <p class="shop-address">{{item?.address}}</p>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <!-- <div class="closing-time">closes in 3 hour 24 minutes</div> -->
                     <div class="closing-time">Timing: {{item?.timings}}</div>
-                    <div class="distance">{{item?.distance}} km</div>
                 </div>
             </div>
         </div>

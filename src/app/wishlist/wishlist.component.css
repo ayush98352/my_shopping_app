@@ -46,6 +46,13 @@ body {
     margin-left: -20px;
 }
 
+
+.icon-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .header-icon {
     width: 32px;
     height: 25px;

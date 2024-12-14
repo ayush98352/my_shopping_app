@@ -1,0 +1,215 @@
+
+<div class="container">
+    <div class="header">
+        <div class = "header1">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2>{{storeDetails?.name}}</h2>
+        </div>
+        
+        <div class="icon-container">
+            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goToWishlistPage()">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
+            </svg>
+            <mat-icon [svgIcon]="'cart-icon'"  [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="search-container"  (click) = "goToSearchPage()">
+                <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
+                <input type="text" class="search-input" placeholder="Search for products..">
+            </div>
+        </div>
+        <!-- mall details -->
+
+        <div class="mall-card">
+            <div class="mall-image-container">
+                <img [src]="'assets/img/stores/' + storeDetails?.images + ''" [alt]="storeDetails?.images" class="mall-image">
+            </div>
+            <div class="mall-details-container">
+                <div class="mall-details">
+                <div class="mall-title-container">
+                    <h2 class="mall-name">{{ storeDetails?.name }}</h2>
+                    <div class="mall-distance" *ngIf="storeDetails?.distance">{{ storeDetails?.distance }} km</div>
+                </div>
+                <p class="mall-address">{{ storeDetails?.address }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-tabs">
+            <div class="view-tab" *ngFor="let tab of contentViewTab" [class.active]="activeContentTab === tab" (click)="changeContentTab(tab)">{{tab}}</div>
+        </div>
+        <div *ngIf="activeContentTab === 'Inventory'">
+            <div class="main-categories">
+                <div *ngFor="let category of mainCategories" style="margin: auto;">
+                    <div (click)="changeFashionTab(category.label)">
+                        <mat-icon [svgIcon]="activeFashionTab === category.label ? category.image + '-active' : category.image" [alt]="'category.title'" style="height: 45px; width: 114px;"></mat-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-content">
+                <button class="filter">Filters <i class="fa fa-filter"></i></button>
+                <div *ngFor="let category of productsfilters[activeFashionTab]">
+                    <button class="filter">{{category}}</button>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <ng-container *ngFor="let recommendedProduct of recommendedProducts">
+                <div class="product-grid-item" (click) = "gotoShowProductPage(recommendedProduct)">
+                    <div>
+                    <img *ngIf="recommendedProduct?.images"
+                        ngOptimizedImage
+                        [src]="recommendedProduct?.images.split('|')[0]"
+                        [alt]="recommendedProduct?.images.split('|')[0]"
+                        />
+                    </div>
+                    <div class = "product-name">
+                    <p>{{recommendedProduct?.brand_name}}
+                        <span class="short-name">{{recommendedProduct?.product_short_name}}</span>
+                    </p>
+                    <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
+                        <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon>
+                    </span> 
+                    <span *ngIf="recommendedProduct?.iswishlisted == '1'" (click)="removeFromWishlist(recommendedProduct, $event)">
+                        <mat-icon [svgIcon]="'wishlisted-icon'"  [alt]="'wishlisted'" style="width:19px; height:17px;"></mat-icon>
+                    </span> 
+                    </div>
+                    <p class="price-info">
+                    <span class="selling-price">₹{{recommendedProduct?.selling_price}}</span>
+                    <span class="mrp-discount">
+                        <span class="mrp">₹{{recommendedProduct?.mrp}}</span>
+                        (<span class="discount-percent">{{recommendedProduct?.discount_percent}}% OFF</span>)
+                    </span>
+                    </p>
+                </div>
+                </ng-container>
+            </div>
+        </div>
+        
+        <div class="about-tab" *ngIf="activeContentTab === 'Offers'">
+            <div class="about-container">
+                <div class="about-headers">
+                    Instore Offers
+                </div>
+                <div class="about-content">
+                    {{storeDetails?.instore_offers}}
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="activeContentTab === 'Reviews'">
+            <div class="review-section">
+                <div class="review-header">
+                  <div class="rating-overview">
+                    <div class="rating">4.2</div>
+                    <div class="stars">★★★★★</div>
+                    <div style="font-size: 12px;">305 Reviews</div>
+                  </div>
+                  <!-- <button>Edit</button> -->
+                  <div class="rating-distribution">
+                    <div class="bar">
+                      <span>5★</span>
+                      <div class="bar-line" style="width: 70%;"></div>
+                      <span>12</span>
+                    </div>
+                    <div class="bar">
+                      <span>4★</span>
+                      <div class="bar-line" style="width: 50%;"></div>
+                      <span>12</span>
+                    </div>
+                    <div class="bar">
+                      <span>3★</span>
+                      <div class="bar-line" style="width: 30%;"></div>
+                      <span>12</span>
+                    </div>
+                    <div class="bar">
+                      <span>2★</span>
+                      <div class="bar-line" style="width: 15%;"></div>
+                      <span>12</span>
+                    </div>
+                    <div class="bar">
+                      <span>1★</span>
+                      <div class="bar-line" style="width: 10%;"></div>
+                      <span>12</span>
+                    </div>
+                  </div>
+                </div>
+            
+                
+            
+                <div class="filters">
+                  <button class="active">All</button>
+                  <button>5 ★</button>
+                  <button>4 ★</button>
+                  <button>3 ★</button>
+                  <button>2 ★</button>
+                </div>
+            
+                <div class="review">
+                  <img src="https://via.placeholder.com/50" alt="Profile">
+                  <div class="review-content">
+                    <div class="name">Helene Moore</div>
+                    <div class="date">June 5, 2024</div>
+                    <div class="stars">★★★★★</div>
+                    <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.</p>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="about-tab"  *ngIf="activeContentTab === 'About'">
+            <div class="about-container">
+                <div class="about-headers">
+                    Location
+                </div>
+                <div class="about-content">
+                    {{storeDetails?.address}}
+                </div>
+            </div>
+            <div class="about-container">
+                <div class="about-headers">
+                    Store Description
+                </div>
+                <div class="about-content">
+                    {{storeDetails?.description}}
+                </div>
+            </div>
+            <div class="about-container">
+                <div class="about-headers">
+                    Operatinal Hours
+                </div>
+                <div class="about-content">
+                    {{storeDetails?.timings}}
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <div class="footer">
+        <div class="footer-icons">
+          <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
+            <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('stores')">
+            <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()" >
+            <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('trends')">
+            <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
+          </div>
+          <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
+             <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
+          </div>
+        </div>
+    </div>
+</div>
+        
+  

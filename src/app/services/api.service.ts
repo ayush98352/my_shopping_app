@@ -54,7 +54,7 @@ export class ApiService implements OnInit {
   
   getData(url:any): Observable<any> {
     let apiUrl = this.apiLink + url;
-    console.log('url', apiUrl);
+    // console.log('url', apiUrl);
     // return this.http.get(apiUrl);
     return this.http.get(apiUrl, { 
       headers: this.getHeaders(),
@@ -67,8 +67,8 @@ export class ApiService implements OnInit {
 
 
     let apiUrl = this.apiLink + url;
-    console.log('url', apiUrl);
-    console.log('params', params);
+    // console.log('url', apiUrl);
+    // console.log('params', params);
     // return this.http.post(apiUrl, params, { headers });
 
     // No need to manually add CSRF token, it will be handled by the interceptor

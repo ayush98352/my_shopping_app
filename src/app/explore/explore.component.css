@@ -21,6 +21,7 @@
   box-sizing: border-box; 
   width: 100%;
   max-width: 100%; /* Prevent it from expanding beyond the container */
+  padding-left: 15px;
 }
 
 .header h2 {

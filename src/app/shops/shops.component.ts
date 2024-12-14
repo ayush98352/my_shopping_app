@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common'; // Import CommonModule
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { DataShareService } from '../services/data.share.service';
 import { ApiService } from '../services/api.service';
-import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule, Route, Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -125,12 +125,45 @@ export class ShopsComponent implements OnInit {
     );
   }
 
+  async goToMallsPage(item: any){
+    this.dataShareService.setMallDetails(item);
+    return this.router.navigate(['/malls']);
+  }
+
+  async goToStorePage(item: any){
+    console.log('goToStorePage', item);
+  }
+
   changeExploreTab(tab: any){
     this.activeExploreTab = tab;
   }
 
   changeFooterTab(tab: any){
     this.activeTab = tab;
+  }
+
+  getNumberSuffix(value: number): string {
+    if (value == null) return '';
+
+    // Handle the exceptions for 11th, 12th, and 13th
+    const lastDigit = value % 10;
+    const lastTwoDigits = value % 100;
+
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+      return `th`;
+    }
+
+    // Default cases for 1st, 2nd, 3rd, and others
+    switch (lastDigit) {
+      case 1:
+        return `st`;
+      case 2:
+        return `nd`;
+      case 3:
+        return `rd`;
+      default:
+        return `th`;
+    }
   }
 
   addToCart(shop: Shop): void {

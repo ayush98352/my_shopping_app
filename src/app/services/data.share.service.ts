@@ -14,6 +14,8 @@ export class DataShareService {
     private filters = <any>{};
     private orderId :any ;
     private orderDetails = <any>{};
+    private mallDetails = <any>{};
+    public storeDetails = <any>{};
 
     setData(name: string) {
         this.data = name;
@@ -56,5 +58,19 @@ export class DataShareService {
     }
     getOrderDetails(): any {
         return this.orderDetails;
+    }
+
+    setMallDetails(mallDetails: any) {
+        this.mallDetails = mallDetails;
+    }
+    getMallDetails(): any {
+        return this.mallDetails;
+    }
+
+    setStoreDetails(storeDetails: any) {
+        this.storeDetails = storeDetails;
+    }
+    getStoreDetails(): any {
+        return this.storeDetails;
     }
 }

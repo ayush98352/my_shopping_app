@@ -77,7 +77,12 @@ export const routes: Routes = [
     {   path: 'shops',
         loadComponent: () => import('./shops/shops.component').then(m => m.ShopsComponent)
     },
-    
+    {   path: 'malls',
+        loadComponent: () => import('./malls/malls.component').then(m => m.MallsComponent)
+    },
+    {   path: 'store',
+        loadComponent: () => import('./store/store.component').then(m => m.StoreComponent)
+    },
 
     // {   path: 'category/:id', 
     //     loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent),

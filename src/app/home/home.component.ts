@@ -21,7 +21,7 @@ import { SvgRegistryService } from '../services/svg-registry.service';
 })
 export class HomeComponent implements OnInit {
   public categories: any;
-  public brands: any;
+  public brands: any = [];
   public recommendedProducts: any = [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
 
