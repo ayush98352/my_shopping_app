@@ -130,8 +130,9 @@ export class ShopsComponent implements OnInit {
     return this.router.navigate(['/malls']);
   }
 
-  async goToStorePage(item: any){
-    console.log('goToStorePage', item);
+  async goToStorePage(store: any){
+    this.dataShareService.setStoreDetails(store);
+    return this.router.navigate(['/store']);
   }
 
   changeExploreTab(tab: any){

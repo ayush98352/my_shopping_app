@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">zenndo</string>
+    <string name="title_activity_main">zenndo</string>
+    <string name="package_name">ayush.shopping.app</string>
+    <string name="custom_url_scheme">ayush.shopping.app</string>
+</resources>

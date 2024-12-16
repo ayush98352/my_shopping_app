@@ -1,7 +1,9 @@
 // import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 // import {HttpClientModule} from '@angular/common/http';
+
+import { App } from '@capacitor/app';
 
 import { Component,Renderer2,HostListener,OnInit,  Inject, PLATFORM_ID  } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
@@ -49,8 +51,9 @@ export class AppComponent implements OnInit {
   isNotch: boolean = false;
   padding: string = '20px';  // Default padding for iPhones without notch
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService ) { 
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService, private location: Location ) { 
     this.apiService.fetchCsrfToken(); 
+    this.setupBackButtonHandler();
   }
  
   ngOnInit(): void {
@@ -130,6 +133,19 @@ export class AppComponent implements OnInit {
       }
       this.detectDevice();
     }
+  }
+
+  setupBackButtonHandler() {
+    App.addListener('backButton', ({ canGoBack }) => {
+      // Check if you can go back to a previous page
+      if (this.location.isCurrentPathEqualTo('/home')) {
+        // If already on the home page, exit the app
+        App.exitApp();
+      } else {
+        // Otherwise, navigate to the previous page
+        this.location.back();
+      }
+    });
   }
   
 
