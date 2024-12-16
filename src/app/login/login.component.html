@@ -62,14 +62,13 @@
         <!-- OTP Input Boxes -->
         <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
           <div class="otp-input-container">
-            <input type="text" maxlength="1" class="otp-input" id="otp1" formControlName="otp1" (keyup)="onKeyUp($event, 'otp2')"
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp1" formControlName="otp1" (keyup)="onKeyUp($event, 'otp2')"
             (paste)="onOtpPaste($event)"/>
-            <input type="text" maxlength="1" class="otp-input" id="otp2" formControlName="otp2" (keyup)="onKeyUp($event, 'otp3')" (keydown)="onKeyDown($event, 'otp1')" />
-            <input type="text" maxlength="1" class="otp-input" id="otp3" formControlName="otp3" (keyup)="onKeyUp($event, 'otp4')" (keydown)="onKeyDown($event, 'otp2')" />
-            <input type="text" maxlength="1" class="otp-input" id="otp4" formControlName="otp4" (keyup)="onKeyUp($event, 'otp5')" (keydown)="onKeyDown($event, 'otp3')" />
-            <input type="text" maxlength="1" class="otp-input" id="otp5" formControlName="otp5" (keyup)="onKeyUp($event, 'otp6')" (keydown)="onKeyDown($event, 'otp4')" />
-            <input type="text" maxlength="1" class="otp-input" id="otp6" formControlName="otp6" (keyup)="verifyOtp()" (keydown)="onKeyDown($event, 'otp5')" />
-          </div>
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp2" formControlName="otp2" (keyup)="onKeyUp($event, 'otp3')" (keydown)="onKeyDown($event, 'otp1')" />
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp3" formControlName="otp3" (keyup)="onKeyUp($event, 'otp4')" (keydown)="onKeyDown($event, 'otp2')" />
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp4" formControlName="otp4" (keyup)="onKeyUp($event, 'otp5')" (keydown)="onKeyDown($event, 'otp3')" />
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp5" formControlName="otp5" (keyup)="onKeyUp($event, 'otp6')" (keydown)="onKeyDown($event, 'otp4')" />
+            <input type="text" pattern="[0-9]*" inputmode="numeric" maxlength="1" class="otp-input" id="otp6" formControlName="otp6" (keyup)="verifyOtp()" (keydown)="onKeyDown($event, 'otp5')" />          </div>
     
           <!-- Resend OTP Timer -->
           <div class="resend-otp">

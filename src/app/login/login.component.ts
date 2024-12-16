@@ -95,7 +95,8 @@ export class LoginComponent {
       await this.apiService.getDataWithParams('/home/verify-otp', apiParams)
         .subscribe((response: any) => {
           if (response.statusCode === 401 && response.message === "Invalid OTP") {
-            alert('Invalid OTP');
+            // alert('Invalid OTP');
+            // need to check this in production
           } else {
             localStorage.setItem('auth_token', response.token); // Save token in local storage
             localStorage.setItem('phoneNumber', this.phoneNumber); // Save phone number in local storage

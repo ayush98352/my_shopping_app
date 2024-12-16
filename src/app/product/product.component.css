@@ -1,6 +1,10 @@
 .container {
-  max-width: 1200px;
-  margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0px auto;
+    overflow: hidden;
 }
 .header {
   display: flex;
@@ -29,7 +33,9 @@
 }
 
 .content {
-  padding: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   flex-grow: 1;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
