@@ -2,7 +2,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h2>SHOPS</h2>
+            <h2>SHOP</h2>
         </div>
         
         <div class="icon-container">
@@ -76,6 +76,11 @@
                     <div class="distance">{{item?.distance}} km</div>
                 </div>
             </div>
+        </div>
+
+        <div class="loader" *ngIf="isLoading">
+            <div class="spinner"></div>
+            <div class="spinner1"></div>
         </div>
           
     </div>

@@ -1,5 +1,6 @@
 
 <div class="container">
+  <!-- <app-loader [isLoading]="isLoading"></app-loader> -->
     <!-- <div class="header">
         <h2>Shopping</h2>
         <div class="search">
@@ -326,4 +327,12 @@
           </div>
         </div>
     </div>
+   
+    <div class="loader" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <div class="spinner1"></div>
+    </div>
+
 </div>
+
+

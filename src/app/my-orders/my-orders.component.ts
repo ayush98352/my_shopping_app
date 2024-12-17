@@ -18,6 +18,8 @@ export class MyOrdersComponent implements OnInit {
 
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public ordersList = <any>[];
+  public isLoading = true;
+
  
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) { }
@@ -33,6 +35,7 @@ export class MyOrdersComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getOrdersList', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.ordersList = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {

@@ -32,6 +32,7 @@ export class CategoryProductsComponent implements OnInit{
   public gender: any;
   public searchedText: any;
   public searchedList: any;
+  public isLoading = true;
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {
     this.route.queryParams.subscribe(params => {
@@ -85,6 +86,7 @@ export class CategoryProductsComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getSelectedCategoryProduct', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -100,6 +102,7 @@ export class CategoryProductsComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getSelectedBrandProduct', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -117,6 +120,7 @@ export class CategoryProductsComponent implements OnInit{
     await this.apiService.getDataWithParams('/home/getExploreCategoryProduct', apiParams).subscribe(
       (response) => {
         this.products = JSON.parse(JSON.stringify(response.result));
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching data:', error);

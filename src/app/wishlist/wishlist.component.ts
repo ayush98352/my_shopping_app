@@ -30,6 +30,8 @@ export class WishlistComponent implements OnInit {
   public showAddToCartPopup = false;
   public selectedProduct: any;
   public selectedSize: string = '';
+  public isLoading = true;
+
 
   public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService,  private location: Location) {}
 
@@ -44,6 +46,7 @@ export class WishlistComponent implements OnInit {
   
     await this.apiService.getDataWithParams('/home/getWishlistedProducts', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.wishlistedProducts = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {
@@ -71,8 +74,10 @@ export class WishlistComponent implements OnInit {
       user_id: this.loggedInUserId,
       product_id: product.product_id
     }
+    this.isLoading = true;
     await this.apiService.getDataWithParams('/home/removeFromWishlist', apiParams)
       .subscribe((response: any) => {
+        this.isLoading = false;
         if(response.code == 200 && response.message == 'sucess'){
           this.wishlistedProducts = this.wishlistedProducts.filter(p => p.product_id !== product.product_id);
         }else{
@@ -106,8 +111,10 @@ export class WishlistComponent implements OnInit {
     product_id: product.product_id,
     size: size
   }
+  this.isLoading = true;
   await this.apiService.getDataWithParams('/home/addToCart', apiParams)
     .subscribe((response: any) => {
+      this.isLoading = false;
       if(response.code == 200 && response.message == 'sucess'){
         // this.inCart = true;
         this.removeFromWishlist(product);

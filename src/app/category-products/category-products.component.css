@@ -146,7 +146,7 @@
   
   /* Product Short Name */
   .short-name {
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.3;
     color: #4E5A37;
     display: block;
@@ -215,10 +215,6 @@
     
     .product-grid-item {
         padding: 8px;
-    }
-    
-    .product-name p {
-        font-size: 12px;
     }
     
     .selling-price {

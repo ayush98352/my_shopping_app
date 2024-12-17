@@ -26,6 +26,8 @@ export class MallsComponent implements OnInit {
   public shopsList: any[] = [];
   public coordinates: any;
   public mallDetails: any;
+  public isLoading = true;
+
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService, private location: Location) {}
 
@@ -46,6 +48,7 @@ export class MallsComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getMallsStoresList', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.shopsList = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {

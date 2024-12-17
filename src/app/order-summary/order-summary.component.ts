@@ -16,6 +16,8 @@ export class OrderSummaryComponent implements OnInit  {
   public orderId: any;
   public orderItemsList: any;
   public orderDetails: any;
+  public isLoading = true;
+
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService) {}
 
@@ -31,6 +33,7 @@ export class OrderSummaryComponent implements OnInit  {
     }
     await this.apiService.getDataWithParams('/home/getOrderItemsList', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.orderItemsList = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {

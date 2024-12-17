@@ -32,7 +32,8 @@ export class StoreComponent implements OnInit {
   public activeFashionTab :any;
   public recommendedProducts: any = [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
-  public activeContentTab = 'Inventory'
+  public activeContentTab = 'Inventory';
+  public isLoading = true;
 
   mainCategories: Category[] = [
     { title: 'Men Fashion', image: 'men-fashion-icon', route: '/men', label: 'Men' },
@@ -58,7 +59,6 @@ export class StoreComponent implements OnInit {
     this.coordinates = location['coordinate'];
 
     this.storeDetails = this.dataShareService.getStoreDetails();
-    console.log('storeDetails', this.storeDetails);
     this.activeFashionTab = 'Women';
 
     await this.getRecommenedProducts();
@@ -70,6 +70,7 @@ export class StoreComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getRecommenedProducts', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.recommendedProducts = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {

@@ -15,6 +15,8 @@ export class AddressBookComponent implements OnInit {
 
   public savedAddresses: any= [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
+  public isLoading = false;
+
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService){}
 
@@ -24,14 +26,17 @@ export class AddressBookComponent implements OnInit {
     if(this.savedAddresses.length === 0){
       this.getSavedAddress();
     }
+    
   }
 
   async getSavedAddress(){
     let apiParams = {
       user_id: this.loggedInUserId,
     }
+    this.isLoading = true;
     this.apiService.getDataWithParams('/home/getSavedAddress', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.savedAddresses = JSON.parse(JSON.stringify(response.result));
         localStorage.setItem('addresses', JSON.stringify(this.savedAddresses));
       },

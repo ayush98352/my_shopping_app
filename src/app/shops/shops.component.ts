@@ -50,6 +50,8 @@ export class ShopsComponent implements OnInit {
   public mallsList: any[] = [];
   public shopsList: any[] = [];
   public coordinates: any;
+  public isLoading = true;
+
 
   shopsCategory: Shop[] = [
     { id: '1', name: 'Best Rated', location: 'Mall A', image: 'best-rated-shops', isFavorite: false },
@@ -101,6 +103,7 @@ export class ShopsComponent implements OnInit {
 
     await this.apiService.getDataWithParams('/home/getMallsList', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.mallsList = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {

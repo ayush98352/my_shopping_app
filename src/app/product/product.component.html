@@ -83,5 +83,10 @@
             <button class="action-button buy-now-button">Buy Now</button>
             <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
         </div>
+        <div class="loader" *ngIf="isLoading">
+            <div class="spinner"></div>
+            <div class="spinner1"></div>
+        </div>
     </div>
+    
 </div>  

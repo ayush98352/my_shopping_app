@@ -35,6 +35,8 @@ export class ShoppingBagComponent implements OnInit{
   public selectedProduct: any;
   public deliveryCharges = 0;
   public transaction_details = <any> {};
+  public isLoading = true;
+
 
   orderAmount: number = 0; // Example of the total amount to be paid
   paymentError: string | null = null; // To capture payment error, if any
@@ -78,6 +80,7 @@ export class ShoppingBagComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/getCartDetails', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.products = JSON.parse(JSON.stringify(response.result));
         this.calcSummaryPrice();
         this.totalProductsInBag = this.products.length;

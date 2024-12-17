@@ -31,6 +31,8 @@ export class ProductComponent implements OnInit{
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public selectedSize = '';
   public inCartSize = '';
+  public isLoading = true;
+
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
@@ -90,6 +92,7 @@ export class ProductComponent implements OnInit{
     }
     await this.apiService.getDataWithParams('/home/getProductDetails', apiParams).subscribe(
       (response) => {
+        this.isLoading = false;
         this.productDetails = response.result[0];
         this.dataShareService.setProductDetails(this.productDetails);
         if(this.productDetails?.images){

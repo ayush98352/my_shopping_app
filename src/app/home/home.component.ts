@@ -39,13 +39,14 @@ export class HomeComponent implements OnInit {
   public savedAddresses: any= [];
   public location: any = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location') || '{}') : {};
   public activeTab = 'home';
+  public isLoading = true;
+
 
 
 
   public constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService) {}
   
   async ngOnInit() {
-  
     
     if (Object.keys(this?.location).length === 0 ) {
       this.setUserLocation();
@@ -233,6 +234,7 @@ export class HomeComponent implements OnInit {
     await this.apiService.getDataWithParams('/home/getRecommenedProducts', apiParams).subscribe(
       (response) => {
         this.recommendedProducts = JSON.parse(JSON.stringify(response.result));
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching data:', error);

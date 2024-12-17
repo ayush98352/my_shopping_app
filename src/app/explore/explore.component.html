@@ -44,7 +44,7 @@
                     <div class="sidebar">
                         <div *ngFor="let category of sidebarCategories[activeFashionTab]">
                             <div class="sidebar-item" [class.active]="activeSidebarCategories === category" (click)="changeSidebarTab(category);">
-                                <div>
+                                <div class="sidebar-text">
                                     {{ category }}
                                 </div>
                             </div>

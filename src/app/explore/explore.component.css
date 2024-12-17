@@ -6,6 +6,7 @@
     max-width: 1200px;
     margin: 0px auto;
     box-sizing: border-box; /* Ensure padding is included in width calculations */
+    font-family: 'Poppins';
 }
 
 /* Fixed Header */
@@ -193,19 +194,21 @@
   /* Content Container */
   .content-container {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     height: calc(100vh - 285px); /* Adjust based on header + footer height */
     position: relative;
   }
   
   /* Sidebar with independent scroll */
   .sidebar {
-    width: 100px;
+    width: 105px;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 5px;
+    padding-right: 2px;
+    padding-left: 2px;
     box-sizing: border-box;
+    padding-top: 5px;
 
     /* Hide scrollbar */
     scrollbar-width: none; /* Firefox */
@@ -214,7 +217,7 @@
   }
 
   .sidebar-item {
-    padding: 15px;
+    padding: 15px 10px;
     margin-bottom: 5px;
     border-radius: 10px;
     cursor: pointer;
@@ -232,6 +235,11 @@
     transform: translateY(-2px);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
     background: #f8f8f8;
+  }
+
+  .sidebar-text {
+    font-size: 12px;
+    font-weight: 500;
   }
   
  
@@ -289,6 +297,7 @@
     gap: 10px;
     justify-content: center;
     padding-bottom: 60px;
+    padding-left: 2px;
   }
   
   .dress-card {
@@ -365,6 +374,14 @@
     .dress-card h3 {
       font-size: 16px;
     }
+
+    .sidebar-text{
+      font-size: 16px;
+    }
+
+    .sidebar{
+      width: 120px;
+    }
   }
   
   
@@ -384,6 +401,14 @@
     .dress-card h3 {
       font-size: 16px;
     }
+    .sidebar-text{
+      font-size: 16px;
+    }
+
+    .sidebar{
+      width: 115px;
+    }
+    
   }
 
 
@@ -405,14 +430,19 @@
     .dress-card h3 {
       font-size: 14px;
     }
+    .sidebar-text{
+      font-size: 14px;
+    }
+
+    .sidebar{
+      width: 105px;
+    }
   }
   
   @media screen and (max-width: 480px) {
     .banner {
       text-align: center;
     }
-    
-   
     
     .dress-grid {
       /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */
@@ -433,11 +463,25 @@
       max-width: -webkit-fill-available;
     }
     
-    
+    .sidebar-text{
+      font-size: 13px;
+    }
+
+    .sidebar{
+      width: 100px;
+    }
   }
   @media screen and (max-width: 375px) {
     .dress-grid {
       margin-bottom: 36px;
+    }
+
+    .sidebar-text{
+      font-size: 12px;
+    }
+
+    .sidebar{
+      width: 100px;
     }
   }
 
@@ -447,6 +491,14 @@
     }
     .dress-grid {
       margin-bottom: 36px;
+    }
+
+    .sidebar-text{
+      font-size: 10px;
+    }
+
+    .sidebar{
+      width: 80px;
     }
     
   }
