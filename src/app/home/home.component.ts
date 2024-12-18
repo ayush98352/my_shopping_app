@@ -25,6 +25,11 @@ export class HomeComponent implements OnInit {
   public recommendedProducts: any = [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
 
+  offset: number = 0;
+  limit: number = 10; // Adjust as per requirement
+  allProductsLoaded: boolean = false;
+
+
   public userLocation: any = {
     latitude: null,
     longitude: null
@@ -40,6 +45,7 @@ export class HomeComponent implements OnInit {
   public location: any = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location') || '{}') : {};
   public activeTab = 'home';
   public isLoading = true;
+  public isLoadingContent: boolean = false;
 
 
 
@@ -53,29 +59,68 @@ export class HomeComponent implements OnInit {
     }else{
       this.displayAddress = this.location.display_address.address_line;
     }
-    
 
-    await this.apiService.getData('/home/top-categories').subscribe(
-      (response) => {
-        this.categories = response.result;
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
-
-    await this.apiService.getData('/home/brands').subscribe(
-      (response) => {
-        this.brands = response.result;
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
-
-    await this.getRecommenedProducts();
+    // await this.getRecommenedProducts();
+    await this.loadCachedData();
 
     this.getSavedAddress();
+  }
+
+  async loadCachedData() {
+    // Load cached products and scroll position from session storage
+    const cachedProducts = sessionStorage.getItem('recommendedProducts');
+    const cachedOffset = sessionStorage.getItem('offset-home');
+    const cachedScrollPosition = sessionStorage.getItem('scrollPosition-home');
+    const cachedTopCategories = sessionStorage.getItem('topCategories');
+    const cachedbrands = sessionStorage.getItem('brands');
+    if (cachedProducts) {
+      this.recommendedProducts = JSON.parse((cachedProducts));
+      this.offset = cachedOffset ? parseInt(cachedOffset) : 0;
+      this.allProductsLoaded = this.recommendedProducts.length < this.offset;
+      this.isLoading = false;
+
+    }else{
+      await this.getRecommenedProducts();
+    }
+    if(cachedTopCategories){
+      this.categories = JSON.parse(cachedTopCategories);
+    }
+    else{
+      await this.apiService.getData('/home/top-categories').subscribe(
+        (response) => {
+          this.categories = response.result;
+          sessionStorage.setItem('topCategories', JSON.stringify(this.categories));
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+        }
+      );
+    }
+
+    if(cachedbrands){
+      this.brands = JSON.parse(cachedbrands);
+    }
+    else {
+      await this.apiService.getData('/home/brands').subscribe(
+        (response) => {
+          this.brands = response.result;
+          sessionStorage.setItem('brands', JSON.stringify(this.brands));
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+        }
+      );
+      
+    }
+
+    if (cachedScrollPosition) {
+      setTimeout(() => {
+        const scrollContainer = document.querySelector('.content') as HTMLElement;
+        if (scrollContainer) {
+          scrollContainer.scrollTop = parseInt(cachedScrollPosition, 10); // Restore scroll position
+        }
+      }, 0); // Restore after rendering
+    }
   }
 
   async setUserLocation(){
@@ -228,18 +273,37 @@ export class HomeComponent implements OnInit {
   }
 
   async getRecommenedProducts(){
+
+    if (this.allProductsLoaded || this.isLoadingContent) return;
+    if(!this.isLoading){
+      this.isLoadingContent = true;
+    }
+    
+
     let apiParams = {
       user_id: this.loggedInUserId,
+      offset: this.offset,
+      limit: this.limit,
     }
     await this.apiService.getDataWithParams('/home/getRecommenedProducts', apiParams).subscribe(
       (response) => {
-        this.recommendedProducts = JSON.parse(JSON.stringify(response.result));
-        this.isLoading = false;
+        let data = JSON.parse(JSON.stringify(response.result));
+        if (data.length === 0) {
+          this.allProductsLoaded = true;
+        } else {
+          this.recommendedProducts = [...this.recommendedProducts, ...data];
+          this.offset += this.limit;
+          this.cacheData();
+        }
       },
       (error) => {
         console.error('Error fetching data:', error);
+      },
+      () => {
+        this.isLoading = false;
+        this.isLoadingContent = false;
       }
-    );
+    );  
   }
 
   async setSavedAddress(address : any){
@@ -269,6 +333,7 @@ export class HomeComponent implements OnInit {
           if (productIndex !== -1) {
               // Update the iswishlisted property for the specific product
               this.recommendedProducts[productIndex].iswishlisted = "1"; // Set iswishlisted to 1
+              this.cacheData();
           }
           else{
             alert('Unable to add to wishlist');
@@ -294,6 +359,7 @@ export class HomeComponent implements OnInit {
           if (productIndex !== -1) {
               // Update the iswishlisted property for the specific product
               this.recommendedProducts[productIndex].iswishlisted = "0"; // Set iswishlisted to 1
+              this.cacheData();
           }
           else{
             alert('Unable to remove to wishlist');
@@ -315,6 +381,23 @@ export class HomeComponent implements OnInit {
     this.activeTab = tab;
   }
 
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    const scrollPosition = target.scrollTop + target.clientHeight;
+    const pageHeight = target.scrollHeight;
+
+    if (scrollPosition >= pageHeight - 40 && !this.isLoading && !this.isLoadingContent) {
+      this.getRecommenedProducts();
+    }
+  }
+
+  cacheData(): void {
+    // Save products and offset in session storage
+    sessionStorage.setItem('recommendedProducts', JSON.stringify(this.recommendedProducts));
+    sessionStorage.setItem('offset-home', this.offset.toString());
+  }
+
   gotoShowCategoryProductsPage(category: any) {
     this.dataShareService.setData(category.category_name);
     // localStorage.setItem('categoryName', category.name);
@@ -328,6 +411,11 @@ export class HomeComponent implements OnInit {
   }
 
   gotoShowProductPage(product:any){
+    // sessionStorage.setItem('scrollPosition-home', window.scrollY.toString());
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      sessionStorage.setItem('scrollPosition-home', scrollContainer.scrollTop.toString());
+    }
     this.dataShareService.setProductDetails(product);
     return this.router.navigate(['/product', product.product_id] );
   }

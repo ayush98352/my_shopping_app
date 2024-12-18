@@ -150,7 +150,7 @@
     </div>
   
 
-    <div class="content">
+    <div class="content" (scroll)="onScroll($event)">
       <!-- categories -->
         <div class="section">
           <!-- <div class="location-container">
@@ -268,7 +268,7 @@
         </div>
         <div class="section">
             <h3>Top Products</h3>
-            <div class="product-grid">
+            <div class="product-grid" >
               <ng-container *ngFor="let recommendedProduct of recommendedProducts">
                 <div class="product-grid-item" (click) = "gotoShowProductPage(recommendedProduct)">
                   <div>
@@ -300,6 +300,13 @@
                   </p>
                 </div>
               </ng-container>
+            </div>
+            <div class="loader-content" *ngIf="isLoadingContent">
+              <div class="spinner1" style="position: relative;"></div>
+              <p>Loading...</p>
+            </div>
+            <div *ngIf="allProductsLoaded" class="end-message">
+              <p>All products are loaded!</p>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@
             <mat-icon [svgIcon]="'cart-icon'"  [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
         </div>
     </div>
-    <div class="content">
+    <div class="content" (scroll)="onScroll($event)">
         <div class="section">
             <div class="product-grid">
                 <ng-container *ngFor="let product of products">
@@ -61,6 +61,13 @@
                     </p>
                   </div>
                 </ng-container>
+            </div>
+            <div class="loader-content" *ngIf="isLoadingContent">
+              <div class="spinner1" style="position: relative;"></div>
+              <p>Loading...</p>
+            </div>
+            <div *ngIf="allProductsLoaded" class="end-message">
+              <p>All products are loaded!</p>
             </div>
         </div>
         

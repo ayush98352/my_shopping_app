@@ -117,3 +117,23 @@ svg {
     }
   }
 
+
+  /* lodaer-content */
+
+.loader-content {
+  text-align: center;
+  margin: 5px 0;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  
+}
+
+.end-message {
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+}

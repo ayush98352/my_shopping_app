@@ -162,6 +162,9 @@ export class ProductComponent implements OnInit{
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = true;
+          
+          this.resetSessionStorage();
+
         }else{
           this.inWishlist = false;
           if(!this.loggedInUserId){
@@ -183,6 +186,7 @@ export class ProductComponent implements OnInit{
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = false;
+          this.resetSessionStorage();
         }else{
           this.inWishlist = true;
           alert('Unable To remove from wishlist');
@@ -243,6 +247,23 @@ export class ProductComponent implements OnInit{
   
   goToBagPage(){
     return this.router.navigate(['/cart']);
+  }
+
+  resetSessionStorage(){
+    const recommendedProducts = JSON.parse(sessionStorage.getItem('recommendedProducts') || '[]');
+    if (recommendedProducts.some((product :any) => product.product_id == this.productId)) {
+      sessionStorage.removeItem('recommendedProducts');
+      sessionStorage.removeItem('offset-home');
+      sessionStorage.removeItem('ScrollPosition-home');
+    }
+
+    let displayName = this.dataShareService.getData();
+    const products = JSON.parse(sessionStorage.getItem(`products-${displayName}`) || '[]');
+    if (products.some((product :any) => product.product_id == this.productId)) {
+      sessionStorage.removeItem(`products-${displayName}`);
+      sessionStorage.removeItem(`offset-category-${displayName}`);
+      sessionStorage.removeItem(`scrollPosition-category-${displayName}`);
+    }
   }
 
 }

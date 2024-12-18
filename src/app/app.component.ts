@@ -54,6 +54,11 @@ export class AppComponent implements OnInit {
   public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService, private location: Location ) { 
     this.apiService.fetchCsrfToken(); 
     this.setupBackButtonHandler();
+    if(isPlatformBrowser(this.platformId)) {
+      if(sessionStorage){
+        sessionStorage.clear();
+      }
+    }
   }
  
   ngOnInit(): void {
