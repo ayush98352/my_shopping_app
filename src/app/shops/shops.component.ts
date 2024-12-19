@@ -206,5 +206,11 @@ export class ShopsComponent implements OnInit {
     return this.router.navigate(['/home']);
   }
 
+  scrollToTop() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }
 
 }

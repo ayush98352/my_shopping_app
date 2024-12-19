@@ -312,7 +312,7 @@
     </div>
     <div class="footer">
         <div class="footer-icons">
-          <div class="icon" (click)="changeFooterTab('home')">
+          <div class="icon" (click)="changeFooterTab('home'); scrollToTop()">
             <!-- <img [src]="activeTab === 'home' ? 'assets/svg/home-icon-active.svg' : 'assets/svg/home-icon.svg'" alt="Home" width="29" height="29"> -->
             <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
           </div>

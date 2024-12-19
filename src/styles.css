@@ -68,7 +68,9 @@ svg {
     text-rendering: optimizeLegibility;
 }
   
-
+.header{
+  z-index: 1001;
+}
   
   
 

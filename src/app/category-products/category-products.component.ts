@@ -208,13 +208,8 @@ export class CategoryProductsComponent implements OnInit{
               // Update the iswishlisted property for the specific product
               this.products[productIndex].iswishlisted = "1"; // Set iswishlisted to 1
               this.cacheData();
-              const recommendedProducts = JSON.parse(sessionStorage.getItem('recommendedProducts') || '[]');
-
-              if (recommendedProducts.some((product :any) => product.product_id == product.product_id)) {
-                  sessionStorage.removeItem('recommendedProducts');
-                  sessionStorage.removeItem('offset-home');
-                  sessionStorage.removeItem('ScrollPosition-home');
-              }
+              this.resetSessionStorage('addToWishlist', product.product_id);
+              this.cacheWishlistedProducts('addToWishlist', product);
           }
           else{
             alert('Unable to add to wishlist');
@@ -239,17 +234,11 @@ export class CategoryProductsComponent implements OnInit{
         if(response.code == 200 && response.message == 'sucess'){
           const productIndex = this.products.findIndex((prod: any) => prod.product_id === product.product_id);
           if (productIndex !== -1) {
-              // Update the iswishlisted property for the specific product
-              this.products[productIndex].iswishlisted = "0"; // Set iswishlisted to 1
-              this.cacheData();
-              const recommendedProducts = JSON.parse(sessionStorage.getItem('recommendedProducts') || '[]');
-
-              if (recommendedProducts.some((product :any) => product.product_id == product.product_id)) {
-                  sessionStorage.removeItem('recommendedProducts');
-                  sessionStorage.removeItem('offset-home');
-                  sessionStorage.removeItem('ScrollPosition-home');
-              }
-              
+            // Update the iswishlisted property for the specific product
+            this.products[productIndex].iswishlisted = "0"; // Set iswishlisted to 1
+            this.cacheData();
+            this.resetSessionStorage('removeFromWishlist', product.product_id);
+            this.cacheWishlistedProducts('removeFromWishlist', product);
           }
           else{
             alert('Unable to remove to wishlist');
@@ -262,19 +251,18 @@ export class CategoryProductsComponent implements OnInit{
   }
 
   gotoShowProductPage(product:any){
-    const scrollContainer = document.querySelector('.content') as HTMLElement;
-    if (scrollContainer) {
-      sessionStorage.setItem(`scrollPosition-category-${this.displayName}`, scrollContainer.scrollTop.toString());
-    }
+    this.storeScrollPosition();
     this.dataShareService.setProductDetails(product);
     return this.router.navigate(['/product', product.product_id] );
   }
 
   goToWishlistPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/cart']);
   }
 
@@ -296,6 +284,7 @@ export class CategoryProductsComponent implements OnInit{
     else{
       this.location.back()
     }
+    sessionStorage.removeItem(`scrollPosition-category-${this.displayName}`);
   }
 
   cacheData(): void {
@@ -303,7 +292,7 @@ export class CategoryProductsComponent implements OnInit{
     sessionStorage.setItem(`products-${this.displayName}`, JSON.stringify(this.products));
     sessionStorage.setItem(`offset-category-${this.displayName}`, this.offset.toString());
   }
-
+  
   @HostListener('scroll', ['$event'])
   async onScroll(event: Event) {
     const target = event.target as HTMLElement;
@@ -361,6 +350,47 @@ export class CategoryProductsComponent implements OnInit{
     }
   }
 
+  storeScrollPosition() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      sessionStorage.setItem(`scrollPosition-category-${this.displayName}`, scrollContainer.scrollTop.toString());
+    }
+  }
 
+  resetSessionStorage(mode: any, productId: any): void {
+    const updateWishlistStatus = (items: any[], productId: number, status: number) => {
+      const index = items.findIndex((item: any) => item.product_id == productId);
+      if (index !== -1) {
+        items[index].iswishlisted = status;
+      }
+      return items;
+    };
+
+    const wishlistStatus = mode === 'addToWishlist' ? 1 : 0;
+
+    for (const key of Object.keys(sessionStorage)) {
+      const products = JSON.parse(sessionStorage.getItem(key) || '[]');
+      if(products.length > 0){
+        updateWishlistStatus(products, productId, wishlistStatus);
+        sessionStorage.setItem(key, JSON.stringify(products));
+      }
+    }
+  }
+
+  cacheWishlistedProducts(mode: any, product: any): void {
+    const wishlistedProducts = JSON.parse(sessionStorage.getItem('wishlistedProducts') || '[]');
+    if(wishlistedProducts.length > 0){
+      if(mode == 'addToWishlist'){
+        wishlistedProducts.unshift(product);
+      }
+      else if(mode == 'removeFromWishlist'){
+        let index = wishlistedProducts.findIndex((prod :any) => prod.product_id == product.product_id);
+        if (index !== -1) {
+          wishlistedProducts.splice(index, 1);
+        }
+      }
+      sessionStorage.setItem('wishlistedProducts', JSON.stringify(wishlistedProducts));
+    }
+  }
 
 }

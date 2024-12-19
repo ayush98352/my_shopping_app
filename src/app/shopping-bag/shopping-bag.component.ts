@@ -177,6 +177,8 @@ export class ShoppingBagComponent implements OnInit{
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.removeFromCart(product);
+          this.resetSessionStorage('addToWishlist', product.product_id);
+          this.cacheWishlistedProducts('addToWishlist', product);
         }else{
           alert('Unable to add to wishlist');
         }
@@ -387,5 +389,35 @@ export class ShoppingBagComponent implements OnInit{
     const seconds = String(now.getSeconds()).padStart(2, '0');
   
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  resetSessionStorage(mode: any, productId: number): void {
+    const updateWishlistStatus = (items: any[], productId: number, status: number) => {
+      const index = items.findIndex((item: any) => item.product_id == productId);
+      if (index !== -1) {
+        items[index].iswishlisted = status;
+      }
+      return items;
+    };
+
+    const wishlistStatus = mode === 'addToWishlist' ? 1 : 0;
+
+    for (const key of Object.keys(sessionStorage)) {
+      const products = JSON.parse(sessionStorage.getItem(key) || '[]');
+      if(products.length > 0){
+        updateWishlistStatus(products, productId, wishlistStatus);
+        sessionStorage.setItem(key, JSON.stringify(products));
+      }
+    }
+  }
+
+  cacheWishlistedProducts(mode: any, product: any): void {
+    const wishlistedProducts = JSON.parse(sessionStorage.getItem('wishlistedProducts') || '[]');
+    if(wishlistedProducts.length > 0){
+      if(mode == 'addToWishlist'){
+        wishlistedProducts.unshfit(product);
+      }
+      sessionStorage.setItem('wishlistedProducts', JSON.stringify(wishlistedProducts));
+    }
   }
 }

@@ -86,7 +86,7 @@
           <div class="icon" (click)="changeFooterTab('stores'); gotoShopsPage()">
             <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
           </div>
-          <div class="icon" (click)="changeFooterTab('explore')">
+          <div class="icon" (click)="changeFooterTab('explore'); scrollToTop()">
             <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('trends')">

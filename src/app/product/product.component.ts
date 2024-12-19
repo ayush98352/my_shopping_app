@@ -82,7 +82,6 @@ export class ProductComponent implements OnInit{
     showImage();
 
     this.checkWishlistStatus();
-    // this.checkCartStatus();
 
   }
 
@@ -102,11 +101,6 @@ export class ProductComponent implements OnInit{
           this.currentImage = this.productDetails?.main_image;
           this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
         }
-        
-        
-        // this.currentImage = this.productDetails?.main_image;
-        // Create a new array with the combination of main_image and additional_images
-        // this.imagesArray = [this.productDetails?.main_image, ...this.productDetails?.additional_images];
         this.getScrollImages();
       },
       (error) => {
@@ -162,9 +156,8 @@ export class ProductComponent implements OnInit{
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = true;
-          
-          this.resetSessionStorage();
-
+          this.resetSessionStorage('addToWishlist');
+          this.cacheWishlistedProducts('addToWishlist', this.productDetails);
         }else{
           this.inWishlist = false;
           if(!this.loggedInUserId){
@@ -186,21 +179,14 @@ export class ProductComponent implements OnInit{
       .subscribe((response: any) => {
         if(response.code == 200 && response.message == 'sucess'){
           this.inWishlist = false;
-          this.resetSessionStorage();
+          this.resetSessionStorage('removeFromWishlist');
+          this.cacheWishlistedProducts('removeFromWishlist', this.productDetails);
         }else{
           this.inWishlist = true;
           alert('Unable To remove from wishlist');
         }
     });
   }
-
-  // checkCartStatus() {
-  //   this.http.get(`/cart/check?user_id=${this.userId}&product_id=${this.productId}`)
-  //     .subscribe((response: any) => {
-  //       this.inCart = response.inCart;
-  //       this.cartQuantity = response.quantity || 0;
-  //     });
-  // }
 
   async setSelectedSize(size: any){
     this.selectedSize = size;
@@ -211,6 +197,7 @@ export class ProductComponent implements OnInit{
       this.inCart = false;
     }
   }
+
   async addToCart(){
     if(!this.loggedInUserId){
       this.router.navigate(['/login']);
@@ -249,20 +236,39 @@ export class ProductComponent implements OnInit{
     return this.router.navigate(['/cart']);
   }
 
-  resetSessionStorage(){
-    const recommendedProducts = JSON.parse(sessionStorage.getItem('recommendedProducts') || '[]');
-    if (recommendedProducts.some((product :any) => product.product_id == this.productId)) {
-      sessionStorage.removeItem('recommendedProducts');
-      sessionStorage.removeItem('offset-home');
-      sessionStorage.removeItem('ScrollPosition-home');
-    }
+  resetSessionStorage(mode: any) {
+    const updateWishlistStatus = (items: any[], productId: number, status: number) => {
+      const index = items.findIndex((item: any) => item.product_id == productId);
+      if (index !== -1) {
+        items[index].iswishlisted = status;
+      }
+      return items;
+    };
 
-    let displayName = this.dataShareService.getData();
-    const products = JSON.parse(sessionStorage.getItem(`products-${displayName}`) || '[]');
-    if (products.some((product :any) => product.product_id == this.productId)) {
-      sessionStorage.removeItem(`products-${displayName}`);
-      sessionStorage.removeItem(`offset-category-${displayName}`);
-      sessionStorage.removeItem(`scrollPosition-category-${displayName}`);
+    const wishlistStatus = mode === 'addToWishlist' ? 1 : 0;
+    
+    for (const key of Object.keys(sessionStorage)) {
+      const products = JSON.parse(sessionStorage.getItem(key) || '[]');
+      if(products.length > 0){
+        updateWishlistStatus(products, this.productId, wishlistStatus);
+        sessionStorage.setItem(key, JSON.stringify(products));
+      }
+    }
+  }
+
+  cacheWishlistedProducts(mode: any, product: any): void {
+    const wishlistedProducts = JSON.parse(sessionStorage.getItem('wishlistedProducts') || '[]');
+    if(wishlistedProducts.length > 0){
+      if(mode == 'addToWishlist'){
+        wishlistedProducts.unshift(product);
+      }
+      else if(mode == 'removeFromWishlist'){
+        let index = wishlistedProducts.findIndex((prod :any) => prod.product_id == product.product_id);
+        if (index !== -1) {
+          wishlistedProducts.splice(index, 1);
+        }
+      }
+      sessionStorage.setItem('wishlistedProducts', JSON.stringify(wishlistedProducts));
     }
   }
 

@@ -334,6 +334,8 @@ export class HomeComponent implements OnInit {
               // Update the iswishlisted property for the specific product
               this.recommendedProducts[productIndex].iswishlisted = "1"; // Set iswishlisted to 1
               this.cacheData();
+              this.cacheWishlistedProducts('addToWishlist', product);
+              this.resetSessionStorage('addToWishlist', product.product_id);
           }
           else{
             alert('Unable to add to wishlist');
@@ -360,6 +362,8 @@ export class HomeComponent implements OnInit {
               // Update the iswishlisted property for the specific product
               this.recommendedProducts[productIndex].iswishlisted = "0"; // Set iswishlisted to 1
               this.cacheData();
+              this.cacheWishlistedProducts('removeFromWishlist', product);
+              this.resetSessionStorage('removeFromWishlist', product.product_id);
           }
           else{
             alert('Unable to remove to wishlist');
@@ -399,6 +403,43 @@ export class HomeComponent implements OnInit {
     sessionStorage.setItem('offset-home', this.offset.toString());
   }
 
+  cacheWishlistedProducts(mode: any, product: any): void {
+    const wishlistedProducts = JSON.parse(sessionStorage.getItem('wishlistedProducts') || '[]');
+    if(wishlistedProducts.length > 0){
+      if(mode == 'addToWishlist'){
+        wishlistedProducts.unshift(product);
+      }
+      else if(mode == 'removeFromWishlist'){
+        let index = wishlistedProducts.findIndex((prod :any) => prod.product_id == product.product_id);
+        if (index !== -1) {
+          wishlistedProducts.splice(index, 1);
+        }
+      }
+      console.log('wishlistedProducts', wishlistedProducts);
+      sessionStorage.setItem('wishlistedProducts', JSON.stringify(wishlistedProducts));
+    }
+  }
+
+  resetSessionStorage(mode: any, productId: any): void {
+    const updateWishlistStatus = (items: any[], productId: number, status: number) => {
+      const index = items.findIndex((item: any) => item.product_id == productId);
+      if (index !== -1) {
+        items[index].iswishlisted = status;
+      }
+      return items;
+    };
+
+    const wishlistStatus = mode === 'addToWishlist' ? 1 : 0;
+
+    for (const key of Object.keys(sessionStorage)) {
+      const products = JSON.parse(sessionStorage.getItem(key) || '[]');
+      if(products.length > 0){
+        updateWishlistStatus(products, productId, wishlistStatus);
+        sessionStorage.setItem(key, JSON.stringify(products));
+      }
+    }
+  }
+
   gotoShowCategoryProductsPage(category: any) {
     sessionStorage.removeItem('ScrollPosition-home');
     this.dataShareService.setData(category.category_name);
@@ -414,24 +455,23 @@ export class HomeComponent implements OnInit {
   }
 
   gotoShowProductPage(product:any){
-    // sessionStorage.setItem('scrollPosition-home', window.scrollY.toString());
-    const scrollContainer = document.querySelector('.content') as HTMLElement;
-    if (scrollContainer) {
-      sessionStorage.setItem('scrollPosition-home', scrollContainer.scrollTop.toString());
-    }
+    this.storeScrollPosition();
     this.dataShareService.setProductDetails(product);
     return this.router.navigate(['/product', product.product_id] );
   }
 
   goToWishlistPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/cart']);
   }
 
   goToSearchPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/search'] );
   }
 
@@ -452,13 +492,30 @@ export class HomeComponent implements OnInit {
   }
 
   gotoProfilePage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/profile']);
   }
 
   gotoExplorePage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/explore']);
   }
   gotoShopsPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/shops']);
+  }
+
+  storeScrollPosition() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      sessionStorage.setItem('scrollPosition-home', scrollContainer.scrollTop.toString());
+    }
+  }
+
+  scrollToTop() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
   }
 }
