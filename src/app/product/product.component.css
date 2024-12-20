@@ -223,3 +223,55 @@
   object-fit: contain;
   border: 1px solid #ddd;
 }
+
+.product-images-scroll{
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  gap: 5px;
+}
+
+.product-image-new {
+  width: 260px;
+  height: auto;
+  border-radius: 8px;
+  align-items: center;
+}
+
+
+
+/* Responsive Breakpoints */
+
+@media screen and (max-width: 2000px) {
+  .product-image-new{
+    width: 500px;
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  .product-image-new{
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-image-new{
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .product-image-new{
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .product-image-new{
+    width: 270px;
+  }
+  
+}
+
+

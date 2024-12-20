@@ -23,11 +23,17 @@
     
     <!-- <img class="product-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)"> -->
     <div class="content">
-        <div class="product-images">
+        <!-- <div class="product-images">
             <img class="product-image" *ngIf="productDetails?.images !== null" [src]="currentImage" [alt]="currentImage" (error)="onImageError($event)">
             <img class="product-image" *ngIf="productDetails?.images === null" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)">
             <button class="carousel-prev">‹</button>
             <button class="carousel-next">›</button>
+        </div> -->
+
+        <div class="product-images-scroll" >
+            <div *ngFor="let image of imagesArray">
+                <img class="product-image-new" [src]="image" [alt]="image" >
+            </div>
         </div>
         
         <div class="color-options">

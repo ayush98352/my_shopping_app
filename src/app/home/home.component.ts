@@ -441,7 +441,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoShowCategoryProductsPage(category: any) {
-    sessionStorage.removeItem('ScrollPosition-home');
+    this.storeScrollPosition();
     this.dataShareService.setData(category.category_name);
     // localStorage.setItem('categoryName', category.name);
     // return this.router.navigate(['/category', category.category_id], { queryParams: { categoryName: category.category_name } });
@@ -449,7 +449,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoShowBrandProductsPage(brand: any) {
-    sessionStorage.removeItem('ScrollPosition-home');
+    this.storeScrollPosition();
     this.dataShareService.setData(brand.brand_name);
     return this.router.navigate(['/brand', brand.brand_id] );
   }

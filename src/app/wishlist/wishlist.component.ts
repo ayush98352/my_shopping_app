@@ -169,21 +169,18 @@ export class WishlistComponent implements OnInit {
   async loadCachedData() {
     // Load cached products and scroll position from session storage
     const cachedProducts = sessionStorage.getItem(`wishlistedProducts`);
-    const cachedOffset = sessionStorage.getItem(`offset-category-wishlist`);
+    const cachedOffset = sessionStorage.getItem(`offset-wishlist`);
     const cachedScrollPosition = sessionStorage.getItem(`scrollPosition-wishlist`);
-    
     
     if (cachedProducts) {
       this.wishlistedProducts = JSON.parse((cachedProducts));
       this.offset = cachedOffset ? parseInt(cachedOffset) : 0;
       this.allProductsLoaded = this.wishlistedProducts.length < this.offset;
       this.isLoading = false;
-
     }
     else{
       await this.getWishlistedProducts();
     }
-    
 
     if (cachedScrollPosition) {
       setTimeout(() => {
