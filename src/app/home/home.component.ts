@@ -208,7 +208,12 @@ export class HomeComponent implements OnInit {
       (response) => {
         this.location = JSON.parse(JSON.stringify(response));
         this.displayAddress = this.location.display_address.address_line;
-        localStorage.setItem('location', JSON.stringify(response))
+        localStorage.setItem('location', JSON.stringify(response));
+        sessionStorage.removeItem('mallsList');
+        sessionStorage.removeItem('mallsOffset');
+        sessionStorage.removeItem('shopsList');
+        sessionStorage.removeItem('shopsOffset');
+        sessionStorage.removeItem('scrollPosition-shops');
       },
       (error) => {
         console.error('Error fetching location details:', error);
@@ -248,7 +253,12 @@ export class HomeComponent implements OnInit {
           this.location = JSON.parse(JSON.stringify(response));
           this.displayAddress = this.location.display_address.address_line;
           this.closeAddressPopup();
-          localStorage.setItem('location', JSON.stringify(response))
+          localStorage.setItem('location', JSON.stringify(response));
+          sessionStorage.removeItem('mallsList');
+          sessionStorage.removeItem('mallsOffset');
+          sessionStorage.removeItem('shopsList');
+          sessionStorage.removeItem('shopsOffset');
+          sessionStorage.removeItem('scrollPosition-shops');
         },
         (error) => {
           console.error('Error fetching location details:', error);
@@ -382,7 +392,7 @@ export class HomeComponent implements OnInit {
   }
 
   changeFooterTab(tab: any){
-    sessionStorage.removeItem('ScrollPosition-home');
+    // sessionStorage.removeItem('scrollPosition-home');
     this.activeTab = tab;
   }
 

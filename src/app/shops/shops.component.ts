@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { DataShareService } from '../services/data.share.service';
 import { ApiService } from '../services/api.service';
@@ -51,6 +51,16 @@ export class ShopsComponent implements OnInit {
   public shopsList: any[] = [];
   public coordinates: any;
   public isLoading = true;
+  public isLoadingMallsContent: boolean = false;
+  public isLoadingShopsContent: boolean = false;
+
+  mallsOffset: number = 0;
+  mallsLimit: number = 5;
+  allMallsLoaded: boolean = false;
+
+  shopsOffset: number = 0;
+  shopsLimit: number = 10; 
+  allShopsLoaded: boolean = false;
 
 
   shopsCategory: Shop[] = [
@@ -87,8 +97,49 @@ export class ShopsComponent implements OnInit {
   async ngOnInit() {
     let location = JSON.parse(localStorage.getItem('location') || '{}');  
     this.coordinates = location['coordinate'];
-    await this.getMallsList();
-    this.getShopsList();
+    // await this.getMallsList();
+    // this.getShopsList();
+    await this.loadCachedData();
+  }
+
+  async loadCachedData() {
+    // Load cached products and scroll position from session storage
+    const cachedMallsList = sessionStorage.getItem('mallsList');
+    const cachedMallsOffset = sessionStorage.getItem('mallsOffset');
+    const cachedScrollPosition = sessionStorage.getItem('scrollPosition-shops');
+
+    const cachedShopsList = sessionStorage.getItem('shopsList');
+    const cachedShopsOffset = sessionStorage.getItem('shopsOffset');
+
+    const cachedExploreTab =   sessionStorage.getItem('shopsExploreTab');
+
+    if (cachedMallsList && cachedShopsList) {
+      this.mallsList = JSON.parse((cachedMallsList));
+      this.mallsOffset = cachedMallsOffset ? parseInt(cachedMallsOffset) : 0;
+      this.allMallsLoaded = this.mallsList.length < this.mallsOffset;
+
+      this.shopsList = JSON.parse((cachedShopsList));
+      this.shopsOffset = cachedShopsOffset ? parseInt(cachedShopsOffset) : 0;
+      this.allShopsLoaded = this.shopsList.length < this.shopsOffset;
+
+      this.isLoading = false;
+    }else{
+      this.getMallsList();
+      this.getShopsList();
+    }
+
+    if(cachedExploreTab){
+      this.activeExploreTab = cachedExploreTab;
+    }
+  
+    if (cachedScrollPosition) {
+      setTimeout(() => {
+        const scrollContainer = document.querySelector('.content') as HTMLElement;
+        if (scrollContainer) {
+          scrollContainer.scrollTop = parseInt(cachedScrollPosition, 10); // Restore scroll position
+        }
+      }, 0); // Restore after rendering
+    }
   }
 
   toggleFavorite(shop: Shop): void {
@@ -96,49 +147,95 @@ export class ShopsComponent implements OnInit {
   }
   
   async getMallsList(){
+
+    if (this.allMallsLoaded || this.isLoadingMallsContent) return;
+    if(!this.isLoading){
+      this.isLoadingMallsContent = true;
+    };
+
+
     let apiParams = {
       latitude: this.coordinates['lat'],
-      longitude: this.coordinates['lon']
-    }
+      longitude: this.coordinates['lon'],
+      offset: this.mallsOffset,
+      limit: this.mallsLimit
+    };
 
     await this.apiService.getDataWithParams('/home/getMallsList', apiParams).subscribe(
       (response) => {
-        this.isLoading = false;
-        this.mallsList = JSON.parse(JSON.stringify(response.result));
+        let data = JSON.parse(JSON.stringify(response.result));
+        if (data.length === 0) {
+          this.allMallsLoaded = true;
+        } else {
+          this.mallsList = [...this.mallsList, ...data];
+          this.mallsOffset += this.mallsLimit;
+          this.cacheData();
+        }
       },
       (error) => {
         console.error('Error fetching data:', error);
+      },
+      () => {
+        if(this.activeExploreTab == 'Malls'){
+          this.isLoading = false;
+        }
+        this.isLoadingMallsContent = false;
       }
     );
   }
 
   async getShopsList(){
+
+    if (this.allShopsLoaded || this.isLoadingShopsContent) return;
+    if(!this.isLoading){
+      this.isLoadingShopsContent = true;
+    };
+
+
     let apiParams = {
       latitude: this.coordinates['lat'],
-      longitude: this.coordinates['lon']
-    }
+      longitude: this.coordinates['lon'],
+      offset: this.shopsOffset,
+      limit: this.shopsLimit
+    };
 
     await this.apiService.getDataWithParams('/home/getShopsList', apiParams).subscribe(
       (response) => {
-        this.shopsList = JSON.parse(JSON.stringify(response.result));
+        let data = JSON.parse(JSON.stringify(response.result));
+        if (data.length === 0) {
+          this.allMallsLoaded = true;
+        } else {
+          this.shopsList = [...this.shopsList, ...data];
+          this.shopsOffset += this.shopsLimit;
+          this.cacheData();
+        }
       },
       (error) => {
         console.error('Error fetching data:', error);
+      },
+      () => {
+        if(this.activeExploreTab == 'Shops'){
+          this.isLoading = false;
+        }
+        this.isLoadingShopsContent = false;
       }
     );
   }
 
   async goToMallsPage(item: any){
     this.dataShareService.setMallDetails(item);
+    this.storeScrollPosition();
     return this.router.navigate(['/malls']);
   }
 
   async goToStorePage(store: any){
+    this.storeScrollPosition();
     this.dataShareService.setStoreDetails(store);
     return this.router.navigate(['/store']);
   }
 
   changeExploreTab(tab: any){
+    sessionStorage.setItem('shopsExploreTab', tab);
     this.activeExploreTab = tab;
   }
 
@@ -183,26 +280,32 @@ export class ShopsComponent implements OnInit {
   }
 
   goToWishlistPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/cart']);
   }
 
   goToSearchPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/search'] );
   }
 
   gotoProfilePage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/profile']);
   }
 
   gotoExplorePage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/explore']);
   }
 
   gotoHomePage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/home']);
   }
 
@@ -213,4 +316,34 @@ export class ShopsComponent implements OnInit {
     }
   }
 
+
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    const scrollPosition = target.scrollTop + target.clientHeight;
+    const pageHeight = target.scrollHeight;
+
+    if (scrollPosition >= pageHeight - 40 && !this.isLoading && !this.isLoadingShopsContent && this.activeExploreTab == 'Shops' && !this.allShopsLoaded) {
+      this.getShopsList();
+    }
+
+    if (scrollPosition >= pageHeight - 40 && !this.isLoading && !this.isLoadingMallsContent && this.activeExploreTab == 'Malls' && !this.allMallsLoaded) {
+      this.getMallsList();
+    }
+  }
+
+  storeScrollPosition() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      sessionStorage.setItem('scrollPosition-shops', scrollContainer.scrollTop.toString());
+    }
+  }
+
+  cacheData(): void {
+    // Save products and offset in session storage
+    sessionStorage.setItem('mallsList', JSON.stringify(this.mallsList));
+    sessionStorage.setItem('mallsOffset', this.mallsOffset.toString());
+    sessionStorage.setItem('shopsList', JSON.stringify(this.shopsList));
+    sessionStorage.setItem('shopsOffset', this.shopsOffset.toString());
+  }
 }

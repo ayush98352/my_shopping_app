@@ -256,7 +256,12 @@ export class AddAddressComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getUserLocation', apiParams).subscribe(
       (response) => {
-        localStorage.setItem('location', JSON.stringify(response))
+        localStorage.setItem('location', JSON.stringify(response));
+        sessionStorage.removeItem('mallsList');
+        sessionStorage.removeItem('mallsOffset');
+        sessionStorage.removeItem('shopsList');
+        sessionStorage.removeItem('shopsOffset');
+        sessionStorage.removeItem('scrollPosition-shops');
       },
       (error) => {
         console.error('Error fetching location details:', error);

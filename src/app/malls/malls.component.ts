@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule, Location } from '@angular/common'; // Import CommonModule
 import { DataShareService } from '../services/data.share.service';
 import { ApiService } from '../services/api.service';
@@ -38,8 +38,31 @@ export class MallsComponent implements OnInit {
     this.coordinates = location['coordinate'];
 
     this.mallDetails = this.dataShareService.getMallDetails();
-    await this.getMallsStoresList();
-   
+    // await this.getMallsStoresList();
+    await this.loadCachedData();
+  }
+
+  async loadCachedData() {
+    // Load cached products and scroll position from session storage
+    const cachedProducts = sessionStorage.getItem(`shopsList-mallspage-${this.mallDetails['mall_id']}`);
+    const cachedScrollPosition = sessionStorage.getItem(`scrollPosition-malls`);
+    
+    if (cachedProducts) {
+      this.shopsList = JSON.parse((cachedProducts));
+      this.isLoading = false;
+    }
+    else{
+      await this.getMallsStoresList();
+    }
+
+    if (cachedScrollPosition) {
+      setTimeout(() => {
+        const scrollContainer = document.querySelector('.content') as HTMLElement;
+        if (scrollContainer) {
+          scrollContainer.scrollTop = parseInt(cachedScrollPosition, 10); // Restore scroll position
+        }
+      }, 0); // Restore after rendering
+    }
   }
 
   async getMallsStoresList(){
@@ -48,8 +71,9 @@ export class MallsComponent implements OnInit {
     }
     await this.apiService.getDataWithParams('/home/getMallsStoresList', apiParams).subscribe(
       (response) => {
-        this.isLoading = false;
         this.shopsList = JSON.parse(JSON.stringify(response.result));
+        sessionStorage.setItem(`shopsList-mallspage-${this.mallDetails['mall_id']}`, JSON.stringify(this.shopsList));
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -86,34 +110,69 @@ export class MallsComponent implements OnInit {
   }
 
   goToStorePage(store: any){
+    this.storeScrollPosition();
     this.dataShareService.setStoreDetails(store);
     return this.router.navigate(['/store']);
   }
 
   goToWishlistPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/wishlist']);
   }
 
   goToBagPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/cart']);
   }
 
   goToSearchPage(){
+    this.storeScrollPosition();
     return this.router.navigate(['/search'] );
   }
 
   gotoProfilePage(){
+    sessionStorage.removeItem('scrollPosition-malls');
     return this.router.navigate(['/profile']);
   }
 
   gotoExplorePage(){
+    sessionStorage.removeItem('scrollPosition-malls');
     return this.router.navigate(['/explore']);
   }
 
   gotoHomePage(){
+    sessionStorage.removeItem('scrollPosition-malls');
     return this.router.navigate(['/home']);
   }
+
   goBackToPreviousPage(){
+    sessionStorage.removeItem('scrollPosition-malls')
     this.location.back();
   }
+
+  storeScrollPosition() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      sessionStorage.setItem('scrollPosition-malls', scrollContainer.scrollTop.toString());
+    }
+  }
+
+  scrollToTop() {
+    const scrollContainer = document.querySelector('.content') as HTMLElement;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }
+
+  @HostListener('scroll', ['$event'])
+  onScroll(event: Event): void {
+    // const target = event.target as HTMLElement;
+    // const scrollPosition = target.scrollTop + target.clientHeight;
+    // const pageHeight = target.scrollHeight;
+
+    // if (scrollPosition >= pageHeight - 40 && !this.isLoading && !this.isLoadingContent) {
+    //   this.getRecommenedProducts();
+    // }
+  }
+
 }

@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="content">
+    <div class="content" (scroll)="onScroll($event)">
         <!-- categories -->
         <div class="section">
             <div class="search-container"  (click) = "goToSearchPage()">
@@ -76,6 +76,14 @@
                     <div class="distance">{{item?.distance}} km</div>
                 </div>
             </div>
+           
+        </div>
+        <div class="loader-content" *ngIf="activeExploreTab === 'Malls' ? isLoadingMallsContent : isLoadingShopsContent">
+            <div class="spinner1" style="position: relative;"></div>
+            <p>Loading...</p>
+          </div>
+          <div *ngIf="activeExploreTab === 'Malls' ? allMallsLoaded : allShopsLoaded" class="end-message">
+            <p>All {{activeExploreTab}} are loaded!</p>
         </div>
 
         <div class="loader" *ngIf="isLoading">
