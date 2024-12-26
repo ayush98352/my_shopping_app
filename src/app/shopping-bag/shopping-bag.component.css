@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.shopping-bag {
+.content {
     margin-bottom: 30px; 
     flex-grow: 1;
     overflow-y: auto;

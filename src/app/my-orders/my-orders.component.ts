@@ -65,6 +65,7 @@ export class MyOrdersComponent implements OnInit {
   }
 
   goBackToPreviousPage(){
-    window.history.back();
+    // window.history.back();
+    this.router.navigate(['/profile']);
   }
 }

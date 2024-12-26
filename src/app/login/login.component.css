@@ -1,4 +1,4 @@
-.page-container {
+/* .page-container {
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -8,7 +8,18 @@
     position: relative;
     overflow-x: hidden;
     border-radius: 24px;
-  }
+  } */
+
+  .container  {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0px auto;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+    justify-content: center;
+    align-items: center;
+}
 
   .background {
     position: fixed;
@@ -22,7 +33,21 @@
     z-index: 0;
   }
 
+
 .login-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: calc(100vh - 130px); /* Adjust based on header + footer height */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  max-width: 1200px;
+  margin: 0px auto;
+  padding-top: 30px;
+  padding-bottom: 60px;
+  width: -webkit-fill-available;
+}
+
+/* .login-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +58,8 @@
     margin: 0 auto;
     padding: 20px 0px;
     border-radius: 24px;
-  }
+    overflow-y: auto;
+  } */
 
   .background-ellipse {
     position: absolute;
@@ -46,17 +72,20 @@
 
   .login-card {
     border-radius: 24px;
-    padding: 32px;
+    padding: 15px;
     width: 100%;
-    max-width: 400px;
+    /* max-width: 400px; */
     position: relative;
+    width: -webkit-fill-available;
+    max-width: 1200px;
     z-index: 0;
+    margin: 0 auto;
   }
 
   .login-text {
     position: absolute;
     font-family: 'Poppins', sans-serif;
-    top: 24px;
+    /* top: 24px; */
     left: 40px;
     color: #000;
     font-weight: 500;
@@ -67,7 +96,7 @@
   .skip-button {
     position: absolute;
     font-family: 'Poppins', sans-serif;
-    top: 24px;
+    /* top: 50px; */
     right: 40px;
     color: #000;
     font-weight: 500;
@@ -191,26 +220,15 @@
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
-    padding: 20px;
     position: relative;
-    max-width: 400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0px;
     border-radius: 24px;
   }
-
-  .login-card {
-    border-radius: 24px;
-    padding: 32px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-    z-index: 0;
-  }
-
   
   .otp-container {
-    max-width: 400px;
+    /* max-width: 1200px; */
     width: 100%;
     background: #ffffff;
     padding: 40px 20px;
@@ -256,13 +274,15 @@
   
   .otp-input-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 20px;
     gap: 5px;
+    width: -webkit-fill-available;
+    overflow-x: auto;
   }
   
   .otp-input {
-    width: 46px;
+    max-width: 46px;
     height: 50px;
     border: 1px solid #ff4f7e;
     border-radius: 8px;
@@ -271,6 +291,7 @@
     color: #ff4f7e;
     background-color: #fff1f2;
     outline: none;
+    width: calc(100% / 6);
   }
   
   .otp-input:focus {

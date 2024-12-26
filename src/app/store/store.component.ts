@@ -46,6 +46,8 @@ export class StoreComponent implements OnInit {
     'Kids' : ['Boys Clothing', 'Girls Clothing', 'Footwear', 'Toys & Games', 'Infants', 'Accessories']
   }
 
+  public activeFilter: any = [];
+
   contentViewTab: any = ['Inventory', 'Offers', 'Reviews', 'About'];
   
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService, private location: Location) {}
@@ -78,6 +80,19 @@ export class StoreComponent implements OnInit {
       }
     );
   }
+
+  setSelectedFilter(filter: any){
+    const index = this.activeFilter.indexOf(filter);
+    if (index > -1) {
+      // Remove filter if already selected
+      this.activeFilter.splice(index, 1);
+    } else {
+      // Add filter if not selected
+      this.activeFilter.push(filter);
+    }
+    console.log('activeFilter', this.activeFilter);
+  }
+
 
   changeFooterTab(tab: any){
     this.activeTab = tab;

@@ -53,9 +53,12 @@
             </div>
 
             <div class="filters-content">
-                <button class="filter">Filters <i class="fa fa-filter"></i></button>
+                <button class="filter">Filters 
+                    <!-- <i class="fa fa-filter"></i> -->
+                    <mat-icon [svgIcon]="'filter-symbol'"  [alt]="'filter'" style="width:17px; height:17px;"></mat-icon>
+                </button>
                 <div *ngFor="let category of productsfilters[activeFashionTab]">
-                    <button class="filter">{{category}}</button>
+                    <button class="filter" (click)="setSelectedFilter(category);" [class.active]="activeFilter.includes(category)">{{category}}</button>
                 </div>
             </div>
 
@@ -155,10 +158,37 @@
                   <img src="https://via.placeholder.com/50" alt="Profile">
                   <div class="review-content">
                     <div class="name">Helene Moore</div>
-                    <div class="date">June 5, 2024</div>
+                    <div class="date">Dec 5, 2024</div>
                     <div class="stars">★★★★★</div>
-                    <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.</p>
+                    <p>Such a lovely experience! The staff was incredibly helpful and attentive, making sure I found the perfect dress for my event. I couldn't be happier with my purchase!</p>
                   </div>
+                </div>
+                <div class="review">
+                    <img src="https://via.placeholder.com/50" alt="Profile">
+                    <div class="review-content">
+                        <div class="name">Jassica</div>
+                        <div class="date">Dec 7, 2024</div>
+                        <div class="stars">★★★★★</div>
+                        <p>These jeans are amazing! They fit perfectly and are so comfortable. I've bought several pairs in different colors. Great quality and great price!</p>
+                    </div>
+                </div>
+                <div class="review">
+                    <img src="https://via.placeholder.com/50" alt="Profile">
+                    <div class="review-content">
+                        <div class="name">James</div>
+                        <div class="date">Dec 12, 2024</div>
+                        <div class="stars">★★★</div>
+                        <p>I love this sweater! It's so cozy and stylish, and the quality is excellent. I've already received compliments when wearing it. Highly recommend!</p>
+                    </div>
+                </div>
+                <div class="review">
+                    <img src="https://via.placeholder.com/50" alt="Profile">
+                    <div class="review-content">
+                        <div class="name">John</div>
+                        <div class="date">Dec 1, 2024</div>
+                        <div class="stars">★</div>
+                        <p>The material of the shirt I bought was very thin and cheap-looking. It didn't match the description or the pictures on the website. I wouldn't recommend this shop.</p>
+                    </div>
                 </div>
               </div>
         </div>

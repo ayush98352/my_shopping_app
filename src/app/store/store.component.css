@@ -304,8 +304,10 @@ img {
         padding: 3px 12px;
         font-size: 14px;
         cursor: pointer;
+        display: flex;
+        gap: 3px;
     }
-    .filter :active{
+    .filter.active{
         background-color: #000000;
         color: #FFFFFF;
     }

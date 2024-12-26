@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
     // this.checkScreenSize();
     this.detectDevice();
 
-    const svgNames = ['ellipse', 'login-page-main', 'indian-flag', 'search-icon', 'notification-icon', 'cart-icon', 'big_sale_logo', 'ad', 'filter-icon', 'wishlist-icon', 'wishlisted-icon', 'home-icon', 'home-icon-active', 'stores-icon-active', 'stores-icon', 'group-icon-active', 'group-icon', 'trends-icon', 'trends-icon-active', 'profile-icon', 'profile-icon-active', 'delete-icon', 'cross', 'coupon-icon']; // Your SVG names
+    const svgNames = ['ellipse', 'login-page-main', 'indian-flag', 'search-icon', 'notification-icon', 'cart-icon', 'big_sale_logo', 'ad', 'filter-icon', 'wishlist-icon', 'wishlisted-icon', 'home-icon', 'home-icon-active', 'stores-icon-active', 'stores-icon', 'group-icon-active', 'group-icon', 'trends-icon', 'trends-icon-active', 'profile-icon', 'profile-icon-active', 'delete-icon', 'cross', 'coupon-icon', 'filter-symbol']; // Your SVG names
     svgNames.forEach(name => this.svgRegistryService.registerSvgIcon(name));
     
     if (isPlatformBrowser(this.platformId)) {

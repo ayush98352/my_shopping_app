@@ -17,8 +17,13 @@
   align-items: center;
 }
 .header h2 {
+  /* font-size: 24px;
+  font-weight: 700; */
+
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 500;
+  font-family: "Times New Roman", Times, serif;
+  /* margin: 0; */
 }
 .search-icon {
   width: 32px;
@@ -147,6 +152,7 @@
 .action-buttons {
   display: flex;
   gap: 15px;
+  padding-bottom: 20px;
 }
 .action-button {
   flex: 1;

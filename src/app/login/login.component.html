@@ -1,6 +1,5 @@
-<div class="page-container">
-  <div class="background"></div>
-  
+<div class="container">
+  <!-- <div class="background"></div> -->
   <div class="login-container" *ngIf="!otpSent">
     <!-- <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse"> -->
     <mat-icon [svgIcon]="'ellipse'"  [alt]="'background'" class="background-ellipse"></mat-icon>
@@ -39,7 +38,7 @@
       <div class="terms">
         <input type="checkbox" formControlName="terms" id="terms">
         <label for="terms">
-          By logging in, you agree to ZENDO's 
+          By logging in, you agree to ZENNDO's 
           <a href="#">T&C</a> and <a href="#">Privacy Policy</a>.
         </label>
       </div>
@@ -47,7 +46,7 @@
   </div>
   </div>
 
-  <div *ngIf="otpSent">
+  <div *ngIf="otpSent" style="width: -webkit-fill-available; max-width: 1200px; margin: 0 auto;">
     <div class="otp-page-container">
       <mat-icon [svgIcon]="'ellipse'" [alt]="'background'" class="background-ellipse"></mat-icon>
  

@@ -41,12 +41,12 @@
           </div>
 
         <div class="shops-content">
-            <div class="info-tags">
+            <!-- <div class="info-tags">
               <button class="tag-button">Category</button>
               <button class="tag-button">New</button>
               <button class="tag-button">Trendy</button>
               <button class="tag-button">Free Delivery</button>
-            </div>
+            </div> -->
             <div class="no-of-stores" *ngIf="mallDetails?.no_of_stores">
               <p>No. of stores ({{mallDetails?.no_of_stores}})</p>
             </div>
@@ -58,7 +58,7 @@
         <div class="shop-card" *ngFor="let item of shopsList">
             <div class="image-container" (click)="goToStorePage(item)">
               <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
-              <div class="promoted-badge">Promoted</div>
+              <div *ngIf="item?.promoted" class="promoted-badge">Promoted</div>
               <div class="offer-tag" *ngIf="item?.instore_offers">{{item?.instore_offers}}</div>
             </div>
             <div class="shop-details" (click)="goToStorePage(item)">
