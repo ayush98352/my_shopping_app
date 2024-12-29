@@ -1,50 +1,28 @@
 <div class="container">
-    <!-- <div class="header">
-        <div class = "header1" >
-            <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
-                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h2>My Account</h2>
-        </div>
-    </div> -->
     <div class="header">
         <div>
             <h2>My Account</h2>
         </div>
     </div>
     <div class="content">
-        <!-- <section class="account-section">
-            <h2>Your account</h2>
-            <p class="phone-number">{{ phoneNumber }}</p>
-        </section> -->
+       
         <section class="user-section">
             <img src="assets/img/girl-profile.jpg" alt="Profile Picture" class="profile-picture">
+            <!-- <img src="assets/img/profile-test.jpg" alt="Profile Picture" class="profile-picture"> -->
             <!-- <p class="phone-number" > Name {{ phoneNumber }}</p>
             <p class="phone-number"> Email Address {{ phoneNumber }}</p> -->
             <p class="phone-number"> Mobile No. {{ phoneNumber }}</p>
         </section>
     
-        <!-- <section class="quick-actions">
-            <div class="action-grid">
-                <div class="action-item" *ngFor="let item of navigationItems">
-                <div class="icon-container">
-                    <i class="fas fa-{{ item.icon }}"></i>
-                </div>
-                <span>{{ item.label }}</span>
-                </div>
-            </div>
-        </section> -->
+       
     
         <section class="info-section">
             <!-- <h3>YOUR INFORMATION</h3> -->
             <div class="menu-items">
                 <div *ngFor="let item of yourInfoItems; last as isLast">
                     <div class="menu-item" (click)="item.clicked === 'gotoYourOrdersPage' ? gotoYourOrdersPage() : item.clicked === 'gotoAddressBookPage' ? gotoAddressBookPage() : item.clicked === 'gotoCollectedCouponsPage' ? gotoCollectedCouponsPage() : item.clicked === 'gotoBookmarkedRecipesPage' ? gotoBookmarkedRecipesPage() : null" [ngStyle]="{'border-bottom': isLast ? '0px' : ''}">
-                        <div *ngIf="item?.icon == 'my-order-icon'">
+                        <div>
                             <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="icon-container" style="border-radius: 0%;"></mat-icon>
-                        </div>
-                        <div class="icon-container" *ngIf="item?.icon != 'my-order-icon'">
-                            <i class="fas fa-{{ item.icon }}"></i>
                         </div>
                         <span>{{ item.label }}</span>
                     </div>
@@ -55,14 +33,6 @@
         <section class="info-section">
             <!-- <h3>OTHER INFORMATION</h3> -->
             <div class="menu-items">
-                <!-- <div *ngFor="let item of otherInfoItems">
-                    <div class="menu-item" (click)="item.clicked === 'shareAppLink' ? shareAppLink() : item.clicked === 'gotoAboutUsPage' ? gotoAboutUsPage() : item.clicked === 'gotoAccPrivacyPage' ? gotoAccPrivacyPage() : item.clicked === 'logout' ? logout() : null" >
-                        <div class="icon-container">
-                            <i class="fas fa-{{ item.icon }}"></i>
-                        </div>
-                        <span>{{ item.label }}</span>
-                    </div>
-                </div> -->
                 <div *ngFor="let item of otherInfoItems; last as isLast">
                     <div class="menu-item" (click)="handleClick(item.clicked)" [ngStyle]="{'border-bottom': isLast ? '0px' : ''}">
                         <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="icon-container"></mat-icon>
@@ -88,7 +58,7 @@
             <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
           </div>
           <div class="icon" (click)="changeFooterTab('profile'); scrollToTop();">
-             <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
+             <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
           </div>
         </div>
     </div>

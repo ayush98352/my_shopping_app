@@ -32,8 +32,8 @@ export class ProfileComponent implements OnInit {
   yourInfoItems = [
     { icon: 'my-order-icon', label: 'My orders', clicked: 'gotoYourOrdersPage' },
     // { icon: 'bookmark', label: 'Bookmarked Recipes', clicked: 'gotoBookmarkedRecipesPage' },
-    { icon: 'book', label: 'Address book', clicked: 'gotoAddressBookPage' },
-    { icon: 'ticket', label: 'Collected coupons', clicked: 'gotoCollectedCouponsPage' },
+    { icon: 'address-book-icon', label: 'Address book', clicked: 'gotoAddressBookPage' },
+    { icon: 'collected-coupon-icon', label: 'Collected coupons', clicked: 'gotoCollectedCouponsPage' },
   ];
 
   // otherInfoItems = [
@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService){}
 
   ngOnInit(): void {
-    const svgNames = ['my-order-icon', 'my-review-icon', 'my-wallet-icon', 'customer-service-icon', 'return-policy-icon', 'about-us-icon', 'setting-icon', 'logout-icon']; // Your SVG names
+    const svgNames = ['my-order-icon', 'my-review-icon', 'my-wallet-icon', 'customer-service-icon', 'return-policy-icon', 'about-us-icon', 'setting-icon', 'logout-icon', 'address-book-icon', 'collected-coupon-icon']; // Your SVG names
     svgNames.forEach(name => this.svgRegistryService.registerSvgIcon(name));
   }
 

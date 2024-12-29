@@ -36,7 +36,7 @@ export class ExploreComponent implements OnInit{
 
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public activeTab = 'explore';
-  public activeFashionTab :any;
+  public activeFashionTab :any = 'Women';
   public activeSidebarCategories: any;
   public activeDressCategory: any;
   public imagepath: any;
@@ -302,9 +302,8 @@ export class ExploreComponent implements OnInit{
 
   ngOnInit(): void {
 
-    const svgNames = ['men-fashion-icon', 'men-fashion-icon-active', 'women-fashion-icon', 'women-fashion-icon-active', 'kids-fashion-icon', 'kids-fashion-icon-active', 'dresses-banner']; // Your SVG names
+    const svgNames = ['men-fashion-icon', 'men-fashion-icon-active', 'women-fashion-icon', 'women-fashion-icon-active', 'kids-fashion-icon', 'kids-fashion-icon-active', 'dresses-banner', 'men-explore-banner', 'kids-explore-banner']; // Your SVG names
     svgNames.forEach(name => this.svgRegistryService.registerSvgIcon(name));
-
 
     // (this.activeFashionTab + '-' + this.activeSidebarCategories)
     let savedFilters = this.dataShareService.getFilters();

@@ -56,7 +56,7 @@
                         <!-- Dresses Banner -->
                         <div class="banner">
                             <h2>{{activeSidebarCategories}}</h2>
-                            <mat-icon [svgIcon]="'dresses-banner'" [alt]="'Dresses Collection'"></mat-icon>
+                            <mat-icon [svgIcon]="activeFashionTab === 'Women' ? 'dresses-banner' : activeFashionTab === 'Men' ? 'men-explore-banner' : 'kids-explore-banner'"></mat-icon>
                             <!-- <img src="assets/svg/dresses-banner.svg" alt="Dresses Collection"> -->
                         </div>
                 

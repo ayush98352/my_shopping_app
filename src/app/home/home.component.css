@@ -549,7 +549,9 @@ body {
   }
   
   .saved-addresses {
-    padding: 1rem;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
     /* border-top: 1px solid #eee; */  
     /* used to fgive a line */
     /* margin-top: 1rem; */

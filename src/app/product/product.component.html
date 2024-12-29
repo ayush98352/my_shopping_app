@@ -81,9 +81,57 @@
             </div>
         </div>
         
-        <p class="product-description">
+        <!-- <p class="product-description">
             {{ productDetails?.product_description }}   
-        </p>
+        </p> -->
+        <!-- <div class="product-description">
+            <p>Material: {{ productDetails?.dominant_material }}</p>
+            <p>Size Fit: {{ productDetails?.size_fit }}</p>
+            <p>Care Instructions: {{ productDetails?.care_instructions }}</p>
+        </div> -->
+        <div class="about-tab">
+            <div class="about-container" *ngIf="productDetails?.product_description">
+                <div class="about-headers">
+                    Description
+                </div>
+                <div class="about-content">
+                    {{productDetails?.product_description}}
+                </div>
+            </div>
+            <div class="about-container" *ngIf="productDetails?.dominant_material">
+                <div class="about-headers">
+                    Material
+                </div>
+                <div class="about-content">
+                    {{productDetails?.dominant_material}}
+                </div>
+            </div>
+            <div class="about-container" *ngIf="productDetails?.size_fit">
+                <div class="about-headers">
+                    Size Fit
+                </div>
+                <div class="about-content">
+                    {{productDetails?.size_fit}}
+                </div>
+            </div>
+            <div class="about-container" *ngIf="productDetails?.care_instructions">
+                <div class="about-headers">
+                    Care Instructions
+                </div>
+                <div class="about-content">
+                    {{productDetails?.care_instructions}}
+                </div>
+            </div>
+            <div class="about-container" *ngIf="productDetails?.complete_the_look">
+                <div class="about-headers">
+                    Complete the Look
+                </div>
+                <div class="about-content">
+                    {{productDetails?.complete_the_look}}
+                </div>
+            </div>
+        </div>
+
         
         <div class="action-buttons">
             <button class="action-button buy-now-button">Buy Now</button>

@@ -41,6 +41,25 @@ export class ShoppingBagComponent implements OnInit{
   orderAmount: number = 0; // Example of the total amount to be paid
   paymentError: string | null = null; // To capture payment error, if any
 
+
+  public locationDetails: any;
+
+  public isAddressPopupOpen = false;
+
+  public searchedText = '';
+  public addressSuggestions: any[] = [];
+  public savedAddresses: any= [];
+
+  public userLocation: any = {
+    latitude: null,
+    longitude: null
+  };
+  public couponDiscount = 0.00;
+  public couponApplied = false;
+  public couponCode = '';
+
+  public location: any = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location') || '{}') : {};
+
   public addOrderParams = {
     user_id: this.loggedInUserId,
     order_date : this.formatLocalDateTime(),
@@ -48,8 +67,8 @@ export class ShoppingBagComponent implements OnInit{
     mrp : this.totalMRP,
     product_discount: this.totalDiscount,
     item_total: this.totalPrice,
-    promo_discount: 0.00,
-    coupon_code : '',
+    promo_discount: this.couponDiscount,
+    coupon_code : this.couponCode,
     delivery_charge: this.deliveryCharges,
     extra_charges: 0,
     extra_charges_name: '',
@@ -68,10 +87,12 @@ export class ShoppingBagComponent implements OnInit{
     order_details: JSON.parse(JSON.stringify(this.products)),
   }
   
-  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private location: Location, private paymentService: PaymentService) { }
+  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private paymentService: PaymentService) { }
 
   async ngOnInit() { 
     await this.getCartDetails();
+    this.savedAddresses = JSON.parse(localStorage.getItem('addresses') || '[]');
+    this.deliveryAddress = this.location.display_address.address_line;
   }
 
   async getCartDetails(){
@@ -202,8 +223,8 @@ export class ShoppingBagComponent implements OnInit{
     this.addOrderParams['mrp'] = this.totalMRP;
     this.addOrderParams['product_discount'] = this.totalDiscount;
     this.addOrderParams['item_total'] = this.totalPrice;
-    this.addOrderParams['promo_discount'] = 0.00;
-    this.addOrderParams['coupon_code'] = '';
+    this.addOrderParams['promo_discount'] = this.couponDiscount;
+    this.addOrderParams['coupon_code'] = this.couponCode;
     this.addOrderParams['delivery_charge'] = this.deliveryCharges;
     this.addOrderParams['extra_charges'] = 0;
     this.addOrderParams['extra_charges_name'] = '';
@@ -370,7 +391,8 @@ export class ShoppingBagComponent implements OnInit{
     return this.router.navigate(['/wishlist']);
   }
   goBackToPreviousPage() {
-    this.location.back();
+    // this.location.back();
+    window.history.back();
   }
 
   gotoShowProductPage(product:any){
@@ -420,4 +442,155 @@ export class ShoppingBagComponent implements OnInit{
       sessionStorage.setItem('wishlistedProducts', JSON.stringify(wishlistedProducts));
     }
   }
+
+
+  async setSavedAddress(address : any){
+    await this.fetchLocationDetails(address, address.latitude.toString(), address.longitude.toString());
+  }
+
+  async setUserLocation(){
+    if (!navigator.geolocation) {
+      console.log('Geolocation is not supported by this browser.');
+      return;
+    }
+
+    try {
+      const position = await this.getCurrentPosition();
+      this.userLocation.latitude = position.coords.latitude;
+      this.userLocation.longitude = position.coords.longitude;
+
+      await this.fetchLocationDetails('', this.userLocation.latitude, this.userLocation.longitude);
+      
+    } catch (error) {
+      console.error('Error fetching location:', error);
+    }
+  }
+
+  openAddressPopup() {
+    // this.isAddressPopupOpen = !this.isAddressPopupOpen;
+    this.isAddressPopupOpen = true;
+    this.searchedText = '';
+    this.addressSuggestions = [];
+  }
+  closeAddressPopup() {
+    this.isAddressPopupOpen = false;
+    this.searchedText = '';
+    this.addressSuggestions = [];
+  }
+
+  gotoAddAddressPage(){
+    return this.router.navigate(['/add-address']);
+  }
+
+
+  async onSearchChange(event: Event) {
+
+    const target = event.target as HTMLInputElement;
+    this.searchedText = target.value;
+
+    let apiParams = {
+      searchedText: this.searchedText,
+    }
+    if (this.searchedText.length > 2) {
+
+      await this.apiService.getDataWithParams('/home/fetchPlaceSuggestions', apiParams).subscribe(
+        (response) => {
+          this.addressSuggestions = response.predictions;
+        },
+        (error) => {
+          console.error('Error fetching location suggestions:', error);
+        }
+      );
+    }
+  }
+
+  async onSelectSuggestion(placeId: any){
+    let apiParams = {
+      placeId: placeId,
+    }
+    if (this.searchedText.length > 2) {
+
+      await this.apiService.getDataWithParams('/home/fetchSelectedAddressDeatils', apiParams).subscribe(
+        (response) => {
+          this.location = JSON.parse(JSON.stringify(response));
+          this.deliveryAddress = this.location.display_address.address_line;
+          this.closeAddressPopup();
+          localStorage.setItem('location', JSON.stringify(response));
+          sessionStorage.removeItem('mallsList');
+          sessionStorage.removeItem('mallsOffset');
+          sessionStorage.removeItem('shopsList');
+          sessionStorage.removeItem('shopsOffset');
+          sessionStorage.removeItem('scrollPosition-shops');
+        },
+        (error) => {
+          console.error('Error fetching location details:', error);
+        }
+      );
+    }
+  }
+
+  private getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  }
+
+  async fetchLocationDetails(address : any, lat: number, lon: number) {
+    let apiParams = {
+      lat: lat,
+      lon: lon,
+    }
+    await this.apiService.getDataWithParams('/home/getUserLocation', apiParams).subscribe(
+      (response) => {
+        this.location = JSON.parse(JSON.stringify(response));
+        this.deliveryAddress = this.location.display_address.address_line;
+        if (address != ''){
+          this.deliveryAddress = address?.house_no + (address?.floor_no ? ', ' + address?.floor_no : '') + (address?.tower_block ? ', ' + address?.tower_block : '') + (address?.landmark ? ', ' + address?.landmark : '') + ', ' + address?.full_address;
+        }
+        localStorage.setItem('location', JSON.stringify(response));
+        sessionStorage.removeItem('mallsList');
+        sessionStorage.removeItem('mallsOffset');
+        sessionStorage.removeItem('shopsList');
+        sessionStorage.removeItem('shopsOffset');
+        sessionStorage.removeItem('scrollPosition-shops');
+      },
+      (error) => {
+        console.error('Error fetching location details:', error);
+      }
+    );
+  }
+
+ async applyCoupon(){
+  console.log('Coupon applied');
+  let coupon_discount_percentage = 50;
+  let billing_amount = this.totalMRP - this.totalDiscount;
+  if(billing_amount < 5000){
+    alert('Minimum order value should be 500');
+    return;
+  }
+  else{
+    let max_discount_amount = 500;
+    let discount_amount = 0;
+    discount_amount = (billing_amount * coupon_discount_percentage)/100;
+    console.log('Discount amount: ', discount_amount);
+    if(discount_amount > max_discount_amount){
+      discount_amount = max_discount_amount;
+    }else{
+      discount_amount = discount_amount;
+    }
+    this.couponDiscount = discount_amount;
+    console.log('coupoun amount: ', this.couponDiscount);
+    this.totalPrice = this.totalPrice - this.couponDiscount;
+    this.couponApplied = true;
+    this.couponCode = 'COUPON50';
+  }
+ }
+
+ async removeAppliedCoupon(){
+  this.couponApplied = false;
+  this.couponCode = '';
+  this.totalPrice = this.totalPrice + this.couponDiscount;
+  this.couponDiscount = 0;
+ }
+
 }

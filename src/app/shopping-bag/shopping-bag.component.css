@@ -42,11 +42,25 @@
     margin-bottom: 20px;
   }
 
+  .delivery-info div {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;  /* Limits text to 2 lines */
+    line-clamp: 2;  /* Standard property for compatibility */    
+    overflow: hidden;  /* Hides the text that overflows */
+    text-overflow: ellipsis;  /* Adds ellipsis if text overflows */
+    line-height: 1.5em;  /* Adjusts line height for proper spacing */
+    max-height: 3em;  /* Ensures it is limited to 2 lines (line-height x 2) */
+    flex-grow: 1;  /* Allows the address div to grow and take available space */
+  }
+  
   .change-button {
     background: none;
     border: none;
     color: red;
     cursor: pointer;
+    margin-left: 5px;  /* Adds some spacing between the address and button */
+    white-space: nowrap;  /* Ensures the button text doesn't wrap */
   }
 
   .product-list {
@@ -211,6 +225,7 @@
   color: #4CAF50;
   border: 1px dashed #09C777;
   padding: 5px;
+  align-self: center;
 }
 .apply-coupon {
   background-color: #fff;
@@ -366,4 +381,253 @@
   font-size: 12px;
   color: #ed4a4a;
   font-weight: 400;
+}
+
+/* addres */
+
+.icon {
+  width: 40px;
+  height:45px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  align-self: center;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.modal-content {
+  background: white; 
+  border-radius: 20px 20px 0 0;
+  height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+  animation: _ngcontent-ng-c811307737_slideUp 0.3s ease-out;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 1rem;
+  /* border-bottom: 1px solid #eee; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 21px;
+    font-weight: 400;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+  }
+
+  .close-button {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+}
+
+.search-container-address {
+  padding: 1rem;
+  margin-bottom: 15px;
+
+  .search-box {
+    position: relative;
+    
+    input {
+      /* width: 100%; */
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid rgba(167, 167, 167, 0.46);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      width: -webkit-fill-available;
+      
+
+      &::placeholder {
+        color: #808080;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #808080;
+    }
+  }
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  /* padding: 1rem; */
+  cursor: pointer;
+  margin: 0 1rem;
+  border-radius: 8px;
+  flex-direction: row;
+  border: 1px solid rgba(251, 129, 140, 0.46);
+  margin-bottom: 10px;
+  padding: 0px 15px;
+  height: 40px;
+  font-size: 14px;
+  font-family: Poppins;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  .icon {
+    /* width: 2rem;
+    height: 2rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-right: 1rem;
+
+    /* position: absolute; */
+    width: 29px;
+    height: 29px;
+    left: 0px;
+    top: 0px;
+  }
+
+  /* .location-icon {
+    background: #e6f4ea;
+    color: #34a853;
+  }
+
+  .add-icon {
+    background: #e6f4ea;
+    color: #34a853;
+  } */
+
+  .content-item {
+    flex: 1;
+
+    .primary-text {
+      /* color: #34a853; */
+      color: #FB818C;
+      font-weight: 500;
+    }
+
+    .secondary-text {
+      font-size: 0.875rem;
+      color: #666;
+    }
+  }
+
+  .arrow {
+    color: #FB818C;
+    font-size: 1.25rem;
+  }
+}
+
+.saved-addresses {
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  /* border-top: 1px solid #eee; */  
+  /* used to fgive a line */
+  /* margin-top: 1rem; */
+  font-family: 'Poppins';
+
+  h3 {
+    color: #808080;
+    margin-bottom: 1rem;
+    font-size: 14px;
+
+  }
+
+  .address-list {
+    
+    .address-item {
+      display: flex;
+      /* padding: 1rem; */
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      padding-top: 10px;
+      padding-bottom: 7px;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+
+      .address-icon {
+        width: 2rem;
+        height: 2rem;
+        /* background: #fff3e0; */
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+      }
+
+      .address-details {
+        flex: 1;
+
+        .address-header {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.25rem;
+
+          .address-type {
+            font-weight: 600;
+          }
+
+          .address-label {
+            color: #00796b;
+            font-size: 0.875rem;
+          }
+        }
+
+        .address-text {
+          font-size: 0.875rem;
+          color: #666;
+        }
+      }
+    }
+  }
 }

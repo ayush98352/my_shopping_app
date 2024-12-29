@@ -13,7 +13,7 @@
         <div>
           <strong>Deliver to:</strong> {{ deliveryAddress }}
         </div>
-        <button class="change-button">Change</button>
+        <button class="change-button" (click)="openAddressPopup()">Change</button>
       </div>
 
       <div class="product-list">
@@ -63,14 +63,26 @@
               </h2>
               <p>All Coupons</p>
           </div>
-          <div class="coupon-card">
-              <h3>Extra ₹200 OFF</h3>
-              <p>10% off on minimum purchase of ₹1040.00</p>
+          <div class="coupon-card" *ngIf="!couponApplied">
+              <h3>Get 50% off up to ₹500</h3>
+              <p>On minimum purchase of ₹5000.00</p>
               <div style="display: flex; justify-content: space-between;">
                 <span class="coupon-code">COUPON50</span>
-                <button class="apply-coupon">APPLY COUPON</button>
+                <button class="apply-coupon" (click)="applyCoupon()">APPLY COUPON</button>
               </div>
           </div>
+          <div class="coupon-card" *ngIf="couponApplied">
+            <!-- <h3>Get 50% off up to ₹500</h3>
+            <p>On minimum purchase of ₹5000.00</p> -->
+            <div style="display: flex; justify-content: space-between;">
+              <span class="coupon-code">COUPON50</span>
+              <div style="display: flex; gap: 15px;">
+                <p>Saved ₹{{ couponDiscount }}</p>
+                <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" style="position: relative; width:20px; height:20px" (click)="removeAppliedCoupon()"></mat-icon>
+              </div>
+              <!-- <button class="apply-coupon" (click)="applyCoupon()">APPLY COUPON</button> -->
+            </div>
+        </div>
       </div>
 
       <div class="frame price-details">
@@ -86,6 +98,10 @@
           <div class="price-row">
               <span>Shipping Fee</span>
               <span>₹0</span>
+          </div>
+          <div class="price-row" *ngIf="couponDiscount > 0">
+            <span>Coupon Discount</span>
+            <span>-₹{{couponDiscount}}</span>
           </div>
           <div class="price-row" style="padding-top: 10px">
               <strong>TOTAL AMOUNT</strong>
@@ -138,10 +154,96 @@
                 <button class="confirm" (click)="confirmRemoveFromWishlist()">Remove</button>
             </div>
         </div>
-    </div>
-    <div class="loader" *ngIf="isLoading">
-      <div class="spinner"></div>
-      <div class="spinner1"></div>
-    </div>
+      </div>
+
+      <div class="modal-overlay" *ngIf="isAddressPopupOpen" (click)="closeAddressPopup(); $event.stopPropagation()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <!-- Header -->
+          <div class="modal-header">
+            <h2>SELECT LOCATION</h2>
+            <!-- <button class="close-button" (click)="closeAddressPopup(); $event.stopPropagation()">✕</button> -->
+            <mat-icon [svgIcon]="'cross'" [alt]="'close-button'" class="close-button" style="width:18px; height:18px; margin-top: -5px;" (click)="closeAddressPopup(); $event.stopPropagation()"></mat-icon>
+          </div>
+
+          <!-- Search -->
+          <div class="search-container-address">
+            <div class="search-box">
+              <i class="search-icon">
+                <img src="assets/svg/search-icon.svg" alt="search-location">
+              </i>
+              <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
+            </div>
+          </div>
+          <div *ngIf="searchedText.length <= 2">
+            <!-- Current Location -->
+            <div class="action-button">
+              <div class="icon location-icon">
+                <img src="assets/svg/location-icon.svg" alt="Go to current location">
+              </div>
+              <div class="content-item" (click)="setUserLocation(); closeAddressPopup(); $event.stopPropagation()">
+                <div class="primary-text">Use your current location</div>
+                <!-- <div class="secondary-text">{{displayAddress}}</div> -->
+              </div>
+              <div class="arrow">›</div>
+            </div>
+
+            <!-- Add New Address -->
+            <div class="action-button" (click)="gotoAddAddressPage()">
+              <div class="icon add-icon">
+                <img src="assets/svg/plus-red-icon.svg" alt="Add new address">
+              </div>
+              <div class="content-item">
+                <div class="primary-text">Add new address</div>
+              </div>
+              <div class="arrow">›</div>
+            </div>
+
+            <!-- Saved Addresses -->
+            <div class="saved-addresses">
+              <h3>Your saved addresses</h3>
+              <div class="address-list">
+                <div class="address-item" *ngFor="let address of savedAddresses" (click)="setSavedAddress(address); closeAddressPopup(); $event.stopPropagation()">
+                  <div class="address-icon">
+                    <img src="assets/svg/home-address-icon.svg" alt="Address Icon" *ngIf="address.address_type === 'Home'">
+                    <img src="assets/svg/office-icon.svg" alt="Address Icon" *ngIf="address.address_type === 'Work'">
+                    <img src="assets/svg/friends-icon.svg" alt="Address Icon" *ngIf="address.address_type !== 'Work' && address.address_type !== 'Home'">
+                  </div>
+                  <div class="address-details">
+                    <div class="address-header">
+                      <span class="address-type">{{address.address_type}}</span>
+                      <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                      <!--  label: '18.38 km away', -->
+                    </div>
+                    <div class="address-text">{{address.house_no + (address.floor_no ? ', ' + address.floor_no : '') + (address.tower_block ? ', ' + address.tower_block : '') + (address.landmark ? ', ' + address.landmark : '') + ', ' + address.full_address}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="searchedText && searchedText.length > 2">
+            <div class="saved-addresses">
+              <h3>Searched Suggestions</h3>
+              <div class="address-list">
+                <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
+                  <div class="icon location-icon">📍</div>
+                  <div class="address-details">
+                    <div class="address-header">
+                      <span class="address-type">{{suggestion.description}}</span>
+                      <!-- <span class="address-label" *ngIf="address.label">{{address.label}}</span> -->
+                    </div>
+                    <div class="address-text">{{suggestion.description}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="loader" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <div class="spinner1"></div>
+      </div>
   </div>
 </div>

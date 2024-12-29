@@ -29,6 +29,12 @@ html, body {
         /* padding-bottom: 20px; */
         padding-bottom: 60px;
     }
+    .address-list{
+      padding-bottom: 60px;
+    }
+    .saved-addresses {
+      padding-bottom: 36px;
+    }
     /* .modal-content{
         padding-bottom: 72px;
     } */
@@ -40,6 +46,12 @@ html, body {
     padding-right: 8px;
     padding-left: 8px; */
     .content {
+        padding-bottom: 36px;
+    }
+    .saved-addresses {
+      padding-bottom: 36px;
+    }
+    .address-list{
         padding-bottom: 36px;
     }
     /* .modal-content{
