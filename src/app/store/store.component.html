@@ -23,7 +23,6 @@
                 <input type="text" class="search-input" placeholder="Search for products..">
             </div>
         </div>
-        <!-- mall details -->
 
         <div class="mall-card">
             <div class="mall-image-container">
@@ -54,7 +53,6 @@
 
             <div class="filters-content">
                 <button class="filter">Filters 
-                    <!-- <i class="fa fa-filter"></i> -->
                     <mat-icon [svgIcon]="'filter-symbol'"  [alt]="'filter'" style="width:17px; height:17px;"></mat-icon>
                 </button>
                 <div *ngFor="let category of productsfilters[activeFashionTab]">
@@ -237,9 +235,9 @@
           <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()" >
             <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
           </div>
-          <div class="icon" (click)="changeFooterTab('trends')">
+          <!-- <div class="icon" (click)="changeFooterTab('trends')">
             <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
-          </div>
+          </div> -->
           <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
              <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
           </div>

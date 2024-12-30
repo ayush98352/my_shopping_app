@@ -55,9 +55,8 @@
 
 .content {
   flex: 1;
-  /* overflow: hidden; */
   overflow-y: auto;
-  position: relative;
+  /* position: relative; */
   height: calc(100vh - 130px); /* Adjust based on header + footer height */
   padding-left: 3px;
   padding-right: 3px;
@@ -66,51 +65,6 @@
     padding: 14px 0px 0px 0px;
 }
 
-.grid {
-    display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
-    gap: 10px;
-    overflow-x: auto; /* Enable horizontal scroll */
-    white-space: nowrap; /* Prevent line breaks */
-    /* Hide scrollbar */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    height: 154px;
-    padding-bottom: 16px;
-}
-.grid::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
-
-.grid-item {
-    text-align: center;
-    flex: 0 0 auto; /* Prevent shrinking */
-    /* background-color: transparent; Ensure background is transparent */
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 107px;
-    padding: 4px 0px 0px 0px;
-    transition: all 0.3s ease;
-    height: 145px;
-}
-
-.grid-item img {
-    width: 86px;
-    height: 117px;
-    border-radius: 8px;
-    object-fit: cover;
-    background-color: transparent; /* Ensure the image background is transparent */
-    mix-blend-mode: multiply; /* Try blending the white background */
-}
-
-.category-name {
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #292929;
-}
 
 /* footer */
 .footer {
@@ -204,14 +158,8 @@ img {
     text-rendering: optimizeLegibility;
 }
 
-/*  */
-
-/* General styles */
-
-  /* Card styles */
   .shop-card {
     position: relative;
-    /* width: 300px; */
     background-color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -259,7 +207,6 @@ img {
     font-size: 14px;
     font-weight: 700;
     line-height: 21px;
-    /* width: 189px; */
     height: 30px;
     padding: 0px 46px 0px 9px;
     gap: 8px;
@@ -319,19 +266,6 @@ img {
     gap: 8px;
   }
  
-  /* .mall-card {
-    position: relative;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    margin-bottom: 15px;
-  }
-  
-  .mall-card:hover {
-    transform: scale(1.03);
-  }
   
   /* Image section */
   .mall-image-container {
@@ -340,9 +274,6 @@ img {
     opacity: 25%;
   } 
 
-
-  /* 
- */
 
  .shops-content {
   .info-tags {
@@ -369,8 +300,6 @@ img {
   }
 }
 
-
-/*  */
 
 .mall-card {
   position: relative;

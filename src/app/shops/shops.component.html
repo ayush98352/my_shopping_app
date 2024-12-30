@@ -14,14 +14,10 @@
     </div>
 
     <div class="content" (scroll)="onScroll($event)">
-        <!-- categories -->
         <div class="section">
-            <div class="search-container"  (click) = "goToSearchPage()">
+            <div class="search-container" (input)="searchShops($event)">
                 <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                <input type="text" class="search-input" placeholder="Shop by stores, malls, products, location...">
-                <!-- <div class="filter-icon">
-                    <mat-icon [svgIcon]="'filter-icon'" [alt]="'filter'"  class="header-icon"></mat-icon>
-                </div> -->
+                <input type="text" class="search-input" placeholder="Shop by malls and stores...">
             </div>
         </div>
         
@@ -41,15 +37,22 @@
             <div *ngFor="let category of mainCategories">
                 <div (click)="changeExploreTab(category.label);">
                     <img [src]="activeExploreTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
-                    <!-- <ng-container *ngIf="setSvgIcons(activeFashionTab === category.label ? category.image + '-active' : category.image)">
-                        
-                    </ng-container> -->
-                    <!-- <mat-icon [svgIcon]="activeFashionTab === category.label ? category.image + '-active' : category.image" [alt]="'category.title'" style="height: 45px; width: 114px;"></mat-icon> -->
                 </div>
             </div>
         </div>
+
+        <div class="loader-content" *ngIf="isLoadingSearchResults && searchedText.length > 1">
+            <div class="spinner1" style="position: relative;"></div>
+            <p>Loading...</p>
+        </div>
+        <div *ngIf="activeExploreTab === 'Malls' && !isLoadingSearchResults && mallsListDisplay.length == 0 && searchedText.length > 1"  class="end-message">
+            <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+        </div>
+        <div *ngIf="activeExploreTab === 'Shops' && !isLoadingSearchResults && shopsListDisplay.length == 0 && searchedText.length > 1"  class="end-message">
+            <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+        </div>
         
-        <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsList : shopsList)">
+        <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsListDisplay.length > 0 ? mallsListDisplay : mallsList : shopsListDisplay.length>0 ? shopsListDisplay : shopsList)">
             <div class="image-container" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
               <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
               <div *ngIf="item?.promoted" class="promoted-badge">Promoted</div>
@@ -61,17 +64,10 @@
                         <span *ngIf="item?.floor_no">| {{item?.floor_no}}{{getNumberSuffix(item?.floor_no)}} Floor </span>
                         <span *ngIf="item?.shop_no">| SN. {{item?.shop_no}}</span>
                     </h2>
-                    <!-- <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon> -->
                 </div>
-                <!-- <span *ngIf="recommendedProduct?.iswishlisted != '1'" (click)="addToWishlist(recommendedProduct, $event)">
-                    <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon>
-                </span> 
-                    <span *ngIf="recommendedProduct?.iswishlisted == '1'" (click)="removeFromWishlist(recommendedProduct, $event)">
-                <mat-icon [svgIcon]="'wishlisted-icon'"  [alt]="'wishlisted'" style="width:19px; height:17px;"></mat-icon>
-                </span>  -->
+                
                 <p class="mall-address">{{item?.address}}</p>
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <!-- <div class="closing-time">closes in 3 hour 24 minutes</div> -->
                     <div class="closing-time">Timing: {{item?.timings}}</div>
                     <div class="distance">{{item?.distance}} km</div>
                 </div>
@@ -103,9 +99,9 @@
           <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()" >
             <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
           </div>
-          <div class="icon" (click)="changeFooterTab('trends')">
+          <!-- <div class="icon" (click)="changeFooterTab('trends')">
             <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
-          </div>
+          </div> -->
           <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
              <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
           </div>

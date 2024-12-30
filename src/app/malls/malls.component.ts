@@ -24,9 +24,11 @@ export class MallsComponent implements OnInit {
   public activeExploreTab = 'Malls';
   public mallsList: any[] = [];
   public shopsList: any[] = [];
+  public shopsListDisplay: any[] = [];
   public coordinates: any;
   public mallDetails: any;
   public isLoading = true;
+  public searchedText = '';
 
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService, private location: Location) {}
@@ -125,10 +127,10 @@ export class MallsComponent implements OnInit {
     return this.router.navigate(['/cart']);
   }
 
-  goToSearchPage(){
-    this.storeScrollPosition();
-    return this.router.navigate(['/search'] );
-  }
+  // goToSearchPage(){
+  //   this.storeScrollPosition();
+  //   return this.router.navigate(['/search'] );
+  // }
 
   gotoProfilePage(){
     sessionStorage.removeItem('scrollPosition-malls');
@@ -173,6 +175,17 @@ export class MallsComponent implements OnInit {
     // if (scrollPosition >= pageHeight - 40 && !this.isLoading && !this.isLoadingContent) {
     //   this.getRecommenedProducts();
     // }
+  }
+
+  async searchShops(event: any){
+    this.searchedText = event.target.value;
+    this.shopsListDisplay = this.shopsList.filter((shop: any) => {
+      return shop?.name.toLowerCase().includes(this.searchedText.toLowerCase());
+    }).sort((a, b) => {
+      const aIndex = a.name.toLowerCase().indexOf(this.searchedText.toLowerCase());
+      const bIndex = b.name.toLowerCase().indexOf(this.searchedText.toLowerCase());
+      return aIndex - bIndex;
+    });
   }
 
 }

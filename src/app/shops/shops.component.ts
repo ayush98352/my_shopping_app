@@ -61,6 +61,10 @@ export class ShopsComponent implements OnInit {
   shopsOffset: number = 0;
   shopsLimit: number = 10; 
   allShopsLoaded: boolean = false;
+  public searchedText: string = '';
+  public shopsListDisplay: any[] = [];
+  public mallsListDisplay: any[] = [];
+  public isLoadingSearchResults: boolean = false;
 
 
   shopsCategory: Shop[] = [
@@ -158,19 +162,28 @@ export class ShopsComponent implements OnInit {
       latitude: this.coordinates['lat'],
       longitude: this.coordinates['lon'],
       offset: this.mallsOffset,
-      limit: this.mallsLimit
+      limit: this.mallsLimit,
+      searchText: this.searchedText
     };
 
     await this.apiService.getDataWithParams('/home/getMallsList', apiParams).subscribe(
       (response) => {
         let data = JSON.parse(JSON.stringify(response.result));
-        if (data.length === 0) {
+        if (data.length === 0 || data.length < this.mallsLimit) {
           this.allMallsLoaded = true;
-        } else {
+        }
+        if(this.searchedText.length > 1){
+          this.mallsListDisplay = [...this.mallsListDisplay, ...data];
+          this.mallsOffset += this.mallsLimit;
+          this.isLoadingSearchResults = false;
+        }  
+        else {
           this.mallsList = [...this.mallsList, ...data];
           this.mallsOffset += this.mallsLimit;
           this.cacheData();
+          this.mallsListDisplay = [];
         }
+        console.log('mallsListDisplay', this.mallsListDisplay);
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -196,19 +209,29 @@ export class ShopsComponent implements OnInit {
       latitude: this.coordinates['lat'],
       longitude: this.coordinates['lon'],
       offset: this.shopsOffset,
-      limit: this.shopsLimit
+      limit: this.shopsLimit,
+      searchText: this.searchedText
     };
 
     await this.apiService.getDataWithParams('/home/getShopsList', apiParams).subscribe(
       (response) => {
         let data = JSON.parse(JSON.stringify(response.result));
-        if (data.length === 0) {
-          this.allMallsLoaded = true;
-        } else {
+        if (data.length === 0 || data.length < this.shopsLimit) {
+          this.allShopsLoaded = true;
+        }
+        if(this.searchedText.length > 1){
+          this.shopsListDisplay = [...this.shopsListDisplay, ...data];
+          this.shopsOffset += this.shopsLimit;
+          this.isLoadingSearchResults = false;
+        } 
+        else {
           this.shopsList = [...this.shopsList, ...data];
           this.shopsOffset += this.shopsLimit;
           this.cacheData();
+          this.shopsListDisplay = [];
         }
+        console.log('shopsList', this.shopsList);
+        console.log('shopsListDisplay', this.shopsListDisplay);
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -234,8 +257,9 @@ export class ShopsComponent implements OnInit {
     return this.router.navigate(['/store']);
   }
 
-  changeExploreTab(tab: any){
+  async changeExploreTab(tab: any){
     sessionStorage.setItem('shopsExploreTab', tab);
+    this.searchedText = '';
     this.activeExploreTab = tab;
   }
 
@@ -345,5 +369,26 @@ export class ShopsComponent implements OnInit {
     sessionStorage.setItem('mallsOffset', this.mallsOffset.toString());
     sessionStorage.setItem('shopsList', JSON.stringify(this.shopsList));
     sessionStorage.setItem('shopsOffset', this.shopsOffset.toString());
+  }
+
+  async searchShops(event: any){
+    this.searchedText = event.target.value;
+    this.mallsListDisplay = [];
+    this.shopsListDisplay = [];
+    this.isLoadingSearchResults = false;
+    if(this.searchedText.length > 1 ){
+      this.mallsOffset = 0;
+      this.allMallsLoaded = false;
+      this.shopsOffset = 0;
+      this.allShopsLoaded = false;
+      this.isLoadingSearchResults = true;
+      if(this.activeExploreTab == 'Malls'){
+        await this.getMallsList();
+        this.getShopsList();
+      }else if(this.activeExploreTab == 'Shops'){
+        await this.getShopsList();
+        this.getMallsList();
+      }
+    }
   }
 }

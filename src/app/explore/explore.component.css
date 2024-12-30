@@ -144,7 +144,6 @@
     cursor: pointer;
 }
 
-/* fashon */
 
 .main-categories {
     display: flex;
@@ -157,7 +156,6 @@
     -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
   
-  /* Bottom Navigation */
   .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -191,7 +189,6 @@
     margin-bottom: 10px;
   }
   
-  /* Content Container */
   .content-container {
     display: flex;
     gap: 15px;
@@ -199,7 +196,6 @@
     position: relative;
   }
   
-  /* Sidebar with independent scroll */
   .sidebar {
     width: 105px;
     height: 100%;
@@ -209,7 +205,6 @@
     padding-left: 2px;
     box-sizing: border-box;
     padding-top: 5px;
-
     /* Hide scrollbar */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -241,10 +236,7 @@
     font-size: 12px;
     font-weight: 500;
   }
-  
- 
 
-  /* Main content with independent scroll */
   .main-content {
     flex: 1;
     height: calc(100vh - 290px); /* Adjust based on header and footer height */
@@ -252,10 +244,9 @@
     overflow-x: hidden;
     padding-right: 10px;
     box-sizing: border-box;
-
-     /* Hide scrollbar */
-     scrollbar-width: none; /* Firefox */
-     -ms-overflow-style: none; /* Internet Explorer 10+ */
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
   }
   
   .banner {
@@ -290,7 +281,6 @@
     margin-left: 5px;
   }
   
-  /* Dress Grid */
   .dress-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
@@ -344,19 +334,12 @@
   }
 
   .custom-svg-icon {
-    /* user-select: auto;
-    background-repeat: no-repeat;
-    fill: currentColor; */
-    /* height: auto;
-    width: auto; */
-    /* overflow: visible; */
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
   
-  /* Media Queries */
 
   @media screen and (max-width: 2000px) {
     .dress-grid {
@@ -368,7 +351,6 @@
     }
 
     .dress-card{
-      /* max-width: 180px; */
       max-width: -webkit-fill-available;
     }
     .dress-card h3 {
@@ -395,7 +377,6 @@
     }
 
     .dress-card{
-      /* max-width: 180px; */
       max-width: -webkit-fill-available;
     }
     .dress-card h3 {
@@ -424,7 +405,6 @@
     }
 
     .dress-card{
-      /* max-width: 140px; */
       max-width: -webkit-fill-available;
     }
     .dress-card h3 {
@@ -445,7 +425,6 @@
     }
     
     .dress-grid {
-      /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); */
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
@@ -459,7 +438,6 @@
     }
 
     .dress-card{
-      /* max-width: 93px; */
       max-width: -webkit-fill-available;
     }
     

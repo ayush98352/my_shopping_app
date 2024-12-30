@@ -18,12 +18,11 @@
 
     <div class="content" (scroll)="onScroll($event)">
         <div class="section">
-            <div class="search-container"  (click) = "goToSearchPage()">
-                <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                <input type="text" class="search-input" placeholder="Search for stores, products...">
-            </div>
+          <div class="search-container" (input)="searchShops($event)">
+              <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
+              <input type="text" class="search-input" placeholder="Search for stores, products...">
+          </div>
         </div>
-        <!-- mall details -->
 
         <div class="mall-card">
             <div class="mall-image-container">
@@ -38,7 +37,9 @@
                 <p class="mall-address">{{ mallDetails?.address }}</p>
               </div>
             </div>
-          </div>
+        </div>
+
+        
 
         <div class="shops-content">
             <!-- <div class="info-tags">
@@ -47,15 +48,18 @@
               <button class="tag-button">Trendy</button>
               <button class="tag-button">Free Delivery</button>
             </div> -->
-            <div class="no-of-stores" *ngIf="mallDetails?.no_of_stores">
+            <div class="no-of-stores" *ngIf="mallDetails?.no_of_stores && searchedText==''">
               <p>No. of stores ({{mallDetails?.no_of_stores}})</p>
+            </div>
+            <div class="no-of-stores" *ngIf="searchedText!=''">
+              <p>No. of stores ({{shopsListDisplay.length}})</p>
             </div>
         </div>
         
        
         
         
-        <div class="shop-card" *ngFor="let item of shopsList">
+        <div class="shop-card" *ngFor="let item of searchedText != '' ? shopsListDisplay : shopsList">
             <div class="image-container" (click)="goToStorePage(item)">
               <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
               <div *ngIf="item?.promoted" class="promoted-badge">Promoted</div>
@@ -67,7 +71,6 @@
                         <span *ngIf="item?.floor_no">| {{item?.floor_no}}{{getNumberSuffix(item?.floor_no)}} Floor </span>
                         <span *ngIf="item?.shop_no">| SN. {{item?.shop_no}}</span>
                     </h2>
-                    <!-- <mat-icon [svgIcon]="'wishlist-icon'"  [alt]="'wishlist'" style="width:19px; height:17px;"></mat-icon> -->
                 </div>
                 
                 <p class="shop-address">{{item?.address}}</p>
@@ -94,9 +97,9 @@
           <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()" >
             <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
           </div>
-          <div class="icon" (click)="changeFooterTab('trends')">
+          <!-- <div class="icon" (click)="changeFooterTab('trends')">
             <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
-          </div>
+          </div> -->
           <div class="icon" (click)="changeFooterTab('profile'); gotoProfilePage();">
              <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
           </div>

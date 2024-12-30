@@ -57,7 +57,7 @@
   flex: 1;
   /* overflow: hidden; */
   overflow-y: auto;
-  position: relative;
+  /* position: relative; */
   height: calc(100vh - 130px); /* Adjust based on header + footer height */
   padding-left: 3px;
   padding-right: 3px;

@@ -48,9 +48,8 @@
 
 .content {
   flex: 1;
-  /* overflow: hidden; */
   overflow-y: auto;
-  position: relative;
+  /* position: relative; */
   height: calc(100vh - 130px); /* Adjust based on header + footer height */
   padding-left: 3px;
   padding-right: 3px;
@@ -61,7 +60,6 @@
 
 .grid {
     display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
     gap: 10px;
     overflow-x: auto; /* Enable horizontal scroll */
     white-space: nowrap; /* Prevent line breaks */
@@ -78,7 +76,6 @@
 .grid-item {
     text-align: center;
     flex: 0 0 auto; /* Prevent shrinking */
-    /* background-color: transparent; Ensure background is transparent */
     background: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     border-radius: 8px;
@@ -204,7 +201,6 @@ img {
   /* Card styles */
   .shop-card {
     position: relative;
-    /* width: 300px; */
     background-color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
