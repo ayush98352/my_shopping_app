@@ -33,6 +33,10 @@ export class ProductComponent implements OnInit{
   public inCartSize = '';
   public isLoading = true;
 
+  isFullscreen = false;
+  selectedImage: string | null = null;
+  zoomedImage: string | null = null;
+
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}
   
@@ -272,4 +276,20 @@ export class ProductComponent implements OnInit{
     }
   }
 
+  openFullscreen(image: string) {
+    this.isFullscreen = true;
+    this.selectedImage = image;
+    this.zoomedImage = null; // Reset zoom
+  }
+
+  closeFullscreen() {
+    this.isFullscreen = false;
+    this.selectedImage = null;
+    this.zoomedImage = null;
+  }
+
+  toggleZoom(event: Event) {
+    const image = (event.target as HTMLImageElement).getAttribute('src');
+    this.zoomedImage = this.zoomedImage === image ? null : image;
+  }
 }

@@ -15,24 +15,15 @@
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click) = "goToWishlistPage()">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
             </svg>
-            <!-- <img src="assets/svg/cart-icon.svg" alt="cart" class="header-icon" (click) = "goToBagPage()"> -->
             <mat-icon [svgIcon]="'cart-icon'" [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
         </div>
     </div>
     
     
-    <!-- <img class="product-image" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)"> -->
     <div class="content">
-        <!-- <div class="product-images">
-            <img class="product-image" *ngIf="productDetails?.images !== null" [src]="currentImage" [alt]="currentImage" (error)="onImageError($event)">
-            <img class="product-image" *ngIf="productDetails?.images === null" [src]="'assets/img/products/' + currentImage + '.jpg'" [alt]="currentImage" (error)="onImageError($event)">
-            <button class="carousel-prev">‹</button>
-            <button class="carousel-next">›</button>
-        </div> -->
-
         <div class="product-images-scroll" >
             <div *ngFor="let image of imagesArray">
-                <img class="product-image-new" [src]="image" [alt]="image" >
+                <img class="product-image-new" [src]="image" [alt]="image" (click)="openFullscreen(image)">
             </div>
         </div>
         
@@ -84,11 +75,7 @@
         <!-- <p class="product-description">
             {{ productDetails?.product_description }}   
         </p> -->
-        <!-- <div class="product-description">
-            <p>Material: {{ productDetails?.dominant_material }}</p>
-            <p>Size Fit: {{ productDetails?.size_fit }}</p>
-            <p>Care Instructions: {{ productDetails?.care_instructions }}</p>
-        </div> -->
+       
         <div class="about-tab">
             <div class="about-container" *ngIf="productDetails?.product_description">
                 <div class="about-headers">
@@ -137,6 +124,31 @@
             <button class="action-button buy-now-button">Buy Now</button>
             <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
         </div>
+
+        <!-- Fullscreen Image Viewer -->
+        <!-- <div class="fullscreen-viewer" *ngIf="isFullscreen">
+            <button class="close-button" (click)="closeFullscreen()">✕</button>
+            <div class="fullscreen-image-container">
+            <img [src]="selectedImage" [alt]="selectedImage" class="fullscreen-image" />
+            </div>
+        </div> -->
+
+        <!-- Fullscreen Image Viewer -->
+        <div class="fullscreen-viewer" *ngIf="isFullscreen">
+            <button class="close-button" (click)="closeFullscreen()">✕</button>
+            <div class="fullscreen-scroll">
+                <div *ngFor="let image of imagesArray" class="fullscreen-image-wrapper">
+                    <img
+                    [src]="image"
+                    [alt]="image"
+                    class="fullscreen-image"
+                    (click)="toggleZoom($event)"
+                    [class.zoomed]="zoomedImage === image"
+                    />
+                </div>
+            </div>
+        </div>
+
         <div class="loader" *ngIf="isLoading">
             <div class="spinner"></div>
             <div class="spinner1"></div>

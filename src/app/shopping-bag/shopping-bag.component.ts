@@ -565,21 +565,19 @@ export class ShoppingBagComponent implements OnInit{
   let coupon_discount_percentage = 50;
   let billing_amount = this.totalMRP - this.totalDiscount;
   if(billing_amount < 5000){
-    alert('Minimum order value should be 500');
+    alert('Minimum order value should be 5000');
     return;
   }
   else{
     let max_discount_amount = 500;
     let discount_amount = 0;
     discount_amount = (billing_amount * coupon_discount_percentage)/100;
-    console.log('Discount amount: ', discount_amount);
     if(discount_amount > max_discount_amount){
       discount_amount = max_discount_amount;
     }else{
       discount_amount = discount_amount;
     }
     this.couponDiscount = discount_amount;
-    console.log('coupoun amount: ', this.couponDiscount);
     this.totalPrice = this.totalPrice - this.couponDiscount;
     this.couponApplied = true;
     this.couponCode = 'COUPON50';
