@@ -14,8 +14,8 @@ export interface UploadResponse {
 })
 
 export class ApiService implements OnInit {
-  private apiLink = 'http://localhost:7399'; // URL of your Node.js API
-  // private apiLink = 'https://loud-crayfish-zendo-ca8afaac.koyeb.app'
+  // private apiLink = 'http://localhost:7399'; // URL of your Node.js API
+  private apiLink = 'https://loud-crayfish-zendo-ca8afaac.koyeb.app'
   
   private csrfToken: string = '';
 
