@@ -183,7 +183,6 @@ export class ShopsComponent implements OnInit {
           this.cacheData();
           this.mallsListDisplay = [];
         }
-        console.log('mallsListDisplay', this.mallsListDisplay);
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -230,8 +229,6 @@ export class ShopsComponent implements OnInit {
           this.cacheData();
           this.shopsListDisplay = [];
         }
-        console.log('shopsList', this.shopsList);
-        console.log('shopsListDisplay', this.shopsListDisplay);
       },
       (error) => {
         console.error('Error fetching data:', error);
