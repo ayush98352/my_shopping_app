@@ -20,6 +20,8 @@ import { SvgRegistryService } from '../services/svg-registry.service';
 export class ProfileComponent implements OnInit {
   public phoneNumber = localStorage.getItem('phoneNumber');
   public loggedInUserId = localStorage.getItem('loggedInUserId');
+  public userName = localStorage.getItem('userName');
+  public userEmail = localStorage.getItem('userEmail');
   public activeTab = 'profile';
 
   

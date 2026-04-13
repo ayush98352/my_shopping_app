@@ -27,28 +27,36 @@
             (click)="gotoShowProductPage(product)"
           />
           <div class="product-details">
-            <div style="justify-content: space-between; display: flex;">
-            <div (click)="gotoShowProductPage(product)">
-              <h2>{{ product?.brand_name }}</h2>
-              <p>{{ product?.product_short_name }}</p>
-            </div>
-            <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" style="width:20px; height:20px"  (click) = "showRemoveConfirmation(product, $event)"></mat-icon>
+            <div class="product-top-row">
+              <div (click)="gotoShowProductPage(product)">
+                <h2>{{ product?.brand_name }}</h2>
+                <p class="product-name">{{ product?.product_short_name }}</p>
+              </div>
+              <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" (click)="showRemoveConfirmation(product, $event)"></mat-icon>
             </div>
             <div class="product-options">
-              <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-              </select>
-              <select [(ngModel)]="product.quantity" (change)="updateCartInfo(product)">
-                <option [value]="i" *ngFor="let i of [1,2,3,4,5]">{{ i }}</option>
-              </select>
+              <div class="select-wrapper">
+                <span class="select-label">Size:</span>
+                <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                </select>
+              </div>
+              <div class="select-wrapper">
+                <span class="select-label">Qty:</span>
+                <select [(ngModel)]="product.quantity" (change)="updateCartInfo(product)">
+                  <option [value]="i" *ngFor="let i of [1,2,3,4,5]">{{ i }}</option>
+                </select>
+              </div>
             </div>
             <div class="product-price">
-              <span class="current-price">₹{{ product?.selling_price * product?.quantity }}</span>
-              <span class="original-price">₹{{ product?.mrp * product?.quantity }}</span>
-              <span class="discount">({{ product?.discount_percent }}% OFF)</span>
+              <div class="current-price">₹{{ (product?.selling_price * product?.quantity) | number:'1.2-2' }}</div>
+              <div class="price-original-row">
+                <span class="original-price">₹{{ (product?.mrp * product?.quantity) | number:'1.2-2' }}</span>
+                <span class="discount">({{ product?.discount_percent }}% OFF)</span>
+              </div>
             </div>
             <p class="delivery-date">Delivery between {{ deliveryDate }}</p>
           </div>
@@ -64,9 +72,9 @@
               <p>All Coupons</p>
           </div>
           <div class="coupon-card" *ngIf="!couponApplied">
-              <h3>Get 50% off up to ₹500</h3>
-              <p>On minimum purchase of ₹5000.00</p>
-              <div style="display: flex; justify-content: space-between;">
+              <h3>Extra ₹200 OFF</h3>
+              <p>10% off on minimum purchase of ₹1,040.00</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span class="coupon-code">COUPON50</span>
                 <button class="apply-coupon" (click)="applyCoupon()">APPLY COUPON</button>
               </div>
@@ -109,50 +117,48 @@
           </div>
       </div>
 
-      <div class="frame">
-          <p>{{totalProductsInBag}} Items Selected</p>
-          <button *ngIf="totalProductsInBag != 0"class="place-order" (click)="placeOrder()">Place Order</button>
+      <div class="place-order-section">
+          <p class="items-selected">{{totalProductsInBag}} Items Selected</p>
+          <button *ngIf="totalProductsInBag != 0" class="place-order" (click)="placeOrder()">Place Order</button>
       </div>
 
       <!-- Display Payment Error, if any -->
       <p *ngIf="paymentError" class="error">{{ paymentError }}</p>
 
-      <!-- Remove from Wishlist Pop-up -->
-      <div *ngIf="showRemovePopup" class="popup-overlay">
-        <div class="popup-content">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <div style="display: flex; gap: 7px;">
-                <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button" style="position: static; width:20px; height:20px"></mat-icon>
-                <h3>Remove Product</h3>
+      <!-- Remove Product Pop-up -->
+      <div *ngIf="showRemovePopup" class="popup-overlay" (click)="closePopups()">
+        <div class="popup-content" (click)="$event.stopPropagation()">
+          <div class="popup-header-row">
+            <div class="popup-title-group">
+              <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button"></mat-icon>
+              <h3>Remove Product</h3>
+            </div>
+            <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:16px; height:16px; cursor:pointer;" (click)="closePopups()"></mat-icon>
+          </div>
+          <p class="popup-subtitle">Are you sure you want to remove this product from your Bag?</p>
+
+          <div class="popup-product-card" *ngIf="selectedProduct">
+            <img *ngIf="selectedProduct?.images"
+              ngOptimizedImage
+              [src]="selectedProduct?.images.split('|')[0]"
+              [alt]="selectedProduct?.brand_name"
+              class="popup-product-img"
+            />
+            <div class="popup-product-info">
+              <h2>{{ selectedProduct?.brand_name }}</h2>
+              <p>{{ selectedProduct?.product_short_name }}</p>
+              <div class="popup-price-row">
+                <span class="popup-selling-price">₹{{ selectedProduct?.selling_price | number:'1.2-2' }}</span>
+                <span class="popup-mrp">₹{{ selectedProduct?.mrp | number:'1.2-2' }}</span>
+                <span class="popup-discount">({{ selectedProduct?.discount_percent }}% OFF)</span>
               </div>
-              <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:15px; height:15px" (click)="closePopups()"></mat-icon>
             </div>
-            <p>Are you sure you want to remove this product from your Bag?</p>
-            <div class="product-item">
+          </div>
 
-                <img *ngIf="selectedProduct?.images"
-                  ngOptimizedImage
-                  [src]="selectedProduct?.images.split('|')[0]"
-                  [alt]="selectedProduct?.images.split('|')[0]"
-                  class="product-image"
-                />
-
-                <div class="product-details">
-                    <h2>{{ selectedProduct?.brand_name }}</h2>
-                    <p>{{ selectedProduct?.product_short_name }}</p>
-                    
-                    <span class="selling-price">₹{{selectedProduct?.selling_price}} &nbsp;</span>
-                    <span class="mrp-discount">
-                        <span class="mrp">₹{{selectedProduct?.mrp}}</span>
-                        (<span class="discount-percent">{{selectedProduct?.discount_percent}}% OFF</span>)
-                    </span>
-                </div>
-            </div>
-            
-            <div class="popup-buttons">
-                <button class="cancel" (click)="addToWishlist(selectedProduct, $event)">Move to Wishlist</button>
-                <button class="confirm" (click)="confirmRemoveFromWishlist()">Remove</button>
-            </div>
+          <div class="popup-buttons">
+            <button class="cancel" (click)="addToWishlist(selectedProduct, $event)">Move to Wishlist</button>
+            <button class="confirm" (click)="confirmRemoveFromWishlist()">Remove</button>
+          </div>
         </div>
       </div>
 

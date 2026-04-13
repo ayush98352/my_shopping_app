@@ -2,7 +2,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h2>SHOP</h2>
+            <h2>SHOPS</h2>
         </div>
         
         <div class="icon-container">
@@ -14,79 +14,107 @@
     </div>
 
     <div class="content" (scroll)="onScroll($event)">
-        <div class="section">
-            <div class="search-container" (input)="searchShops($event)">
-                <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                <input type="text" class="search-input" placeholder="Shop by malls and stores...">
-            </div>
-        </div>
-        
-        <div class="grid">
-            <ng-container *ngFor="let category of shopsCategory">
-              <div class="grid-item">
-                <img
-                  [src]="'assets/img/' + category.image + '.jpg'"
-                  [alt]="category.image"
-                />
-                <div class="category-name">{{category.name}}</div>
-              </div>
-            </ng-container>
+
+        <!-- Location permission denied -->
+        <div class="error-state" *ngIf="locationError === 'denied'">
+            <div class="error-icon">📍</div>
+            <h3>Location Access Denied</h3>
+            <p>We need your location to show nearby shops and malls. Please allow location access and try again.</p>
+            <button class="error-btn primary" (click)="requestLocation()">Allow Location</button>
+            <p class="error-hint">If the button doesn't work, enable location in your browser settings and reload.</p>
         </div>
 
-        <div class="main-categories">
-            <div *ngFor="let category of mainCategories">
-                <div (click)="changeExploreTab(category.label);">
-                    <img [src]="activeExploreTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
-                </div>
-            </div>
+        <!-- Location unavailable (GPS off, no support) -->
+        <div class="error-state" *ngIf="locationError === 'unavailable'">
+            <div class="error-icon">🌐</div>
+            <h3>Location Unavailable</h3>
+            <p>We couldn't detect your location. Make sure location services are enabled on your device.</p>
+            <button class="error-btn primary" (click)="requestLocation()">Try Again</button>
         </div>
 
-        <div class="loader-content" *ngIf="isLoadingSearchResults && searchedText.length > 1">
-            <div class="spinner1" style="position: relative;"></div>
-            <p>Loading...</p>
-        </div>
-        <div *ngIf="activeExploreTab === 'Malls' && !isLoadingSearchResults && mallsListDisplay.length == 0 && searchedText.length > 1"  class="end-message">
-            <p>Searched {{activeExploreTab}} not found! Showing All !</p>
-        </div>
-        <div *ngIf="activeExploreTab === 'Shops' && !isLoadingSearchResults && shopsListDisplay.length == 0 && searchedText.length > 1"  class="end-message">
-            <p>Searched {{activeExploreTab}} not found! Showing All !</p>
-        </div>
-        
-        <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsListDisplay.length > 0 ? mallsListDisplay : mallsList : shopsListDisplay.length>0 ? shopsListDisplay : shopsList)">
-            <div class="image-container" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
-              <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
-              <div *ngIf="item?.promoted" class="promoted-badge">Promoted</div>
-              <div class="offer-tag" *ngIf="item?.instore_offers">{{item?.instore_offers}}</div>
-            </div>
-            <div class="shop-details" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
-                <div class="title-container">
-                    <h2 class="mall-name">{{item?.name}}
-                        <span *ngIf="item?.floor_no">| {{item?.floor_no}}{{getNumberSuffix(item?.floor_no)}} Floor </span>
-                        <span *ngIf="item?.shop_no">| SN. {{item?.shop_no}}</span>
-                    </h2>
-                </div>
-                
-                <p class="mall-address">{{item?.address}}</p>
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <div class="closing-time">Timing: {{item?.timings}}</div>
-                    <div class="distance">{{item?.distance}} km</div>
-                </div>
-            </div>
-           
-        </div>
-        <div class="loader-content" *ngIf="activeExploreTab === 'Malls' ? isLoadingMallsContent : isLoadingShopsContent">
-            <div class="spinner1" style="position: relative;"></div>
-            <p>Loading...</p>
-          </div>
-          <div *ngIf="activeExploreTab === 'Malls' ? allMallsLoaded : allShopsLoaded" class="end-message">
-            <p>All {{activeExploreTab}} are loaded!</p>
+        <!-- API error -->
+        <div class="error-state" *ngIf="apiError && !locationError">
+            <div class="error-icon">⚠️</div>
+            <h3>Something Went Wrong</h3>
+            <p>We couldn't load shops near you. Please check your connection and try again.</p>
+            <button class="error-btn primary" (click)="retryLoad()">Retry</button>
         </div>
 
-        <div class="loader" *ngIf="isLoading">
+        <!-- Normal content -->
+        <ng-container *ngIf="!locationError && !apiError">
+            <div class="section">
+                <div class="search-container" (input)="searchShops($event)">
+                    <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
+                    <input type="text" class="search-input" placeholder="Shop by malls and stores...">
+                </div>
+            </div>
+
+            <div class="grid">
+                <ng-container *ngFor="let category of shopsCategory">
+                  <div class="grid-item">
+                    <img
+                      [src]="'assets/img/' + category.image + '.jpg'"
+                      [alt]="category.image"
+                    />
+                    <div class="category-name">{{category.name}}</div>
+                  </div>
+                </ng-container>
+            </div>
+
+            <div class="main-categories">
+                <div *ngFor="let category of mainCategories">
+                    <div (click)="changeExploreTab(category.label);">
+                        <img [src]="activeExploreTab === category.label ? 'assets/svg/' + category.image + '-active.svg' : 'assets/svg/' + category.image + '.svg'" [alt]="category.title">
+                    </div>
+                </div>
+            </div>
+
+            <div class="loader-content" *ngIf="isLoadingSearchResults && searchedText.length > 1">
+                <div class="spinner1" style="position: relative;"></div>
+                <p>Loading...</p>
+            </div>
+            <div *ngIf="activeExploreTab === 'Malls' && !isLoadingSearchResults && mallsListDisplay.length == 0 && searchedText.length > 1" class="end-message">
+                <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+            </div>
+            <div *ngIf="activeExploreTab === 'Shops' && !isLoadingSearchResults && shopsListDisplay.length == 0 && searchedText.length > 1" class="end-message">
+                <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+            </div>
+
+            <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsListDisplay.length > 0 ? mallsListDisplay : mallsList : shopsListDisplay.length>0 ? shopsListDisplay : shopsList)">
+                <div class="image-container" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
+                  <img [src]="'assets/img/stores/' + item?.images + ''" [alt]="item?.images" class="mall-image">
+                  <div *ngIf="item?.promoted" class="promoted-badge">Promoted</div>
+                  <div class="offer-tag" *ngIf="item?.instore_offers">{{item?.instore_offers}}</div>
+                </div>
+                <div class="shop-details" (click)="activeExploreTab === 'Malls' ? goToMallsPage(item) : goToStorePage(item)">
+                    <div class="title-container">
+                        <h2 class="mall-name">{{item?.name}}
+                            <span *ngIf="item?.floor_no">| {{item?.floor_no}}{{getNumberSuffix(item?.floor_no)}} Floor </span>
+                            <span *ngIf="item?.shop_no">| SN. {{item?.shop_no}}</span>
+                        </h2>
+                    </div>
+                    <p class="mall-address">{{item?.address}}</p>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="closing-time">Timing: {{item?.timings}}</div>
+                        <div class="distance">{{item?.distance}} km</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loader-content" *ngIf="activeExploreTab === 'Malls' ? isLoadingMallsContent : isLoadingShopsContent">
+                <div class="spinner1" style="position: relative;"></div>
+                <p>Loading...</p>
+            </div>
+            <div *ngIf="activeExploreTab === 'Malls' ? allMallsLoaded : allShopsLoaded" class="end-message">
+                <p>All {{activeExploreTab}} are loaded!</p>
+            </div>
+        </ng-container>
+
+        <div class="loader" *ngIf="isLoading && !locationError">
             <div class="spinner"></div>
             <div class="spinner1"></div>
         </div>
-          
+
     </div>
     <div class="footer">
         <div class="footer-icons">

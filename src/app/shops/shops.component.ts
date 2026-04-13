@@ -53,6 +53,8 @@ export class ShopsComponent implements OnInit {
   public isLoading = true;
   public isLoadingMallsContent: boolean = false;
   public isLoadingShopsContent: boolean = false;
+  public locationError: 'denied' | 'unavailable' | null = null;
+  public apiError: boolean = false;
 
   mallsOffset: number = 0;
   mallsLimit: number = 5;
@@ -99,11 +101,51 @@ export class ShopsComponent implements OnInit {
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService) {}
 
   async ngOnInit() {
-    let location = JSON.parse(localStorage.getItem('location') || '{}');  
+    let location = JSON.parse(localStorage.getItem('location') || '{}');
     this.coordinates = location['coordinate'];
-    // await this.getMallsList();
-    // this.getShopsList();
+
+    if (!this.coordinates?.lat || !this.coordinates?.lon) {
+      await this.requestLocation();
+      return;
+    }
     await this.loadCachedData();
+  }
+
+  private getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
+    });
+  }
+
+  async requestLocation() {
+    this.locationError = null;
+    this.isLoading = true;
+
+    if (!navigator.geolocation) {
+      this.locationError = 'unavailable';
+      this.isLoading = false;
+      return;
+    }
+
+    try {
+      const position = await this.getCurrentPosition();
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      this.coordinates = { lat, lon };
+
+      const existing = JSON.parse(localStorage.getItem('location') || '{}');
+      existing['coordinate'] = { lat, lon };
+      localStorage.setItem('location', JSON.stringify(existing));
+
+      await this.loadCachedData();
+    } catch (err: any) {
+      this.isLoading = false;
+      if (err?.code === 1) {
+        this.locationError = 'denied';
+      } else {
+        this.locationError = 'unavailable';
+      }
+    }
   }
 
   async loadCachedData() {
@@ -176,7 +218,7 @@ export class ShopsComponent implements OnInit {
           this.mallsListDisplay = [...this.mallsListDisplay, ...data];
           this.mallsOffset += this.mallsLimit;
           this.isLoadingSearchResults = false;
-        }  
+        }
         else {
           this.mallsList = [...this.mallsList, ...data];
           this.mallsOffset += this.mallsLimit;
@@ -186,6 +228,10 @@ export class ShopsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching data:', error);
+        this.apiError = true;
+        this.isLoading = false;
+        this.isLoadingMallsContent = false;
+        this.isLoadingSearchResults = false;
       },
       () => {
         if(this.activeExploreTab == 'Malls'){
@@ -222,7 +268,7 @@ export class ShopsComponent implements OnInit {
           this.shopsListDisplay = [...this.shopsListDisplay, ...data];
           this.shopsOffset += this.shopsLimit;
           this.isLoadingSearchResults = false;
-        } 
+        }
         else {
           this.shopsList = [...this.shopsList, ...data];
           this.shopsOffset += this.shopsLimit;
@@ -232,6 +278,10 @@ export class ShopsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching data:', error);
+        this.apiError = true;
+        this.isLoading = false;
+        this.isLoadingShopsContent = false;
+        this.isLoadingSearchResults = false;
       },
       () => {
         if(this.activeExploreTab == 'Shops'){
@@ -252,6 +302,19 @@ export class ShopsComponent implements OnInit {
     this.storeScrollPosition();
     this.dataShareService.setStoreDetails(store);
     return this.router.navigate(['/store']);
+  }
+
+  async retryLoad() {
+    this.apiError = false;
+    this.isLoading = true;
+    this.mallsList = [];
+    this.shopsList = [];
+    this.mallsOffset = 0;
+    this.shopsOffset = 0;
+    this.allMallsLoaded = false;
+    this.allShopsLoaded = false;
+    this.getMallsList();
+    this.getShopsList();
   }
 
   async changeExploreTab(tab: any){

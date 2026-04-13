@@ -5,9 +5,10 @@
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
                 <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <h2>{{productDetails?.brand_name}}</h2>
+            <h2 *ngIf="!showTitleInHeader">{{productDetails?.brand_name}}</h2>
+            <h2 class="header-product-title" *ngIf="showTitleInHeader">{{productDetails?.product_name}}</h2>
         </div>
-        <div>
+        <div class="header-icons">
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M21 21L16.65 16.65" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -20,7 +21,7 @@
     </div>
     
     
-    <div class="content">
+    <div class="content" (scroll)="onContentScroll($event)">
         <div class="product-images-scroll" >
             <div *ngFor="let image of imagesArray">
                 <img class="product-image-new" [src]="image" [alt]="image" (click)="openFullscreen(image)">
@@ -120,11 +121,6 @@
         </div>
 
         
-        <div class="action-buttons">
-            <button class="action-button buy-now-button">Buy Now</button>
-            <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
-        </div>
-
         <!-- Fullscreen Image Viewer -->
         <!-- <div class="fullscreen-viewer" *ngIf="isFullscreen">
             <button class="close-button" (click)="closeFullscreen()">✕</button>
@@ -154,5 +150,10 @@
             <div class="spinner1"></div>
         </div>
     </div>
-    
-</div>  
+
+    <div class="action-buttons-bar">
+        <button class="action-button buy-now-button">Buy Now</button>
+        <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
+    </div>
+
+</div>

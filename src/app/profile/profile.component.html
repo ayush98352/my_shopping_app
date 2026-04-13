@@ -1,66 +1,74 @@
 <div class="container">
-    <div class="header">
-        <div>
-            <h2>My Account</h2>
-        </div>
-    </div>
-    <div class="content">
-       
-        <section class="user-section">
-            <img src="assets/img/girl-profile.jpg" alt="Profile Picture" class="profile-picture">
-            <!-- <img src="assets/img/profile-test.jpg" alt="Profile Picture" class="profile-picture"> -->
-            <!-- <p class="phone-number" > Name {{ phoneNumber }}</p>
-            <p class="phone-number"> Email Address {{ phoneNumber }}</p> -->
-            <p class="phone-number"> Mobile No. {{ phoneNumber }}</p>
-        </section>
-    
-       
-    
-        <section class="info-section">
-            <!-- <h3>YOUR INFORMATION</h3> -->
-            <div class="menu-items">
-                <div *ngFor="let item of yourInfoItems; last as isLast">
-                    <div class="menu-item" (click)="item.clicked === 'gotoYourOrdersPage' ? gotoYourOrdersPage() : item.clicked === 'gotoAddressBookPage' ? gotoAddressBookPage() : item.clicked === 'gotoCollectedCouponsPage' ? gotoCollectedCouponsPage() : item.clicked === 'gotoBookmarkedRecipesPage' ? gotoBookmarkedRecipesPage() : null" [ngStyle]="{'border-bottom': isLast ? '0px' : ''}">
-                        <div>
-                            <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="icon-container" style="border-radius: 0%;"></mat-icon>
-                        </div>
-                        <span>{{ item.label }}</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    
-        <section class="info-section">
-            <!-- <h3>OTHER INFORMATION</h3> -->
-            <div class="menu-items">
-                <div *ngFor="let item of otherInfoItems; last as isLast">
-                    <div class="menu-item" (click)="handleClick(item.clicked)" [ngStyle]="{'border-bottom': isLast ? '0px' : ''}">
-                        <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="icon-container"></mat-icon>
-                        <span>{{ item.label }}</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
 
-    <div class="footer">
-        <div class="footer-icons">
-          <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
+  <!-- Header -->
+  <div class="header">
+    <h2>My Account</h2>
+  </div>
+
+  <div class="content">
+
+    <!-- User Info Card -->
+    <section class="user-section">
+      <img src="assets/img/girl-profile.jpg" alt="Profile Picture" class="profile-picture">
+      <div class="user-info">
+        <p class="user-name">{{ userName || 'Name' }}</p>
+        <p class="user-detail">{{ userEmail || 'Email Address' }}</p>
+        <p class="user-detail">{{ phoneNumber || 'Mobile No.' }}</p>
+      </div>
+      <button class="edit-btn">Edit</button>
+    </section>
+
+    <!-- Your Info Menu -->
+    <section class="info-section">
+      <div class="menu-items">
+        <div *ngFor="let item of yourInfoItems; last as isLast">
+          <div class="menu-item"
+            [class.no-border]="isLast"
+            (click)="item.clicked === 'gotoYourOrdersPage' ? gotoYourOrdersPage() :
+                     item.clicked === 'gotoAddressBookPage' ? gotoAddressBookPage() :
+                     item.clicked === 'gotoCollectedCouponsPage' ? gotoCollectedCouponsPage() : null">
+            <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="menu-icon"></mat-icon>
+            <span class="menu-label">{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Info Menu -->
+    <section class="info-section">
+      <div class="menu-items">
+        <div *ngFor="let item of otherInfoItems; last as isLast">
+          <div class="menu-item"
+            [class.no-border]="isLast"
+            (click)="handleClick(item.clicked)">
+            <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="menu-icon"></mat-icon>
+            <span class="menu-label">{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-icons">
+      <div class="icon" (click)="changeFooterTab('home'); gotoHomePage()">
             <mat-icon [svgIcon]="activeTab === 'home' ? 'home-icon-active' : 'home-icon'" [alt]="'Home'" style="height: 29px; width: 29px; display: flex;"></mat-icon>
-          </div>
-          <div class="icon" (click)="changeFooterTab('stores'); gotoShopsPage()">
+      </div>
+      <div class="icon" (click)="changeFooterTab('stores'); gotoShopsPage()">
             <mat-icon [svgIcon]="activeTab === 'stores' ? 'stores-icon-active' : 'stores-icon'" [alt]="'Stores'" style="height: 31px; width: 30px; display: flex;"></mat-icon>
-          </div>
-          <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()">
+      </div>
+      <div class="icon" (click)="changeFooterTab('explore'); gotoExplorePage()">
             <mat-icon [svgIcon]="activeTab === 'explore' ? 'group-icon-active' : 'group-icon'" [alt]="'Explore'" style="height: 25px; width: 24px; display: flex;"></mat-icon>
-          </div>
+      </div>
           <!-- <div class="icon" (click)="changeFooterTab('trends')">
             <mat-icon [svgIcon]="activeTab === 'trends' ? 'trends-icon-active' : 'trends-icon'" [alt]="'Trends'" style="height: 21px; width: 28px; display: flex;"></mat-icon>
           </div> -->
           <div class="icon" (click)="changeFooterTab('profile'); scrollToTop();">
              <mat-icon [svgIcon]="activeTab === 'profile' ? 'profile-icon-active' : 'profile-icon'" [alt]="'Profile'" style="height: 28px; width: 28px; display: flex;"></mat-icon>
-          </div>
-        </div>
+      </div>
     </div>
+  </div>
 
 </div>
