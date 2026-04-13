@@ -36,6 +36,15 @@ export class ProductComponent implements OnInit{
   isFullscreen = false;
   selectedImage: string | null = null;
   zoomedImage: string | null = null;
+  public showTitleInHeader: boolean = false;
+
+  onContentScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    const titleEl = target.querySelector('.product-title') as HTMLElement;
+    if (titleEl) {
+      this.showTitleInHeader = target.scrollTop > titleEl.offsetTop;
+    }
+  }
 
 
   public constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private dataShareService: DataShareService, private location: Location) {}

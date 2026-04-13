@@ -1,204 +1,142 @@
-/* profile.component.scss */
-
-
+/* ── Layout ── */
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 1200px;
-    margin: 0px auto;
-    font-family: 'Poppins';
-    background-color: #D3D3D30A;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
 }
-/* 
+
+/* ── Header ── */
 .header {
-    background-color: #fff;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-.header1 {
-    display: flex;
-    align-items: center;
-    margin-left: -20px;
-    width: 100%;
-}
-
-.header-icon {
-    width: 32px;
-    height: 25px;
-    margin-left: 5px;
-    margin-right: 5px;
-    cursor: pointer;
+  padding: clamp(16px, 4vw, 28px) clamp(16px, 4vw, 24px) clamp(8px, 2vw, 12px);
+  background-color: #fafafa;
 }
 
 .header h2 {
-    margin: 0;
-    text-align: center;
-    width: 100%;
-} */
+  margin: 0;
+  font-size: clamp(21px, 5vw, 30px);
+  font-weight: 400;
+  font-family: 'Times New Roman', Times, serif;
+  color: #111;
+}
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1001;
-  /* background-color: #fff; */
+/* ── Scrollable content ── */
+.content {
+  flex-grow: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0px 10px;
+}
+
+/* ── User info card ── */
+.user-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; 
-  width: 100%;
-  max-width: 100%; /* Prevent it from expanding beyond the container */
-  padding-left: 15px;
+  gap: clamp(10px, 3vw, 16px);
+  background-color: #FB818C1A;
+  border-radius: 14px;
+  padding: clamp(14px, 4vw, 20px);
+  margin-bottom: clamp(18px, 4vw, 28px);
+  position: relative;
 }
 
-.header h2 {
-    font-size: 21px;
-    font-weight: 400;
-    font-family: 'Times New Roman', Times, serif;
-  }
-
-
-.icon-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-.header-icon {
-    width: 28px;
-    height: 25px;
-    margin-left: 5px;
-    margin-right: 5px;
-    cursor: pointer;
+.profile-picture {
+  width: clamp(56px, 15vw, 76px);
+  height: clamp(56px, 15vw, 76px);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
+.user-name {
+  margin: 0;
+  font-size: clamp(14px, 3.8vw, 17px);
+  font-weight: 600;
+  color: #111;
+  line-height: 1.3;
+}
 
+.user-detail {
+  margin: 0;
+  font-size: clamp(12px, 3vw, 14px);
+  color: #555;
+  line-height: 1.4;
+}
 
-.content {
-    /* padding: 0px 10px; */
-    /* background-color: #ffffff; */
-    overflow-y: auto;
-    /* padding-bottom: 60px; */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    
-  }
-  
-  .account-section {
-    margin-bottom: 24px;
-  
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-  
-    .phone-number {
-      color: #666;
-      font-size: 16px;
-    }
-  }
-  .user-section {
-    display: flex;
-    background-color: #FB818C24;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-    margin-top: 15px;
-    gap: 10px;
-  }
-  
-  .quick-actions {
-    background-color: #FB818C24;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-  
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-  
-    .action-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      text-align: center;
-  
-      .icon-container {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-      }
-  
-      span {
-        font-size: 14px;
-        color: #333;
-      }
-    }
-  }
-  
-  .info-section {
-    margin-bottom: 24px;
-    padding: 14px;
-    gap: 14px;
-    border-radius: 18px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #FFFFFF;
-  
-    h3 {
-      color: #999;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-  
-    .menu-items {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-  
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 8px 0;
-      cursor: pointer;
-      border-bottom: 1px solid #0000004D;
+.edit-btn {
+  position: absolute;
+  top: clamp(12px, 3vw, 18px);
+  right: clamp(12px, 3vw, 18px);
+  background: none;
+  border: none;
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-weight: 500;
+  color: #111;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
 
-  
-      .icon-container {
-        width: 25px;
-        height: 25px;
-        /* background-color: #f5f5f5; */
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-      }
-  
-      span {
-        font-size: 16px;
-        color: #333;
-      }
-    }
-  }
+/* ── Menu sections ── */
+.info-section {
+  margin-bottom: clamp(14px, 3vw, 20px);
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
 
+.menu-items {
+  display: flex;
+  flex-direction: column;
+}
 
-  /* footer */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 3.5vw, 18px);
+  padding: clamp(13px, 3.5vw, 16px) clamp(14px, 4vw, 20px);
+  cursor: pointer;
+  border-bottom: 1px solid #e8e8e8;
+  transition: background-color 0.15s ease;
+}
+
+.menu-item:hover {
+  background-color: #f9f9f9;
+}
+
+.menu-item.no-border {
+  border-bottom: none;
+}
+
+.menu-icon {
+  width: clamp(22px, 6vw, 28px) !important;
+  height: clamp(22px, 6vw, 28px) !important;
+  flex-shrink: 0;
+  color: #222;
+}
+
+.menu-label {
+  font-size: clamp(13px, 3.8vw, 16px);
+  color: #222;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ── Footer ── */
 .footer {
   position: sticky;
   bottom: 0;
@@ -230,3 +168,5 @@
   background-size: contain;
   align-self: center;
 }
+
+

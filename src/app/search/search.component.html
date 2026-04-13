@@ -1,37 +1,59 @@
-<!-- <p>search works!</p> -->
 <div class="container">
 
-    <div class="search-container" >
-        
-        <svg class="search-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
-            <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <input type="text" class="search-input" [placeholder]="searchedText ? searchedText : 'Search for brands and products'" (input)="onSearch($event)">
-        <!-- (input)="getSearchedlist($event.target)" -->
-        <!-- <div class="filter-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="4" y1="21" x2="4" y2="14"></line>
-                <line x1="4" y1="10" x2="4" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12" y2="3"></line>
-                <line x1="20" y1="21" x2="20" y2="16"></line>
-                <line x1="20" y1="12" x2="20" y2="3"></line>
-                <line x1="1" y1="14" x2="7" y2="14"></line>
-                <line x1="9" y1="8" x2="15" y2="8"></line>
-                <line x1="17" y1="16" x2="23" y2="16"></line>
+    <div class="search-bar">
+        <button class="back-btn" (click)="goBackToPreviousPage()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-        </div> -->
+        </button>
+        <div class="search-input-wrap">
+            <svg class="search-icon-inner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-input" [placeholder]="searchedText ? searchedText : 'Search for brands and products'" (input)="onSearch($event)" autofocus>
+        </div>
     </div>
-    <div class="search-results" *ngIf="searchedList.length > 0">
-        <div class="search-result-item" *ngFor="let item of searchedList">
-            <div (click)="gotoCategoryProductPage(item)">
-                <div *ngIf="item?.ideal_for != 'Kids'">
-                    <p>{{item?.category_name + ' for ' + item?.ideal_for}}</p>
+
+    <div class="results-section" *ngIf="searchedList.length > 0">
+        <p class="results-label">Suggestions</p>
+        <div class="result-list">
+            <div class="result-item" *ngFor="let item of searchedList" (click)="gotoCategoryProductPage(item)">
+                <div class="result-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FB818C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
                 </div>
-                <div *ngIf="item?.ideal_for == 'Kids'">
-                    <p>{{item?.category_name + ' for ' + ((item?.top_category_name === 'Boys Clothing' || item?.top_category_name === 'Girls Clothing') ? item?.top_category_name.split(' ')[0] : item?.top_category_name)}}</p>
+                <div class="result-text">
+                    <ng-container *ngIf="item?.ideal_for != 'Kids'">
+                        <span class="result-category">{{item?.category_name}}</span>
+                        <span class="result-for"> in </span>
+                        <span class="result-gender">{{item?.ideal_for}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="item?.ideal_for == 'Kids'">
+                        <span class="result-category">{{item?.category_name}}</span>
+                        <span class="result-for"> in </span>
+                        <span class="result-gender">{{(item?.top_category_name === 'Boys Clothing' || item?.top_category_name === 'Girls Clothing') ? item?.top_category_name.split(' ')[0] : item?.top_category_name}}</span>
+                    </ng-container>
+                    <span class="result-subcategory">{{item?.top_category_name}}</span>
+                </div>
+                <div class="result-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="empty-state" *ngIf="searchedText && searchedList.length === 0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <p>No results for <strong>"{{searchedText}}"</strong></p>
+        <span>Try a different keyword</span>
+    </div>
+
 </div>

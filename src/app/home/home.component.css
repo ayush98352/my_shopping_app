@@ -114,7 +114,7 @@
 }
 
 .new-arrival {
-  background-color: #FFD1DC;
+  /* background-color: #FFD1DC; */
   border-radius: 10px;
   display: flex;
   justify-content: space-between;

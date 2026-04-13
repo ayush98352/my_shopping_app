@@ -1,10 +1,11 @@
 <div class="container">
   <!-- <div class="background"></div> -->
   <div class="login-container" *ngIf="!otpSent">
-    <!-- <img src="assets/svg/ellipse.svg" alt="background" class="background-ellipse"> -->
-    <mat-icon [svgIcon]="'ellipse'"  [alt]="'background'" class="background-ellipse"></mat-icon>
-    <div class="skip-button" (click)="skipLogin()">Skip</div>
-    <div class="login-text">Login/Register</div>
+    <mat-icon [svgIcon]="'ellipse'" [alt]="'background'" class="background-ellipse"></mat-icon>
+    <div class="top-bar">
+      <div class="login-text">Login/Register</div>
+      <div class="skip-button" (click)="skipLogin()">Skip</div>
+    </div>
     <div class="login-card">
     
     

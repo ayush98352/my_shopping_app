@@ -309,8 +309,8 @@ export class ExploreComponent implements OnInit{
     let savedFilters = this.dataShareService.getFilters();
     if(savedFilters && Object.keys(savedFilters).length > 0){
       this.activeDressCategory = savedFilters?.activeDressCategory;
-      this.activeFashionTab = savedFilters?.activeFashionTab;
-      this.activeSidebarCategories = savedFilters?.activeSidebarCategories;
+      this.activeFashionTab = savedFilters?.activeFashionTab || 'Women';
+      this.activeSidebarCategories = savedFilters?.activeSidebarCategories || (this.activeFashionTab === 'Men' ? 'Topwear' : this.activeFashionTab === 'Kids' ? 'Boys Clothing' : 'Dresses');
     }else{
       this.activeFashionTab = 'Women';
       this.activeSidebarCategories = 'Dresses';

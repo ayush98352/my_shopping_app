@@ -38,40 +38,47 @@
   .delivery-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding: 0 15px;
+    font-size: clamp(12px, 3.2vw, 14px);
+    line-height: 1.5;
   }
 
   .delivery-info div {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;  /* Limits text to 2 lines */
-    line-clamp: 2;  /* Standard property for compatibility */    
-    overflow: hidden;  /* Hides the text that overflows */
-    text-overflow: ellipsis;  /* Adds ellipsis if text overflows */
-    line-height: 1.5em;  /* Adjusts line height for proper spacing */
-    max-height: 3em;  /* Ensures it is limited to 2 lines (line-height x 2) */
-    flex-grow: 1;  /* Allows the address div to grow and take available space */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    max-height: 3em;
+    flex-grow: 1;
   }
-  
+
   .change-button {
     background: none;
     border: none;
-    color: red;
+    color: #F52727;
+    font-size: clamp(12px, 3.2vw, 14px);
+    font-weight: 500;
     cursor: pointer;
-    margin-left: 5px;  /* Adds some spacing between the address and button */
-    white-space: nowrap;  /* Ensures the button text doesn't wrap */
+    margin-left: 8px;
+    white-space: nowrap;
+    padding: 0;
   }
 
   .product-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
+    padding: 0 15px;
   }
 
   .product-item {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     position: relative;
     background-color: #f9f9f9;
     padding: 15px;
@@ -79,24 +86,40 @@
   }
 
   .product-image {
-    width: 100px;
-    height: 100px;
+    width: clamp(90px, 28vw, 130px);
+    height: clamp(110px, 34vw, 155px);
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 8px;
+    flex-shrink: 0;
   }
 
   .product-details {
     flex-grow: 1;
+    position: relative;
+  }
+
+  .product-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
   }
 
   .product-details h2 {
-    font-size: 18px;
-    margin: 0 0 5px 0;
+    font-size: clamp(13px, 3.8vw, 16px);
+    font-weight: 600;
+    margin: 0 0 2px 0;
+    color: #111;
   }
 
-  .product-details p {
-    font-size: 14px;
-    margin: 0 0 10px 0;
+  .product-name {
+    font-size: clamp(11px, 3vw, 13px);
+    color: #666;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45vw;
   }
 
   .product-options {
@@ -105,8 +128,31 @@
     margin-bottom: 10px;
   }
 
-  .product-options select {
-    padding: 5px;
+  .select-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    padding: clamp(2px, 1vw, 4px) clamp(4px, 1.5vw, 7px);
+    background: #f5f5f0;
+    font-size: clamp(11px, 3vw, 13px);
+  }
+
+  .select-label {
+    color: #333;
+    margin-right: 2px;
+    white-space: nowrap;
+    font-size: clamp(11px, 3vw, 13px);
+  }
+
+  .select-wrapper select {
+    border: none;
+    background: transparent;
+    font-size: clamp(11px, 3vw, 13px);
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    max-width: 50px;
   }
 
   .product-price {
@@ -114,69 +160,82 @@
   }
 
   .current-price {
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: clamp(16px, 4.5vw, 20px);
+    color: #111;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .price-original-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   .original-price {
     text-decoration: line-through;
     color: #888;
-    margin-left: 5px;
+    font-size: clamp(10px, 2.8vw, 13px);
   }
 
   .discount {
-    color: red;
-    margin-left: 5px;
+    color: #E07000;
+    font-size: clamp(10px, 2.8vw, 13px);
   }
 
   .delivery-date {
-    font-size: 12px;
+    font-size: clamp(10px, 2.5vw, 12px);
     color: #888;
+    margin-top: 5px;
   }
 
   .remove-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0;
     cursor: pointer;
+    color: #555;
   }
 
   .header {
     background-color: #fff;
-    padding: 15px 0px;
+    padding: 15px 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
   }
 
 .header h2 {
     margin: 0;
+    flex: 1;
+    text-align: left;
+    padding-left: 8px;
+    font-size: clamp(18px, 5vw, 22px);
+    font-weight: 400;
 }
 
 .header-icon {
-    width: 32px;
+    width: 28px;
     height: 25px;
-    margin-left: 5px;
-    margin-right: 5px;
+    flex-shrink: 0;
     cursor: pointer;
 }
 
 
 
 .frame {
-  padding: 15px 13px;
+  padding: 15px;
   width: 100%;
   box-sizing: border-box;
 }
 .coupon-section {
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
+  gap: 10px;
 }
 
 .coupon-header {
@@ -188,77 +247,99 @@
 }
 .coupon-header h2 {
   font-weight: 500;
-  font-size: 18px;
-  line-height: 10px;
+  font-size: clamp(13px, 3.8vw, 16px);
+  line-height: 1;
+  margin: 0;
 }
-.coupon-header p{
+.coupon-header p {
   font-weight: 500;
-  font-size: 18px;
-  line-height: 10px;
+  font-size: clamp(12px, 3.5vw, 14px);
+  line-height: 1;
   color: #F52727;
-
+  margin: 0;
 }
 
 .coupon-card {
-  border: 1px solid #4CAF50;
+  border: 1.5px solid #09C777;
   border-radius: 8px;
-  padding: 10px;
-  
+  padding: clamp(10px, 3vw, 14px);
 }
-.coupon-card h3{
+.coupon-card h3 {
   font-style: normal;
-  font-weight: 550;
-  font-size: 16px;
-  line-height: 0px;
+  font-weight: 600;
+  font-size: clamp(14px, 4vw, 16px);
+  margin: 0 0 4px 0;
+  color: #111;
 }
 
-
-.coupon-card p{
+.coupon-card p {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-
+  font-size: clamp(11px, 2.8vw, 13px);
+  line-height: 1.5;
+  color: #555;
+  margin: 0 0 10px 0;
 }
 .coupon-code {
-  color: #4CAF50;
-  border: 1px dashed #09C777;
-  padding: 5px;
-  align-self: center;
+  color: #09C777;
+  border: 1.5px dashed #09C777;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 .apply-coupon {
   background-color: #fff;
   color: #FF0000;
-  border: 1px solid #FF0000;
-  padding: 5px 10px;
+  border: 1.5px solid #FF0000;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 600;
   cursor: pointer;
+  letter-spacing: 0.3px;
 }
 .price-details {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.price-details h3{
+.price-details h3 {
   font-style: normal;
-  font-size: 16px;
-  line-height: 0px;
+  font-size: clamp(13px, 3.8vw, 16px);
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  line-height: 1;
 }
 .price-row {
   display: flex;
   justify-content: space-between;
   font-weight: 400;
-  line-height: 18px;
+  font-size: clamp(12px, 3.5vw, 14px);
+  line-height: 1.4;
   gap: 10px;
+}
+.place-order-section {
+  padding: clamp(10px, 3vw, 15px) 15px 0;
+}
+.items-selected {
+  font-size: clamp(11px, 3vw, 13px);
+  color: #444;
+  margin: 0 0 10px 0;
 }
 .place-order {
   background-color: #000;
   color: #fff;
   border: none;
-  padding: 15px;
+  padding: clamp(12px, 4vw, 16px);
   width: 100%;
-  font-size: 18px;
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 500;
   cursor: pointer;
+  letter-spacing: 0.3px;
+  border-radius: 10px;
 }
 
 
@@ -270,64 +351,140 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.55);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+    background-color: #fff;
+    padding: clamp(16px, 5vw, 24px);
+    border-radius: 16px;
     text-align: left;
-    max-width: 80%;
-    width: 300px;
-}
-.popup-content h3{
-    padding: 0px;
-    margin: 2px;
-    font-size: 18px;
-    line-height: 18px;
-    font-weight: 500;
-}
-.popup-content p{
-    padding: 0px;
-    margin: 2px;
-    font-size: 12px;
-    line-height: 12px;
-    font-weight: 500;
+    width: min(90vw, 380px);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
 }
 
+.popup-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.popup-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.popup-content h3 {
+    padding: 0;
+    margin: 0;
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 1.3;
+    font-weight: 600;
+    color: #111;
+}
+
+.popup-subtitle {
+    padding: 0;
+    margin: 4px 0 14px;
+    font-size: clamp(12px, 3vw, 14px);
+    line-height: 1.4;
+    font-weight: 400;
+    color: #666;
+}
+
+.popup-product-card {
+    display: flex;
+    gap: 12px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 4px;
+}
+
+.popup-product-card .popup-product-img {
+    width: clamp(70px, 20vw, 100px);
+    height: clamp(85px, 24vw, 120px);
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.popup-product-info h2 {
+    font-size: clamp(14px, 3.8vw, 16px);
+    font-weight: 600;
+    margin: 0 0 3px;
+    color: #111;
+}
+
+.popup-product-info p {
+    font-size: clamp(12px, 3vw, 13px);
+    color: #666;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.popup-price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.popup-selling-price {
+    font-size: clamp(14px, 3.8vw, 16px);
+    font-weight: 700;
+    color: #111;
+}
+
+.popup-mrp {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.popup-discount {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: #E07000;
+    font-weight: 500;
+}
 
 .popup-buttons {
-  margin-top: 20px;
+  margin-top: 18px;
   display: flex;
   gap: 10px;
   align-items: center;
-  justify-content: center;
 }
+
 .popup-buttons button {
   flex: 1;
-  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: clamp(12px, 3.2vw, 14px);
+  font-weight: 600;
+  padding: clamp(11px, 3vw, 14px) 12px;
   cursor: pointer;
 }
 
 .popup-buttons .cancel {
     background-color: #ffffff;
+    border: 1.5px solid #ddd;
+    color: #333;
 }
 
 .popup-buttons .confirm {
-    background-color: #242424;
-    color: #FFFFFF;
+    background-color: #111;
+    color: #ffffff;
+    border: none;
 }
 
 .size-buttons {
@@ -356,30 +513,27 @@
 
 
 .selling-price {
-  font-size: 14px;
-  font-weight: 500;
-  color: #000; /* Black for selling price */
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-weight: 600;
+  color: #111;
 }
 
-/* Container for MRP and discount */
 .mrp-discount {
-  align-items: center; /* Keep MRP and discount aligned on the same line */
+  align-items: center;
   margin-top: -3px;
 }
 
-/* MRP style */
 .mrp {
-  font-size: 12px;
+  font-size: clamp(11px, 2.8vw, 13px);
   color: #aaa;
   text-decoration: line-through;
-  margin-right: 5px; /* Spacing between MRP and discount */
+  margin-right: 4px;
   font-weight: 400;
 }
 
-/* Discount style */
 .discount-percent {
-  font-size: 12px;
-  color: #ed4a4a;
+  font-size: clamp(11px, 2.8vw, 13px);
+  color: #E07000;
   font-weight: 400;
 }
 
@@ -440,7 +594,7 @@
   align-items: center;
 
   h2 {
-    font-size: 21px;
+    font-size: clamp(17px, 4.5vw, 21px);
     font-weight: 400;
     font-family: 'Times New Roman', Times, serif;
     margin: 0;
