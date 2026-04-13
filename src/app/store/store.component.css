@@ -262,31 +262,6 @@ img {
     gap: 8px;
   }
  
-  /* .mall-card {
-    position: relative;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    margin-bottom: 15px;
-  }
-  
-  .mall-card:hover {
-    transform: scale(1.03);
-  }
-  
-  /* Image section */
-  .mall-image-container {
-    position: relative;
-    height: 190px;
-    opacity: 25%;
-  } 
-
-
-  /* 
- */
-
  .filters-content {
     display: flex;
     margin-bottom: 30px;
