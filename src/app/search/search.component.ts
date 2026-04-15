@@ -3,12 +3,13 @@ import { ApiService } from '../services/api.service';
 import { RouterModule, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
 import { CommonModule, Location } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })

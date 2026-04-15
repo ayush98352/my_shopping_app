@@ -9,12 +9,13 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'

@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataShareService } from './data.share.service';
+import { LanguageService } from './language.service';
 import { map } from 'rxjs/operators';
 
 export interface UploadResponse {
@@ -19,8 +20,8 @@ export class ApiService implements OnInit {
   
   private csrfToken: string = '';
 
-  constructor(private http: HttpClient, private dataShareService: DataShareService) {
-    
+  constructor(private http: HttpClient, private dataShareService: DataShareService, private languageService: LanguageService) {
+
   }
 
   async ngOnInit() {
@@ -45,7 +46,8 @@ export class ApiService implements OnInit {
     let csrf = this.dataShareService.getcsrfToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-CSRF-Token': csrf || this.csrfToken || ''
+      'X-CSRF-Token': csrf || this.csrfToken || '',
+      'Accept-Language': this.languageService.getCurrentLang(),
     });
   }
 

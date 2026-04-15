@@ -72,7 +72,7 @@ body {
     gap: 15px;
   }
   .action-button {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     border: 1px solid #ccc;
     box-sizing: border-box;
     cursor: pointer;

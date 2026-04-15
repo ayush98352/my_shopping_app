@@ -15,6 +15,7 @@ import { SvgRegistryService } from './services/svg-registry.service';
 import { ApiService } from './services/api.service';
 import { isPlatformBrowser } from '@angular/common';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LanguageService } from './services/language.service';
 
 
 
@@ -51,7 +52,7 @@ export class AppComponent implements OnInit {
   isNotch: boolean = false;
   padding: string = '20px';  // Default padding for iPhones without notch
 
-  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService, private location: Location ) { 
+  public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService, private location: Location, private languageService: LanguageService) {
     this.apiService.fetchCsrfToken(); 
     this.setupBackButtonHandler();
     if(isPlatformBrowser(this.platformId)) {
@@ -62,6 +63,7 @@ export class AppComponent implements OnInit {
   }
  
   ngOnInit(): void {
+    this.languageService.init();
     // this.checkScreenSize();
     this.detectDevice();
 

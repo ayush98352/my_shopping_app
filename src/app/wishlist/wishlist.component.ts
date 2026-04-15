@@ -11,12 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css'

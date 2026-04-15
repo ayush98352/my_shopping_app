@@ -1,0 +1,36 @@
+<div class="container">
+
+  <div class="header">
+    <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click)="goBack()">
+      <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2>{{ 'profile.settings' | translate }}</h2>
+  </div>
+
+  <div class="content">
+
+    <section class="settings-section">
+      <div class="section-title">{{ 'profile.language' | translate }}</div>
+      <div class="setting-row">
+        <mat-icon [svgIcon]="'setting-icon'" class="setting-icon"></mat-icon>
+        <span class="setting-label">{{ 'profile.language' | translate }}</span>
+        <div class="language-toggle">
+          <button
+            class="lang-btn"
+            [class.active]="currentLang === 'en'"
+            (click)="setLanguage('en')">
+            {{ 'profile.language_english' | translate }}
+          </button>
+          <button
+            class="lang-btn"
+            [class.active]="currentLang === 'hi'"
+            (click)="setLanguage('hi')">
+            {{ 'profile.language_hindi' | translate }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>

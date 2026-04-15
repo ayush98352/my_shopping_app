@@ -2,7 +2,7 @@
 
   <!-- Header -->
   <div class="header">
-    <h2>My Account</h2>
+    <h2>{{ 'profile.title' | translate }}</h2>
   </div>
 
   <div class="content">
@@ -11,11 +11,11 @@
     <section class="user-section">
       <img src="assets/img/girl-profile.jpg" alt="Profile Picture" class="profile-picture">
       <div class="user-info">
-        <p class="user-name">{{ userName || 'Name' }}</p>
-        <p class="user-detail">{{ userEmail || 'Email Address' }}</p>
-        <p class="user-detail">{{ phoneNumber || 'Mobile No.' }}</p>
+        <p class="user-name">{{ userName || ('profile.name_placeholder' | translate) }}</p>
+        <p class="user-detail">{{ userEmail || ('profile.email_placeholder' | translate) }}</p>
+        <p class="user-detail">{{ phoneNumber || ('profile.mobile_placeholder' | translate) }}</p>
       </div>
-      <button class="edit-btn">Edit</button>
+      <button class="edit-btn">{{ 'common.edit' | translate }}</button>
     </section>
 
     <!-- Your Info Menu -->
@@ -27,8 +27,8 @@
             (click)="item.clicked === 'gotoYourOrdersPage' ? gotoYourOrdersPage() :
                      item.clicked === 'gotoAddressBookPage' ? gotoAddressBookPage() :
                      item.clicked === 'gotoCollectedCouponsPage' ? gotoCollectedCouponsPage() : null">
-            <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="menu-icon"></mat-icon>
-            <span class="menu-label">{{ item.label }}</span>
+            <mat-icon [svgIcon]="item.icon" [alt]="item.labelKey | translate" class="menu-icon"></mat-icon>
+            <span class="menu-label">{{ item.labelKey | translate }}</span>
           </div>
         </div>
       </div>
@@ -41,12 +41,13 @@
           <div class="menu-item"
             [class.no-border]="isLast"
             (click)="handleClick(item.clicked)">
-            <mat-icon [svgIcon]="item.icon" [alt]="item.label" class="menu-icon"></mat-icon>
-            <span class="menu-label">{{ item.label }}</span>
+            <mat-icon [svgIcon]="item.icon" [alt]="item.labelKey | translate" class="menu-icon"></mat-icon>
+            <span class="menu-label">{{ item.labelKey | translate }}</span>
           </div>
         </div>
       </div>
     </section>
+
 
   </div>
 

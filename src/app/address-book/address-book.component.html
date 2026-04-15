@@ -4,7 +4,7 @@
             <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
                 <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <h2>My Addresses</h2>
+            <h2>{{ 'address_book.title' | translate }}</h2>
         </div>
     </div>
 
@@ -13,14 +13,14 @@
         <div class="action-button" (click)="gotoAddAddressPage()">
             <div class="icon add-icon">+</div>
             <div class="content-type">
-            <div class="primary-text">Add new address</div>
+            <div class="primary-text">{{ 'address_book.add_new_address' | translate }}</div>
             </div>
             <div class="arrow">›</div>
         </div>
 
         <!-- Saved Addresses -->
         <div class="saved-addresses">
-            <h3 style="padding-left: 10px ;">Your saved addresses</h3>
+            <h3 style="padding-left: 10px ;">{{ 'address_book.your_saved_addresses' | translate }}</h3>
             <div class="address-list">
             <div class="address-item" *ngFor="let address of savedAddresses">
                 <div class="address-icon">🏠</div>

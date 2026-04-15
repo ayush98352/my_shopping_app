@@ -3,16 +3,16 @@
   <div class="login-container" *ngIf="!otpSent">
     <mat-icon [svgIcon]="'ellipse'" [alt]="'background'" class="background-ellipse"></mat-icon>
     <div class="top-bar">
-      <div class="login-text">Login/Register</div>
-      <div class="skip-button" (click)="skipLogin()">Skip</div>
+      <div class="login-text">{{ 'login.title' | translate }}</div>
+      <div class="skip-button" (click)="skipLogin()">{{ 'login.skip' | translate }}</div>
     </div>
     <div class="login-card">
     
     
     <mat-icon [svgIcon]="'login-page-main'" [alt]="'login'" class="phone-icon"></mat-icon>
     
-    <h1>What's your mobile number?</h1>
-    <p class="subtitle">A verification code will be sent to this number.</p>
+    <h1>{{ 'login.mobile_prompt' | translate }}</h1>
+    <p class="subtitle">{{ 'login.verification_note' | translate }}</p>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!otpSent">
       <div class="phone-input">
@@ -20,7 +20,7 @@
         <input 
           type="tel" 
           formControlName="phoneNumber"
-          placeholder="Your 10 digit number"
+          [placeholder]="'login.mobile_placeholder' | translate"
           maxlength="10"
         >
         <button type="button" class="clear-button" *ngIf="loginForm.get('phoneNumber')?.value" 
@@ -31,16 +31,16 @@
         <a href="#">Have a referral link?</a>
       </div>
 
-      <button type="submit" class="submit-button" 
+      <button type="submit" class="submit-button"
         [disabled]="!loginForm.valid">
-        Send OTP
+        {{ 'login.send_otp' | translate }}
       </button>
 
       <div class="terms">
         <input type="checkbox" formControlName="terms" id="terms">
         <label for="terms">
-          By logging in, you agree to ZENNDO's 
-          <a href="#">T&C</a> and <a href="#">Privacy Policy</a>.
+          {{ 'login.terms_prefix' | translate }}
+          <a href="#">{{ 'login.terms' | translate }}</a> and <a href="#">{{ 'login.privacy_policy' | translate }}</a>.
         </label>
       </div>
     </form>
@@ -53,10 +53,10 @@
  
       <div class="otp-container">
         <div class="login-text" (click)="goBackToLogin()">&larr;</div>
-        <h2>Login/Register</h2>
-        <p class="otp-subtitle">Verify your mobile number</p>
+        <h2>{{ 'login.title' | translate }}</h2>
+        <p class="otp-subtitle">{{ 'login.verify_title' | translate }}</p>
         <p class="otp-instruction">
-          Enter the 6 digit OTP to <strong>+91-{{phoneNumber}}</strong>
+          {{ 'login.otp_instruction' | translate }} <strong>+91-{{phoneNumber}}</strong>
         </p>
     
         <!-- OTP Input Boxes -->
@@ -72,9 +72,9 @@
     
           <!-- Resend OTP Timer -->
           <div class="resend-otp">
-            <p>Didn't get the OTP?</p>
+            <p>{{ 'login.didnt_get_otp' | translate }}</p>
             <a href="#" (click)="onResendOtp($event); $event.stopPropagation()" [class.disabled]="!isResendEnabled">
-              Resend code <span *ngIf="countdown>0">in {{ countdown }} seconds </span>
+              {{ 'login.resend_code' | translate }} <span *ngIf="countdown>0">in {{ countdown }} seconds </span>
             </a>
           </div>
     

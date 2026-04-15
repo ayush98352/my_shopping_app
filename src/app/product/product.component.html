@@ -61,8 +61,8 @@
         
         <div class="size-selection">
             <div class="size-header">
-                <span class="size-title">Select Size ( UK Size )</span>
-                <span class="size-chart">Size Chart ></span>
+                <span class="size-title">{{ 'product.select_size' | translate }}</span>
+                <span class="size-chart">{{ 'product.size_chart' | translate }}</span>
             </div>
             <div class="size-options">
                 <div class="size-option" [ngClass]="{'selected': selectedSize === 'S'}" (click)="setSelectedSize('S')" [style.background-color]="selectedSize === 'S' ? '#CCEDF0' : '#EFFAFB'" style="border: 1.84px solid #95F3FC;">S</div>
@@ -80,7 +80,7 @@
         <div class="about-tab">
             <div class="about-container" *ngIf="productDetails?.product_description">
                 <div class="about-headers">
-                    Description
+                    {{ 'product.description' | translate }}
                 </div>
                 <div class="about-content">
                     {{productDetails?.product_description}}
@@ -88,7 +88,7 @@
             </div>
             <div class="about-container" *ngIf="productDetails?.dominant_material">
                 <div class="about-headers">
-                    Material
+                    {{ 'product.material' | translate }}
                 </div>
                 <div class="about-content">
                     {{productDetails?.dominant_material}}
@@ -96,7 +96,7 @@
             </div>
             <div class="about-container" *ngIf="productDetails?.size_fit">
                 <div class="about-headers">
-                    Size Fit
+                    {{ 'product.size_fit' | translate }}
                 </div>
                 <div class="about-content">
                     {{productDetails?.size_fit}}
@@ -104,7 +104,7 @@
             </div>
             <div class="about-container" *ngIf="productDetails?.care_instructions">
                 <div class="about-headers">
-                    Care Instructions
+                    {{ 'product.care_instructions' | translate }}
                 </div>
                 <div class="about-content">
                     {{productDetails?.care_instructions}}
@@ -112,7 +112,7 @@
             </div>
             <div class="about-container" *ngIf="productDetails?.complete_the_look">
                 <div class="about-headers">
-                    Complete the Look
+                    {{ 'product.complete_the_look' | translate }}
                 </div>
                 <div class="about-content">
                     {{productDetails?.complete_the_look}}
@@ -152,8 +152,8 @@
     </div>
 
     <div class="action-buttons-bar">
-        <button class="action-button buy-now-button">Buy Now</button>
-        <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? 'Go to Cart' : 'Add to Cart'}}</button>
+        <button class="action-button buy-now-button">{{ 'product.buy_now' | translate }}</button>
+        <button class="action-button add-to-cart-button" [ngClass]="{'active': inCart}" (click)="inCart ? goToBagPage() : addToCart()">{{inCart ? ('product.go_to_cart' | translate) : ('product.add_to_cart' | translate)}}</button>
     </div>
 
 </div>

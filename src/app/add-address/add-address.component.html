@@ -9,14 +9,14 @@
         <div class="search-container-address">
             <div class="search-box">
               <i class="search-icon">🔍</i>
-              <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
+              <input type="text"  [placeholder]="'add_address.search_placeholder' | translate"  (input)="onSearchChange($event)">
             </div>
           </div>
     </div>
     <div class= 'content' style="overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
         <div *ngIf="searchedText && searchedText.length > 2">
             <div class="saved-addresses">
-            <h3>Searched Suggestions</h3>
+            <h3>{{ 'add_address.searched_suggestions' | translate }}</h3>
             <div class="address-list">
                 <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
                 <div class="icon location-icon">📍</div>
@@ -36,12 +36,12 @@
 
         <div class="location-details">
             <button class="current-location-btn" (click)="goToCurrentLocation()">
-                Go to Current Location
+                {{ 'add_address.go_to_current_location' | translate }}
             </button>
-            <p>Your Order will be delivered to:</p>
+            <p>{{ 'add_address.delivery_to' | translate }}</p>
             <p>{{selectedAddress}}</p>
             <button class="add-more-details-btn" (click)="openAddMore()">
-                Add more address details
+                {{ 'add_address.add_more_details' | translate }}
                 <span>></span>
             </button>
         </div>
@@ -52,7 +52,7 @@
     <div class="modal-overlay" *ngIf="openAddMorePopup">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Enter complete address</h2>
+                <h2>{{ 'add_address.enter_complete_address' | translate }}</h2>
                 <button class="close-button" (click)="closeAddMore()">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
@@ -63,67 +63,67 @@
             <form [formGroup]="addressForm" (ngSubmit)="saveAddress()">
                 <div class="form-content">
                     <div class="form-group">
-                        <label class="form-label">Save address as *</label>
+                        <label class="form-label">{{ 'add_address.save_as_label' | translate }}</label>
                         <div class="address-type-options">
                             <button type="button" 
                                     class="address-type-button" 
                                     [class.active]="isAddressTypeSelected('Home')"
                                     (click)="setAddressType('Home')">
                                 <span>🏠</span>
-                                Home
+                                {{ 'add_address.home' | translate }}
                             </button>
-                            <button type="button" 
-                                    class="address-type-button" 
+                            <button type="button"
+                                    class="address-type-button"
                                     [class.active]="isAddressTypeSelected('Work')"
                                     (click)="setAddressType('Work')">
                                 <span>🏢</span>
-                                Work
+                                {{ 'add_address.work' | translate }}
                             </button>
-                            <button type="button" 
-                                    class="address-type-button" 
+                            <button type="button"
+                                    class="address-type-button"
                                     [class.active]="isAddressTypeSelected('Hotel')"
                                     (click)="setAddressType('Hotel')">
                                 <span>🏨</span>
-                                Hotel
+                                {{ 'add_address.hotel' | translate }}
                             </button>
-                            <button type="button" 
-                                    class="address-type-button" 
+                            <button type="button"
+                                    class="address-type-button"
                                     [class.active]="isAddressTypeSelected('Other')"
                                     (click)="setAddressType('Other')">
                                 <span>📍</span>
-                                Other
+                                {{ 'add_address.other' | translate }}
                             </button>
                         </div>
                         <div class="other-address-input" *ngIf="isAddressTypeSelected('Other')">
-                            <input type="text" 
+                            <input type="text"
                                 class="form-input"
                                 formControlName="otherAddressType"
-                                placeholder="Save as"
+                                [placeholder]="'add_address.save_as_placeholder' | translate"
                                 [class.error]="addressForm.get('otherAddressType')?.touched && addressForm.get('otherAddressType')?.invalid">
                             <div class="error-message" *ngIf="addressForm.get('otherAddressType')?.touched && addressForm.get('otherAddressType')?.invalid">
-                                Please enter an address type
+                                {{ 'add_address.address_type_error' | translate }}
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Flat/House no/ Building name *</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.house_no' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="houseNumber"
-                            placeholder="Enter house number"
+                            [placeholder]="'add_address.house_no_placeholder' | translate"
                             [class.error]="addressForm.get('houseNumber')?.touched && addressForm.get('houseNumber')?.invalid">
                         <div class="error-message" *ngIf="addressForm.get('houseNumber')?.touched && addressForm.get('houseNumber')?.invalid">
-                            House number is required
+                            {{ 'add_address.house_no_error' | translate }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Floor (optional)</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.floor' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="floor"
-                            placeholder="Enter floor number"
+                            [placeholder]="'add_address.floor_placeholder' | translate"
                             [class.error]="addressForm.get('floor')?.touched && addressForm.get('floor')?.invalid">
                         <!-- <div class="error-message" *ngIf="addressForm.get('floor')?.touched && addressForm.get('floor')?.invalid">
                             Floor number is required
@@ -131,49 +131,49 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Tower / Block (optional)</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.tower' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="towerBlock"
-                            placeholder="Enter tower or block">
+                            [placeholder]="'add_address.tower_placeholder' | translate">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Nearby landmark (optional)</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.landmark' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="landmark"
-                            placeholder="Enter nearby landmark">
+                            [placeholder]="'add_address.landmark_placeholder' | translate">
                     </div>
                     
 
                     <div class="form-group">
-                        <label class="form-label">Your name *</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.name' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="name"
-                            placeholder="Enter your name"
+                            [placeholder]="'add_address.name_placeholder' | translate"
                             [class.error]="addressForm.get('name')?.touched && addressForm.get('name')?.invalid">
                         <div class="error-message" *ngIf="addressForm.get('name')?.touched && addressForm.get('name')?.invalid">
-                            Name is required
+                            {{ 'add_address.name_error' | translate }}
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Your phone no *</label>
-                        <input type="text" 
-                            class="form-input" 
+                        <label class="form-label">{{ 'add_address.phone' | translate }}</label>
+                        <input type="text"
+                            class="form-input"
                             formControlName="phone"
-                            placeholder="Enter your phone no"
+                            [placeholder]="'add_address.phone_placeholder' | translate"
                             [class.error]="addressForm.get('phone')?.touched && addressForm.get('phone')?.invalid"
                             [ngModel]="phone">
                         <div class="error-message" *ngIf="addressForm.get('phone')?.touched && addressForm.get('phone')?.invalid">
-                            Phone number is required
+                            {{ 'add_address.phone_error' | translate }}
                         </div>
                     </div>
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="save-address-btn">Save Address</button>
+                    <button type="submit" class="save-address-btn">{{ 'add_address.save_address' | translate }}</button>
                 </div>
             </form>
         </div>

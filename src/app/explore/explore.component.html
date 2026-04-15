@@ -2,7 +2,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h2>EXPLORE ALL</h2>
+            <h2>{{ 'explore.title' | translate }}</h2>
         </div>
         
         <div class="icon-container">
@@ -42,34 +42,32 @@
                 <div class="content-container">
                     <!-- Sidebar -->
                     <div class="sidebar">
-                        <div *ngFor="let category of sidebarCategories[activeFashionTab]">
+                        <div *ngFor="let category of sidebarCategories[activeFashionTab]; let i = index">
                             <div class="sidebar-item" [class.active]="activeSidebarCategories === category" (click)="changeSidebarTab(category);">
                                 <div class="sidebar-text">
-                                    {{ category }}
+                                    {{ isHindi ? (sidebarCategoriesHi[activeFashionTab][i] || category) : category }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                
+
                     <!-- Main Content -->
                     <div class="main-content">
                         <!-- Dresses Banner -->
                         <div class="banner">
-                            <h2>{{activeSidebarCategories}}</h2>
+                            <h2>{{ activeSidebarLabel }}</h2>
                             <mat-icon [svgIcon]="activeFashionTab === 'Women' ? 'dresses-banner' : activeFashionTab === 'Men' ? 'men-explore-banner' : 'kids-explore-banner'"></mat-icon>
-                            <!-- <img src="assets/svg/dresses-banner.svg" alt="Dresses Collection"> -->
                         </div>
-                
+
                         <!-- Dress Categories Grid -->
                         <div class="dress-grid">
                             <div class="dress-card" *ngFor="let dress of dressCategories[(this.activeFashionTab + '-' + this.activeSidebarCategories)]">
                                 <div class="dress-image" (click)="gotoCategoryProductPage(dress)">
-                                    <!-- <img [src]="'assets/svg/explore-logos/' + dress.image + '.svg'" [alt]="dress.title"> -->
                                     <ng-container *ngIf="setSvgExploreIcons(dress.image)">
                                         <mat-icon [svgIcon]="dress.image" [alt]="dress.title" class="custom-svg-icon"></mat-icon>
                                     </ng-container>
                                 </div>
-                                <h3 (click)="gotoCategoryProductPage(dress)">{{ dress.title }}</h3>
+                                <h3 (click)="gotoCategoryProductPage(dress)">{{ dressTitleDisplay(dress.title) }}</h3>
                             </div>
                         </div>
                     </div>

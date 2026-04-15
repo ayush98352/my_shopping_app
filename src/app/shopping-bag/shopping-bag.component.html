@@ -3,7 +3,7 @@
     <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
         <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <h2>Shopping Bag</h2>
+    <h2>{{ 'shopping_bag.title' | translate }}</h2>
     <svg class="header-icon" width="32" height="31" viewBox="0 0 24 24" fill="none" (click) = "goToWishlistPage()">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#242424" stroke-width="2"/>
     </svg>
@@ -11,9 +11,9 @@
   <div class="content">
       <div class="delivery-info">
         <div>
-          <strong>Deliver to:</strong> {{ deliveryAddress }}
+          <strong>{{ 'shopping_bag.deliver_to' | translate }}</strong> {{ deliveryAddress }}
         </div>
-        <button class="change-button" (click)="openAddressPopup()">Change</button>
+        <button class="change-button" (click)="openAddressPopup()">{{ 'common.change' | translate }}</button>
       </div>
 
       <div class="product-list">
@@ -36,7 +36,7 @@
             </div>
             <div class="product-options">
               <div class="select-wrapper">
-                <span class="select-label">Size:</span>
+                <span class="select-label">{{ 'shopping_bag.size_label' | translate }}</span>
                 <select [(ngModel)]="product.size" (change)="updateCartInfo(product)">
                   <option value="S">S</option>
                   <option value="M">M</option>
@@ -45,7 +45,7 @@
                 </select>
               </div>
               <div class="select-wrapper">
-                <span class="select-label">Qty:</span>
+                <span class="select-label">{{ 'shopping_bag.qty_label' | translate }}</span>
                 <select [(ngModel)]="product.quantity" (change)="updateCartInfo(product)">
                   <option [value]="i" *ngFor="let i of [1,2,3,4,5]">{{ i }}</option>
                 </select>
@@ -58,7 +58,7 @@
                 <span class="discount">({{ product?.discount_percent }}% OFF)</span>
               </div>
             </div>
-            <p class="delivery-date">Delivery between {{ deliveryDate }}</p>
+            <p class="delivery-date">{{ 'shopping_bag.delivery_between' | translate }} {{ deliveryDate }}</p>
           </div>
         </div>
       </div>
@@ -66,17 +66,17 @@
       
       <div class="frame coupon-section">
           <div class="coupon-header">
-              <h2>Coupon for you 
+              <h2>{{ 'shopping_bag.coupon_for_you' | translate }}
                 <mat-icon [svgIcon]="'coupon-icon'" [alt]="'coupon-icon'" style="width:18px; height:18px; margin-bottom: -3px;"></mat-icon>
               </h2>
-              <p>All Coupons</p>
+              <p>{{ 'shopping_bag.all_coupons' | translate }}</p>
           </div>
           <div class="coupon-card" *ngIf="!couponApplied">
               <h3>Extra ₹200 OFF</h3>
               <p>10% off on minimum purchase of ₹1,040.00</p>
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span class="coupon-code">COUPON50</span>
-                <button class="apply-coupon" (click)="applyCoupon()">APPLY COUPON</button>
+                <button class="apply-coupon" (click)="applyCoupon()">{{ 'shopping_bag.apply_coupon' | translate }}</button>
               </div>
           </div>
           <div class="coupon-card" *ngIf="couponApplied">
@@ -94,32 +94,32 @@
       </div>
 
       <div class="frame price-details">
-          <h3>Price Details ({{totalProductsInBag}} Items)</h3>
+          <h3>{{ 'shopping_bag.price_details' | translate }} ({{totalProductsInBag}} Items)</h3>
           <div class="price-row">
-              <span>Total MRP</span>
+              <span>{{ 'shopping_bag.total_mrp' | translate }}</span>
               <span>₹{{totalMRP}}</span>
           </div>
           <div class="price-row">
-              <span>Discount on MRP</span>
+              <span>{{ 'shopping_bag.discount_on_mrp' | translate }}</span>
               <span>-₹{{totalDiscount}}</span>
           </div>
           <div class="price-row">
-              <span>Shipping Fee</span>
+              <span>{{ 'shopping_bag.shipping_fee' | translate }}</span>
               <span>₹0</span>
           </div>
           <div class="price-row" *ngIf="couponDiscount > 0">
-            <span>Coupon Discount</span>
+            <span>{{ 'shopping_bag.coupon_discount' | translate }}</span>
             <span>-₹{{couponDiscount}}</span>
           </div>
           <div class="price-row" style="padding-top: 10px">
-              <strong>TOTAL AMOUNT</strong>
+              <strong>{{ 'shopping_bag.total_amount' | translate }}</strong>
               <strong>₹{{totalPrice}}</strong>
           </div>
       </div>
 
       <div class="place-order-section">
-          <p class="items-selected">{{totalProductsInBag}} Items Selected</p>
-          <button *ngIf="totalProductsInBag != 0" class="place-order" (click)="placeOrder()">Place Order</button>
+          <p class="items-selected">{{totalProductsInBag}} {{ 'shopping_bag.items_selected' | translate }}</p>
+          <button *ngIf="totalProductsInBag != 0" class="place-order" (click)="placeOrder()">{{ 'common.place_order' | translate }}</button>
       </div>
 
       <!-- Display Payment Error, if any -->
@@ -131,11 +131,11 @@
           <div class="popup-header-row">
             <div class="popup-title-group">
               <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" class="remove-button"></mat-icon>
-              <h3>Remove Product</h3>
+              <h3>{{ 'shopping_bag.remove_product' | translate }}</h3>
             </div>
             <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:16px; height:16px; cursor:pointer;" (click)="closePopups()"></mat-icon>
           </div>
-          <p class="popup-subtitle">Are you sure you want to remove this product from your Bag?</p>
+          <p class="popup-subtitle">{{ 'shopping_bag.remove_confirm' | translate }}</p>
 
           <div class="popup-product-card" *ngIf="selectedProduct">
             <img *ngIf="selectedProduct?.images"
@@ -156,8 +156,8 @@
           </div>
 
           <div class="popup-buttons">
-            <button class="cancel" (click)="addToWishlist(selectedProduct, $event)">Move to Wishlist</button>
-            <button class="confirm" (click)="confirmRemoveFromWishlist()">Remove</button>
+            <button class="cancel" (click)="addToWishlist(selectedProduct, $event)">{{ 'shopping_bag.move_to_wishlist' | translate }}</button>
+            <button class="confirm" (click)="confirmRemoveFromWishlist()">{{ 'common.remove' | translate }}</button>
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
         <div class="modal-content" (click)="$event.stopPropagation()">
           <!-- Header -->
           <div class="modal-header">
-            <h2>SELECT LOCATION</h2>
+            <h2>{{ 'shopping_bag.select_location' | translate }}</h2>
             <!-- <button class="close-button" (click)="closeAddressPopup(); $event.stopPropagation()">✕</button> -->
             <mat-icon [svgIcon]="'cross'" [alt]="'close-button'" class="close-button" style="width:18px; height:18px; margin-top: -5px;" (click)="closeAddressPopup(); $event.stopPropagation()"></mat-icon>
           </div>
@@ -177,7 +177,7 @@
               <i class="search-icon">
                 <img src="assets/svg/search-icon.svg" alt="search-location">
               </i>
-              <input type="text"  placeholder="Search for area, street name..."  (input)="onSearchChange($event)">
+              <input type="text"  [placeholder]="'home.search_placeholder' | translate"  (input)="onSearchChange($event)">
             </div>
           </div>
           <div *ngIf="searchedText.length <= 2">
@@ -187,7 +187,7 @@
                 <img src="assets/svg/location-icon.svg" alt="Go to current location">
               </div>
               <div class="content-item" (click)="setUserLocation(); closeAddressPopup(); $event.stopPropagation()">
-                <div class="primary-text">Use your current location</div>
+                <div class="primary-text">{{ 'shopping_bag.use_current_location' | translate }}</div>
                 <!-- <div class="secondary-text">{{displayAddress}}</div> -->
               </div>
               <div class="arrow">›</div>
@@ -199,14 +199,14 @@
                 <img src="assets/svg/plus-red-icon.svg" alt="Add new address">
               </div>
               <div class="content-item">
-                <div class="primary-text">Add new address</div>
+                <div class="primary-text">{{ 'shopping_bag.add_new_address' | translate }}</div>
               </div>
               <div class="arrow">›</div>
             </div>
 
             <!-- Saved Addresses -->
             <div class="saved-addresses">
-              <h3>Your saved addresses</h3>
+              <h3>{{ 'shopping_bag.your_saved_addresses' | translate }}</h3>
               <div class="address-list">
                 <div class="address-item" *ngFor="let address of savedAddresses" (click)="setSavedAddress(address); closeAddressPopup(); $event.stopPropagation()">
                   <div class="address-icon">
@@ -228,7 +228,7 @@
           </div>
           <div *ngIf="searchedText && searchedText.length > 2">
             <div class="saved-addresses">
-              <h3>Searched Suggestions</h3>
+              <h3>{{ 'shopping_bag.searched_suggestions' | translate }}</h3>
               <div class="address-list">
                 <div class="address-item" *ngFor="let suggestion of addressSuggestions" (click)="onSelectSuggestion(suggestion.place_id)">
                   <div class="icon location-icon">📍</div>

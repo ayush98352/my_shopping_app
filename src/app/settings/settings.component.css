@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fafafa;
+  max-width: 1200px;
+  margin: 0px auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 15px 8px;
+  background-color: #fafafa;
+}
+
+.header-icon {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: clamp(18px, 4.5vw, 24px);
+  font-weight: 400;
+  font-family: 'Times New Roman', Times, serif;
+  color: #111;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 16px 12px;
+}
+
+.settings-section {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 20px) 0;
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 3.5vw, 18px);
+  padding: clamp(13px, 3.5vw, 16px) clamp(14px, 4vw, 20px);
+}
+
+.setting-icon {
+  width: clamp(22px, 6vw, 28px) !important;
+  height: clamp(22px, 6vw, 28px) !important;
+  flex-shrink: 0;
+  color: #222;
+}
+
+.setting-label {
+  font-size: clamp(13px, 3.8vw, 16px);
+  color: #222;
+  font-weight: 400;
+}
+
+.language-toggle {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.lang-btn {
+  padding: 5px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 16px;
+  background: transparent;
+  font-size: clamp(12px, 3vw, 14px);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.lang-btn.active {
+  border-color: #e66666;
+  background: #fdf0f0;
+  color: #e66666;
+  font-weight: 600;
+}

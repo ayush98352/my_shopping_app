@@ -3,7 +3,7 @@
         <svg class="header-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" (click) = "goBackToPreviousPage()">
             <path d="M15 18L9 12L15 6" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <h2>Wishlist</h2>
+        <h2>{{ 'wishlist.title' | translate }}</h2>
         <mat-icon [svgIcon]="'cart-icon'"  [alt]="'cart'" class="header-icon" (click)="goToBagPage()"></mat-icon>
     </div>
 
@@ -37,7 +37,7 @@
                       </span>
                     </p>
                     <div class="action-buttons">
-                        <button class="action-button add-to-cart-button" (click)="showAddToCartConfirmation(product, $event)">Add to cart</button>
+                        <button class="action-button add-to-cart-button" (click)="showAddToCartConfirmation(product, $event)">{{ 'wishlist.add_to_cart' | translate }}</button>
                     </div>
                   </div>
                     
@@ -46,10 +46,10 @@
         </div>
         <div class="loader-content" *ngIf="isLoadingContent">
             <div class="spinner1" style="position: relative;"></div>
-            <p>Loading...</p>
+            <p>{{ 'common.loading' | translate }}</p>
         </div>
         <div *ngIf="allProductsLoaded" class="end-message">
-            <p>All products are loaded!</p>
+            <p>{{ 'common.all_products_loaded' | translate }}</p>
         </div>
     </div>
     <!-- Remove from Wishlist Pop-up -->
@@ -58,11 +58,11 @@
             <div class="popup-header-row">
                 <div class="popup-title-group">
                     <mat-icon [svgIcon]="'delete-icon'" [alt]="'delete-icon'" style="width:20px; height:20px; flex-shrink:0;"></mat-icon>
-                    <h3>Remove Product</h3>
+                    <h3>{{ 'wishlist.remove_product' | translate }}</h3>
                 </div>
                 <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:16px; height:16px; cursor:pointer;" (click)="closePopups()"></mat-icon>
             </div>
-            <p class="popup-subtitle">Are you sure you want to remove this product from your wishlist?</p>
+            <p class="popup-subtitle">{{ 'wishlist.remove_confirm' | translate }}</p>
             <div class="popup-product-card" *ngIf="selectedProduct">
                 <img [src]="selectedProduct?.images.split('|')[0]" [alt]="selectedProduct?.brand_name" class="popup-product-img">
                 <div class="popup-product-info">
@@ -76,8 +76,8 @@
                 </div>
             </div>
             <div class="popup-buttons">
-                <button class="cancel" (click)="closePopups()">Cancel</button>
-                <button class="confirm" (click)="confirmRemoveFromWishlist()">Yes, Remove</button>
+                <button class="cancel" (click)="closePopups()">{{ 'common.cancel' | translate }}</button>
+                <button class="confirm" (click)="confirmRemoveFromWishlist()">{{ 'common.yes_remove' | translate }}</button>
             </div>
         </div>
     </div>
@@ -86,7 +86,7 @@
     <div *ngIf="showAddToCartPopup" class="popup-overlay" (click)="closePopups()">
         <div class="popup-content" (click)="$event.stopPropagation()">
             <div class="popup-header-row">
-                <h3>Select Size</h3>
+                <h3>{{ 'wishlist.select_size' | translate }}</h3>
                 <mat-icon [svgIcon]="'cross'" [alt]="'cancel'" style="width:16px; height:16px; cursor:pointer;" (click)="closePopups()"></mat-icon>
             </div>
             <p class="popup-subtitle">{{ selectedProduct?.product_short_name }}</p>
@@ -105,11 +105,11 @@
                 <button *ngFor="let size of ['S', 'M', 'L', 'XL']" (click)="saveSelectedSize(size)">{{ size }}</button>
             </div>
             <div *ngIf="selectedSize == ''" class="size-error">
-                <span style="color: red;">*</span> Please select a size
+                <span style="color: red;">*</span> {{ 'wishlist.please_select_size' | translate }}
             </div>
             <div class="popup-buttons">
-                <button class="cancel" (click)="closePopups()">Cancel</button>
-                <button class="confirm" (click)="confirmAddToCart()">Add To Cart</button>
+                <button class="cancel" (click)="closePopups()">{{ 'common.cancel' | translate }}</button>
+                <button class="confirm" (click)="confirmAddToCart()">{{ 'wishlist.add_to_cart_confirm' | translate }}</button>
             </div>
         </div>
     </div>

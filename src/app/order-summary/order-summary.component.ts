@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 import { DataShareService } from '../services/data.share.service';
 import { RouterModule, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './order-summary.component.html',
   styleUrl: './order-summary.component.css'
 })

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="header">
         <div>
-            <h2>SHOPS</h2>
+            <h2>{{ 'shops.title' | translate }}</h2>
         </div>
         
         <div class="icon-container">
@@ -18,26 +18,26 @@
         <!-- Location permission denied -->
         <div class="error-state" *ngIf="locationError === 'denied'">
             <div class="error-icon">📍</div>
-            <h3>Location Access Denied</h3>
-            <p>We need your location to show nearby shops and malls. Please allow location access and try again.</p>
-            <button class="error-btn primary" (click)="requestLocation()">Allow Location</button>
-            <p class="error-hint">If the button doesn't work, enable location in your browser settings and reload.</p>
+            <h3>{{ 'shops.location_denied_title' | translate }}</h3>
+            <p>{{ 'shops.location_denied_msg' | translate }}</p>
+            <button class="error-btn primary" (click)="requestLocation()">{{ 'shops.allow_location' | translate }}</button>
+            <p class="error-hint">{{ 'shops.location_denied_hint' | translate }}</p>
         </div>
 
         <!-- Location unavailable (GPS off, no support) -->
         <div class="error-state" *ngIf="locationError === 'unavailable'">
             <div class="error-icon">🌐</div>
-            <h3>Location Unavailable</h3>
-            <p>We couldn't detect your location. Make sure location services are enabled on your device.</p>
-            <button class="error-btn primary" (click)="requestLocation()">Try Again</button>
+            <h3>{{ 'shops.location_unavailable_title' | translate }}</h3>
+            <p>{{ 'shops.location_unavailable_msg' | translate }}</p>
+            <button class="error-btn primary" (click)="requestLocation()">{{ 'shops.try_again' | translate }}</button>
         </div>
 
         <!-- API error -->
         <div class="error-state" *ngIf="apiError && !locationError">
             <div class="error-icon">⚠️</div>
-            <h3>Something Went Wrong</h3>
-            <p>We couldn't load shops near you. Please check your connection and try again.</p>
-            <button class="error-btn primary" (click)="retryLoad()">Retry</button>
+            <h3>{{ 'shops.api_error_title' | translate }}</h3>
+            <p>{{ 'shops.api_error_msg' | translate }}</p>
+            <button class="error-btn primary" (click)="retryLoad()">{{ 'common.retry' | translate }}</button>
         </div>
 
         <!-- Normal content -->
@@ -45,7 +45,7 @@
             <div class="section">
                 <div class="search-container" (input)="searchShops($event)">
                     <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                    <input type="text" class="search-input" placeholder="Shop by malls and stores...">
+                    <input type="text" class="search-input" [placeholder]="'shops.search_placeholder' | translate">
                 </div>
             </div>
 
@@ -71,13 +71,13 @@
 
             <div class="loader-content" *ngIf="isLoadingSearchResults && searchedText.length > 1">
                 <div class="spinner1" style="position: relative;"></div>
-                <p>Loading...</p>
+                <p>{{ 'common.loading' | translate }}</p>
             </div>
             <div *ngIf="activeExploreTab === 'Malls' && !isLoadingSearchResults && mallsListDisplay.length == 0 && searchedText.length > 1" class="end-message">
-                <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+                <p>{{ 'shops.not_found' | translate:{ type: activeExploreTab } }}</p>
             </div>
             <div *ngIf="activeExploreTab === 'Shops' && !isLoadingSearchResults && shopsListDisplay.length == 0 && searchedText.length > 1" class="end-message">
-                <p>Searched {{activeExploreTab}} not found! Showing All !</p>
+                <p>{{ 'shops.not_found' | translate:{ type: activeExploreTab } }}</p>
             </div>
 
             <div class="shop-card" *ngFor="let item of (activeExploreTab === 'Malls' ? mallsListDisplay.length > 0 ? mallsListDisplay : mallsList : shopsListDisplay.length>0 ? shopsListDisplay : shopsList)">
@@ -103,10 +103,10 @@
 
             <div class="loader-content" *ngIf="activeExploreTab === 'Malls' ? isLoadingMallsContent : isLoadingShopsContent">
                 <div class="spinner1" style="position: relative;"></div>
-                <p>Loading...</p>
+                <p>{{ 'common.loading' | translate }}</p>
             </div>
             <div *ngIf="activeExploreTab === 'Malls' ? allMallsLoaded : allShopsLoaded" class="end-message">
-                <p>All {{activeExploreTab}} are loaded!</p>
+                <p>{{ 'shops.all_loaded' | translate:{ type: activeExploreTab } }}</p>
             </div>
         </ng-container>
 

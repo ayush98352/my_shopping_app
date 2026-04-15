@@ -7,11 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageService, SupportedLang } from '../services/language.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -26,37 +28,36 @@ export class ProfileComponent implements OnInit {
 
   
   navigationItems = [
-    { icon: 'wallet', label: 'Wallet' },
-    { icon: 'headphones-alt', label: 'Support' },
-    { icon: 'credit-card', label: 'Payments' }
+    { icon: 'wallet', labelKey: 'profile.my_wallet' },
+    { icon: 'headphones-alt', labelKey: 'profile.customer_service' },
+    { icon: 'credit-card', labelKey: 'profile.settings' }
   ];
 
   yourInfoItems = [
-    { icon: 'my-order-icon', label: 'My orders', clicked: 'gotoYourOrdersPage' },
-    // { icon: 'bookmark', label: 'Bookmarked Recipes', clicked: 'gotoBookmarkedRecipesPage' },
-    { icon: 'address-book-icon', label: 'Address book', clicked: 'gotoAddressBookPage' },
-    { icon: 'collected-coupon-icon', label: 'Collected coupons', clicked: 'gotoCollectedCouponsPage' },
+    { icon: 'my-order-icon', labelKey: 'profile.my_orders', clicked: 'gotoYourOrdersPage' },
+    { icon: 'address-book-icon', labelKey: 'profile.address_book', clicked: 'gotoAddressBookPage' },
+    { icon: 'collected-coupon-icon', labelKey: 'profile.collected_coupons', clicked: 'gotoCollectedCouponsPage' },
   ];
-
-  // otherInfoItems = [
-  //   { icon: 'share', label: 'Share the app', clicked: 'shareAppLink' },
-  //   { icon: 'info', label: 'About us', clicked: 'gotoAboutUsPage' },
-  //   { icon: 'lock', label: 'Account privacy', clicked: 'gotoAccPrivacyPage' },
-  //   // { icon: 'bell', label: 'Notification preferences', clicked: '' },
-  //   { icon: 'sign-out', label: 'Log out', clicked: 'logout' }
-  // ];
 
   otherInfoItems = [
-    { icon: 'my-review-icon', label: 'My Review', clicked: 'goTomyReview' },
-    { icon: 'my-wallet-icon', label: 'My Wallet', clicked: 'goTomyWallet' },
-    { icon: 'customer-service-icon', label: 'Customer Service', clicked: 'goToCustomerService' },
-    { icon: 'return-policy-icon', label: 'Return Policy', clicked: 'goToReturnPolicy' },
-    { icon: 'about-us-icon', label: 'About Us', clicked: 'gotoAboutUsPage' },
-    { icon: 'setting-icon', label: 'Settings', clicked: 'goToSettings' },
-    { icon: 'logout-icon', label: 'Log out', clicked: 'logout' }
+    { icon: 'my-review-icon', labelKey: 'profile.my_review', clicked: 'goTomyReview' },
+    { icon: 'my-wallet-icon', labelKey: 'profile.my_wallet', clicked: 'goTomyWallet' },
+    { icon: 'customer-service-icon', labelKey: 'profile.customer_service', clicked: 'goToCustomerService' },
+    { icon: 'return-policy-icon', labelKey: 'profile.return_policy', clicked: 'goToReturnPolicy' },
+    { icon: 'about-us-icon', labelKey: 'profile.about_us', clicked: 'gotoAboutUsPage' },
+    { icon: 'setting-icon', labelKey: 'profile.settings', clicked: 'goToSettings' },
+    { icon: 'logout-icon', labelKey: 'profile.logout', clicked: 'logout' }
   ];
 
-  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService){}
+  constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private svgRegistryService: SvgRegistryService, public languageService: LanguageService){}
+
+  setLanguage(lang: SupportedLang): void {
+    this.languageService.setLanguage(lang);
+  }
+
+  get currentLang(): SupportedLang {
+    return this.languageService.getCurrentLang();
+  }
 
   ngOnInit(): void {
     const svgNames = ['my-order-icon', 'my-review-icon', 'my-wallet-icon', 'customer-service-icon', 'return-policy-icon', 'about-us-icon', 'setting-icon', 'logout-icon', 'address-book-icon', 'collected-coupon-icon']; // Your SVG names
@@ -123,7 +124,6 @@ export class ProfileComponent implements OnInit {
   }
 
   handleClick(functionName: string) {
-    console.log('handleClick called with functionName:', functionName);
     switch(functionName) {
       case 'shareAppLink':
           this.shareAppLink();
@@ -133,6 +133,9 @@ export class ProfileComponent implements OnInit {
           break;
       case 'gotoAccPrivacyPage':
           this.gotoAccPrivacyPage();
+          break;
+      case 'goToSettings':
+          this.router.navigate(['/settings']);
           break;
       case 'logout':
           this.logout();

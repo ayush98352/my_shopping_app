@@ -3,11 +3,12 @@ import { ApiService } from '../services/api.service';
 import { CommonModule, NgOptimizedImage, provideImgixLoader } from '@angular/common'; // Import CommonModule
 import { RouterModule, Router } from '@angular/router';
 import { DataShareService } from '../services/data.share.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-address-book',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslatePipe],
   templateUrl: './address-book.component.html',
   styleUrl: './address-book.component.css'
 })

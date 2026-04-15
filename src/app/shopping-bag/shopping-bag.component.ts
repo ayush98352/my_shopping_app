@@ -10,13 +10,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 declare var Razorpay: any;  // Declaring Razorpay to use the Razorpay SDK
 
 @Component({
   selector: 'app-shopping-bag',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, MatIconModule],
+  imports: [CommonModule, RouterModule, FormsModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './shopping-bag.component.html',
   styleUrl: './shopping-bag.component.css'

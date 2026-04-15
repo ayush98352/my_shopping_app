@@ -8,13 +8,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -527,5 +528,10 @@ export class HomeComponent implements OnInit {
     if (scrollContainer) {
       scrollContainer.scrollTop = 0;
     }
+  }
+
+  goToVoicePage(){
+    this.storeScrollPosition();
+    return this.router.navigate(['/voice']);
   }
 }

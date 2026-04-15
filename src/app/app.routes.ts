@@ -83,6 +83,12 @@ export const routes: Routes = [
     {   path: 'store',
         loadComponent: () => import('./store/store.component').then(m => m.StoreComponent)
     },
+    {   path: 'voice',
+        loadComponent: () => import('./voice-search/voice-search.component').then(m => m.VoiceSearchComponent)
+    },
+    {   path: 'settings',
+        loadComponent: () => import('./settings/settings.component').then(m => m.SettingsComponent)
+    },
 
     // {   path: 'category/:id', 
     //     loadComponent: () => import('./category-products/category-products.component').then(m => m.CategoryProductsComponent),

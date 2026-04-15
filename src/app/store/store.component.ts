@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Category {
   title: string;
@@ -19,7 +20,7 @@ interface Category {
 @Component({
   selector: 'app-store',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
   templateUrl: './store.component.html',
   styleUrl: './store.component.css'

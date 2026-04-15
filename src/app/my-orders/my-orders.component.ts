@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 import { DataShareService } from '../services/data.share.service';
 import { RouterModule, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-my-orders',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './my-orders.component.html',
   styleUrl: './my-orders.component.css'
 })

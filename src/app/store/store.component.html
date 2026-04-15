@@ -20,7 +20,7 @@
         <div class="section">
             <div class="search-container"  (click) = "goToSearchPage()">
                 <img src="assets/svg/search-icon.svg" alt="search" class="search-icon">
-                <input type="text" class="search-input" placeholder="Search for products..">
+                <input type="text" class="search-input" [placeholder]="'store.search_placeholder' | translate">
             </div>
         </div>
 
@@ -52,7 +52,7 @@
             </div>
 
             <div class="filters-content">
-                <button class="filter">Filters 
+                <button class="filter">{{ 'store.filters' | translate }}
                     <mat-icon [svgIcon]="'filter-symbol'"  [alt]="'filter'" style="width:17px; height:17px;"></mat-icon>
                 </button>
                 <div *ngFor="let category of productsfilters[activeFashionTab]">
@@ -96,7 +96,7 @@
         <div class="about-tab" *ngIf="activeContentTab === 'Offers'">
             <div class="about-container">
                 <div class="about-headers">
-                    Instore Offers
+                    {{ 'store.instore_offers' | translate }}
                 </div>
                 <div class="about-content">
                     {{storeDetails?.instore_offers}}
@@ -194,7 +194,7 @@
         <div class="about-tab"  *ngIf="activeContentTab === 'About'">
             <div class="about-container">
                 <div class="about-headers">
-                    Location
+                    {{ 'store.location' | translate }}
                 </div>
                 <div class="about-content">
                     {{storeDetails?.address}}
@@ -202,7 +202,7 @@
             </div>
             <div class="about-container">
                 <div class="about-headers">
-                    Store Description
+                    {{ 'store.store_description' | translate }}
                 </div>
                 <div class="about-content">
                     {{storeDetails?.description}}
@@ -210,7 +210,7 @@
             </div>
             <div class="about-container">
                 <div class="about-headers">
-                    Operatinal Hours
+                    {{ 'store.operational_hours' | translate }}
                 </div>
                 <div class="about-content">
                     {{storeDetails?.timings}}
