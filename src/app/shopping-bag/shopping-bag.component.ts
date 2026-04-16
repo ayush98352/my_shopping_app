@@ -93,10 +93,12 @@ export class ShoppingBagComponent implements OnInit{
   
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService, private paymentService: PaymentService) { }
 
-  async ngOnInit() { 
+  async ngOnInit() {
     await this.getCartDetails();
     this.savedAddresses = JSON.parse(localStorage.getItem('addresses') || '[]');
-    this.deliveryAddress = this.location.display_address.address_line;
+    if (this.location?.display_address?.address_line) {
+      this.deliveryAddress = this.location.display_address.address_line;
+    }
   }
 
   retry() {

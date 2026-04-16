@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CsrfInterceptor } from './interceptor/csrfInterceptor';
 import { ApiService } from './services/api.service';
@@ -24,6 +24,16 @@ function initApp(apiService: ApiService, dataShareService: DataShareService): ()
   };
 }
 
+// Load translations before any component renders to avoid showing raw keys (e.g. "login.title")
+function initTranslations(translate: TranslateService): () => Promise<void> {
+  return () => new Promise(resolve => {
+    const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('app_language') === 'hi') ? 'hi' : 'en';
+    translate.addLangs(['en', 'hi']);
+    translate.setDefaultLang('en');
+    translate.use(lang).subscribe({ complete: resolve, error: resolve });
+  });
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -38,6 +48,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initApp,
       deps: [ApiService, DataShareService],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initTranslations,
+      deps: [TranslateService],
       multi: true,
     },
     provideTranslateService({

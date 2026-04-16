@@ -61,7 +61,6 @@ export class AppComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.languageService.init();
     // this.checkScreenSize();
     this.detectDevice();
 
