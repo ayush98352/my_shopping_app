@@ -38,7 +38,6 @@ declare var jdSalesInterface: WebAppInterface;
   imports: [CommonModule, RouterOutlet, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [ApiService],  // Add your ApiService here if needed
 })
 export class AppComponent implements OnInit {
   title = 'my-app';
@@ -53,7 +52,6 @@ export class AppComponent implements OnInit {
   padding: string = '20px';  // Default padding for iPhones without notch
 
   public constructor(private apiService: ApiService, dataShare: DataShareService, private titleService: Title,private renderer: Renderer2, private router: Router, private route: ActivatedRoute, private dataService: DataAccessService, @Inject(PLATFORM_ID) private platformId: Object, private deviceService: DeviceDetectorService, private svgRegistryService: SvgRegistryService, private location: Location, private languageService: LanguageService) {
-    this.apiService.fetchCsrfToken(); 
     this.setupBackButtonHandler();
     if(isPlatformBrowser(this.platformId)) {
       if(sessionStorage){

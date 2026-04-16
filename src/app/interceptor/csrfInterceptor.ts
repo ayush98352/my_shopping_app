@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { DataShareService } from '../services/data.share.service';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
+  constructor(private dataShareService: DataShareService) {}
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Fetch the CSRF token from localStorage (or any other storage)
-    const csrfToken = localStorage.getItem('csrfToken');
+    // Always send credentials (cookies) so the backend _csrf cookie is included
+    let cloned = req.clone({ withCredentials: true });
 
-    // Clone the request and set the CSRF token in the headers
-    const clonedRequest = req.clone({
-      setHeaders: {
-        'X-CSRF-Token': csrfToken || ''
-      },
-      withCredentials: true // Ensure credentials (including cookies) are sent
-    });
+    // Skip attaching the token for the CSRF token fetch itself
+    if (req.url.includes('/csrf-token')) {
+      return next.handle(cloned);
+    }
 
-    // Pass the cloned request to the next handler
-    return next.handle(clonedRequest);
+    const token = this.dataShareService.getcsrfToken();
+    if (token) {
+      cloned = cloned.clone({ setHeaders: { 'X-CSRF-Token': token } });
+    }
+
+    return next.handle(cloned);
   }
 }

@@ -32,6 +32,8 @@ export class WishlistComponent implements OnInit {
   public selectedProduct: any;
   public selectedSize: string = '';
   public isLoading = true;
+  public errorMessage = '';
+  public isAuthError = false;
 
   offset: number = 0;
   limit: number = 20; // Adjust as per requirement
@@ -43,6 +45,17 @@ export class WishlistComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadCachedData();
+  }
+
+  retry() {
+    this.errorMessage = '';
+    this.isAuthError = false;
+    this.isLoading = true;
+    this.getWishlistedProducts();
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
   async getWishlistedProducts(){
@@ -69,7 +82,15 @@ export class WishlistComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        this.isLoading = false;
+        this.isLoadingContent = false;
+        if (error?.status === 401) {
+          this.isAuthError = true;
+          this.errorMessage = 'Please login to view your wishlist.';
+        } else {
+          this.isAuthError = false;
+          this.errorMessage = 'Failed to load wishlist. Please try again.';
+        }
       },
       () => {
         this.isLoading = false;
@@ -108,6 +129,9 @@ export class WishlistComponent implements OnInit {
         }else{
           alert('Unable To remove from wishlist');
         }
+      }, (error) => {
+        this.isLoading = false;
+        if (error?.status === 401) this.errorMessage = 'Please login to manage your wishlist.';
     });
   }
 
@@ -142,7 +166,10 @@ export class WishlistComponent implements OnInit {
       if(response.code == 200 && response.message == 'sucess'){
         this.removeFromWishlist(product);
       }
-    })
+    }, (error) => {
+      this.isLoading = false;
+      if (error?.status === 401) this.errorMessage = 'Please login to add items to cart.';
+    });
   }
 
   gotoShowProductPage(product:any){

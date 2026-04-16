@@ -151,3 +151,16 @@ svg {
   color: #888;
   margin: 20px 0;
 }
+
+/* Fix for iOS Chrome sticky toolbar: 100vh includes areas behind browser toolbars,
+   so the container overflows the visible area and the bottom nav gets hidden.
+   100svh (Small Viewport Height) always equals the viewport with toolbars visible.
+   height: auto on .content lets flex-grow: 1 fill remaining space correctly. */
+@supports (height: 100svh) {
+  .container {
+    height: 100svh !important;
+  }
+  .content {
+    height: auto !important;
+  }
+}

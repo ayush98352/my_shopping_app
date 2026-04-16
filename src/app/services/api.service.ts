@@ -1,9 +1,10 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataShareService } from './data.share.service';
 import { LanguageService } from './language.service';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface UploadResponse {
   url: string;
@@ -14,41 +15,33 @@ export interface UploadResponse {
   providedIn: 'root' // Ensure it's provided globally
 })
 
-export class ApiService implements OnInit {
-  // private apiLink = 'http://localhost:7399'; // URL of your Node.js API
-  private apiLink = 'https://loud-crayfish-zendo-ca8afaac.koyeb.app'
-  
-  private csrfToken: string = '';
+export class ApiService {
+  readonly apiLink = environment.apiUrl;
 
-  constructor(private http: HttpClient, private dataShareService: DataShareService, private languageService: LanguageService) {
+  constructor(private http: HttpClient, public dataShareService: DataShareService, private languageService: LanguageService) {}
 
-  }
-
-  async ngOnInit() {
-    const storedToken = localStorage.getItem('csrfToken');
-    if (storedToken) {
-      this.csrfToken = storedToken;
-    } else {
-      this.fetchCsrfToken();
-    }
-  }
-
-  fetchCsrfToken() {
-    let apiUrl = this.apiLink + '/csrf-token';
+  fetchCsrfToken(): Promise<void> {
+    const apiUrl = this.apiLink + '/csrf-token';
     return this.http.get<{ csrfToken: string }>(apiUrl, { withCredentials: true })
-      .subscribe(response => {
-        this.csrfToken = response.csrfToken;
-        this.dataShareService.setcsrfToken(this.csrfToken);
-      });
+      .toPromise()
+      .then(response => {
+        if (response?.csrfToken) {
+          this.dataShareService.setcsrfToken(response.csrfToken);
+        }
+      })
+      .catch(() => {});
   }
 
   private getHeaders(): HttpHeaders {
-    let csrf = this.dataShareService.getcsrfToken();
-    return new HttpHeaders({
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'X-CSRF-Token': csrf || this.csrfToken || '',
       'Accept-Language': this.languageService.getCurrentLang(),
-    });
+    };
+    const token = this.dataShareService.getAuthToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return new HttpHeaders(headers);
   }
 
   
@@ -109,7 +102,8 @@ export class ApiService implements OnInit {
       formData,
       {
         reportProgress: true,
-        observe: 'events'
+        observe: 'events',
+        withCredentials: true,
       }
     ).pipe(
       map(event => {

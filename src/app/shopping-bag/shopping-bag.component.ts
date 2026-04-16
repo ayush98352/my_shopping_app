@@ -11,6 +11,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgRegistryService } from '../services/svg-registry.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { environment } from '../../environments/environment';
 
 declare var Razorpay: any;  // Declaring Razorpay to use the Razorpay SDK
 
@@ -27,6 +28,8 @@ export class ShoppingBagComponent implements OnInit{
   deliveryDate = '13 Oct - 18 Oct'
 
   public loggedInUserId = localStorage.getItem('loggedInUserId');
+  public errorMessage = '';
+  public isAuthError = false;
   public products = <any> [];
   public totalPrice = 0;
   public totalDiscount = 0;
@@ -96,6 +99,17 @@ export class ShoppingBagComponent implements OnInit{
     this.deliveryAddress = this.location.display_address.address_line;
   }
 
+  retry() {
+    this.errorMessage = '';
+    this.isAuthError = false;
+    this.isLoading = true;
+    this.getCartDetails();
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
   async getCartDetails(){
     let apiParams = {
       user_id: this.loggedInUserId
@@ -108,11 +122,16 @@ export class ShoppingBagComponent implements OnInit{
         this.totalProductsInBag = this.products.length;
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        this.isLoading = false;
+        if (error?.status === 401) {
+          this.isAuthError = true;
+          this.errorMessage = 'Please login to view your cart.';
+        } else {
+          this.isAuthError = false;
+          this.errorMessage = 'Failed to load cart. Please try again.';
+        }
       }
     );
-
-    
   }
 
   async updateCartInfo(product: any) {
@@ -262,7 +281,9 @@ export class ShoppingBagComponent implements OnInit{
         console.log('Order added successfully:', response);
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        if (error?.status === 401) {
+          this.errorMessage = 'Please login to place an order.';
+        }
       }
     );
   }
@@ -293,7 +314,7 @@ export class ShoppingBagComponent implements OnInit{
   // Function to process payment via the payment gateway
   processPayment(order: any) {
     const options = {
-      key: 'rzp_test_O6NVokGEP2mmkE', // Use your payment gateway's key
+      key: environment.razorpayKeyId,
       amount: order.amount, // Order amount from backend
       currency: 'INR',
       name: 'My-Store',

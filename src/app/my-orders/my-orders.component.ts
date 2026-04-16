@@ -20,6 +20,8 @@ export class MyOrdersComponent implements OnInit {
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public ordersList = <any>[];
   public isLoading = true;
+  public errorMessage = '';
+  public isAuthError = false;
 
  
 
@@ -28,6 +30,17 @@ export class MyOrdersComponent implements OnInit {
   async ngOnInit() {
 
     await this.getOrdersList();
+  }
+
+  retry() {
+    this.errorMessage = '';
+    this.isAuthError = false;
+    this.isLoading = true;
+    this.getOrdersList();
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
   async getOrdersList(){
@@ -40,7 +53,14 @@ export class MyOrdersComponent implements OnInit {
         this.ordersList = JSON.parse(JSON.stringify(response.result));
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        this.isLoading = false;
+        if (error?.status === 401) {
+          this.isAuthError = true;
+          this.errorMessage = 'Please login to view your orders.';
+        } else {
+          this.isAuthError = false;
+          this.errorMessage = 'Failed to load orders. Please try again.';
+        }
       }
     );
         

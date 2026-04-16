@@ -17,6 +17,8 @@ export class AddressBookComponent implements OnInit {
   public savedAddresses: any= [];
   public loggedInUserId = localStorage.getItem('loggedInUserId');
   public isLoading = false;
+  public errorMessage = '';
+  public isAuthError = false;
 
 
   constructor(private apiService: ApiService, private router: Router, private dataShareService: DataShareService){}
@@ -28,6 +30,16 @@ export class AddressBookComponent implements OnInit {
       this.getSavedAddress();
     }
     
+  }
+
+  retry() {
+    this.errorMessage = '';
+    this.isAuthError = false;
+    this.getSavedAddress();
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
   async getSavedAddress(){
@@ -42,7 +54,14 @@ export class AddressBookComponent implements OnInit {
         localStorage.setItem('addresses', JSON.stringify(this.savedAddresses));
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        this.isLoading = false;
+        if (error?.status === 401) {
+          this.isAuthError = true;
+          this.errorMessage = 'Please login to view your saved addresses.';
+        } else {
+          this.isAuthError = false;
+          this.errorMessage = 'Failed to load addresses. Please try again.';
+        }
       }
     );
   }

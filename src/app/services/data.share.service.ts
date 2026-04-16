@@ -10,7 +10,8 @@ export class DataShareService {
 
     private data: string | null = null;
     private productDetails = <any>{};
-    private csrfToken = <any>{};
+    private csrfToken: string = '';
+    private authToken: string = '';
     private filters = <any>{};
     private orderId :any ;
     private orderDetails = <any>{};
@@ -37,6 +38,13 @@ export class DataShareService {
     }
     getcsrfToken(): any {
         return this.csrfToken;
+    }
+
+    setAuthToken(token: string) {
+        this.authToken = token;
+    }
+    getAuthToken(): string {
+        return this.authToken;
     }
 
     setFilters(filters: any) {

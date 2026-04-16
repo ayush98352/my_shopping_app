@@ -99,11 +99,16 @@ export class LoginComponent {
             // alert('Invalid OTP');
             // need to check this in production
           } else {
-            localStorage.setItem('auth_token', response.token); // Save token in local storage
-            localStorage.setItem('phoneNumber', this.phoneNumber); // Save phone number in local storage
-            localStorage.setItem('loggedInUserId', response.userDetails.result[0].user_id)
-            
-            this.router.navigate(['/home']); // Navigate to home page
+            const token = response.token;
+            const userId = response.userDetails?.result?.[0]?.user_id;
+            // Store token in memory for current session
+            this.apiService.dataShareService.setAuthToken(token);
+            // localStorage persists across refreshes and tabs
+            localStorage.setItem('auth_token', token);
+            localStorage.setItem('phoneNumber', this.phoneNumber);
+            localStorage.setItem('loggedInUserId', userId);
+
+            this.router.navigate(['/home']);
           }
         }, error => {
           alert('Invalid OTP');
