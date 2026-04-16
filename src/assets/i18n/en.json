@@ -208,7 +208,13 @@
     "placeholder": "Search for brands and products",
     "suggestions": "Suggestions",
     "no_results": "No results for",
-    "try_different": "Try a different keyword"
+    "try_different": "Try a different keyword",
+    "voice_listening": "Listening...",
+    "voice_tap_to_speak": "Tap to search by voice",
+    "voice_tap_to_stop": "Tap to stop",
+    "voice_mic_denied": "Microphone access denied. Please allow mic in browser settings.",
+    "voice_no_speech": "No speech detected. Try again.",
+    "voice_error": "Voice search unavailable. Try typing instead."
   },
   "explore": {
     "title": "EXPLORE ALL"
